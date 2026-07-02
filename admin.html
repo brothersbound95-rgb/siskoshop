@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sisko Shop — Espace équipe</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; }
+
+    :root {
+        --bg: #0c0c0c;
+        --surface: #171717;
+        --surface-2: #212121;
+        --border: #303030;
+        --text: #f5f5f5;
+        --muted: #9c9c9c;
+        --accent: #e10600;
+        --accent-dark: #b30500;
+        --on-accent: #ffffff;
+        --green: #2ecc71;
+        --amber: #f2b134;
+    }
+
+    body { background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
+    a { color: inherit; }
+
+    /* ---------- LOGIN GATE ---------- */
+    .gate {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .gate-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px 32px;
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+    }
+
+    .gate-box h1 { font-size: 1.3rem; margin-bottom: 6px; }
+    .gate-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 22px; }
+
+    .gate-box input {
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+    }
+
+    .gate-box input:focus { outline: none; border-color: var(--accent); }
+
+    .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: var(--on-accent);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.15s ease;
+    }
+
+    .btn:hover { background: var(--accent-dark); }
+    .btn.ghost { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
+    .btn.ghost:hover { border-color: var(--muted); }
+
+    .gate-error { color: var(--accent); font-size: 0.82rem; margin-top: -6px; margin-bottom: 14px; display: none; }
+    .gate-error.show { display: block; }
+
+    .gate-note { margin-top: 18px; font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+
+    /* ---------- DASHBOARD ---------- */
+    .dash { display: none; max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
+    .dash.show { display: block; }
+
+    .dash-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-bottom: 26px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .dash-header .brand { font-weight: 800; font-size: 1.15rem; }
+    .dash-header .brand span { color: var(--accent); }
+    .dash-header .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn-sm {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 9px 14px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .btn-sm:hover { border-color: var(--muted); }
+    .btn-sm.danger:hover { border-color: var(--accent); color: var(--accent); }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 14px;
+        margin-bottom: 26px;
+    }
+
+    .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 20px;
+    }
+
+    .stat-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
+    .stat-card .value { font-size: 1.5rem; font-weight: 800; }
+    .stat-card .value.accent { color: var(--accent); }
+
+    .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+        align-items: center;
+    }
+
+    .toolbar input[type="text"] {
+        flex: 1;
+        min-width: 180px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: var(--text);
+        font-size: 0.88rem;
+    }
+
+    .toolbar select {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: var(--text);
+        font-size: 0.85rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 70px 20px;
+        color: var(--muted);
+        background: var(--surface);
+        border: 1px dashed var(--border);
+        border-radius: 14px;
+    }
+
+    .empty-state .icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .empty-state h3 { color: var(--text); margin-bottom: 8px; }
+    .empty-state p { font-size: 0.88rem; max-width: 440px; margin: 0 auto; }
+
+    .order-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .order-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px 18px;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto auto;
+        gap: 16px;
+        align-items: center;
+    }
+
+    @media (max-width: 900px) {
+        .order-card { grid-template-columns: 1fr; }
+    }
+
+    .order-thumb {
+        width: 52px;
+        height: 52px;
+        border-radius: 8px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .order-thumb img { width: 100%; height: 100%; object-fit: contain; }
+    .order-thumb span { font-size: 1.3rem; opacity: 0.3; }
+
+    .order-main .ref { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.4px; }
+    .order-main .title { font-weight: 700; font-size: 0.98rem; margin: 2px 0 4px; }
+    .order-main .meta { font-size: 0.82rem; color: var(--muted); }
+    .order-main .customer { font-size: 0.82rem; color: var(--text); margin-top: 4px; }
+
+    .order-total { font-weight: 800; color: var(--accent); font-size: 1.05rem; white-space: nowrap; }
+
+    .status-select {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .order-actions { display: flex; gap: 8px; }
+
+    .icon-btn {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ---------- DETAIL MODAL ---------- */
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.72);
+        z-index: 300;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        max-width: 480px;
+        width: 100%;
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 26px;
+    }
+
+    .modal-box h3 { margin-bottom: 16px; }
+    .modal-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+    .modal-row span:first-child { color: var(--muted); }
+    .modal-row span:last-child { font-weight: 600; text-align: right; }
+    .modal-logo { width: 100%; max-height: 220px; object-fit: contain; background: #fff; border-radius: 10px; margin: 16px 0; padding: 10px; }
+    .modal-close-row { margin-top: 18px; display: flex; gap: 10px; }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN GATE ============ -->
+<div class="gate" id="gate">
+    <div class="gate-box">
+        <h1>Espace équipe</h1>
+        <p>Accès réservé — commandes Sisko Shop</p>
+        <input type="password" id="gatePassword" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') tryLogin()">
+        <div class="gate-error" id="gateError">Mot de passe incorrect.</div>
+        <button class="btn" onclick="tryLogin()">Entrer</button>
+        <div class="gate-note">
+            Mot de passe par défaut : <strong>sisko2026</strong> — à changer directement dans le fichier admin.html (variable ADMIN_PASSWORD) avant mise en ligne.<br><br>
+            ⚠️ Ceci est un journal de commandes local au navigateur : il n'affiche que les commandes passées depuis cet appareil (ou synchronisées via un autre onglet ouvert dessus). WhatsApp reste le canal de confirmation officiel de chaque commande.
+        </div>
+    </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="dash" id="dash">
+    <div class="dash-header">
+        <div class="brand">SISKO SHOP <span>·</span> Commandes</div>
+        <div class="actions">
+            <button class="btn-sm" onclick="exportCSV()">⬇ Exporter en CSV</button>
+            <button class="btn-sm danger" onclick="clearAllOrders()">🗑 Vider le journal</button>
+            <button class="btn-sm" onclick="logout()">Déconnexion</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card"><div class="label">Commandes totales</div><div class="value" id="statTotal">0</div></div>
+        <div class="stat-card"><div class="label">Nouvelles</div><div class="value accent" id="statNew">0</div></div>
+        <div class="stat-card"><div class="label">Traitées</div><div class="value" id="statDone">0</div></div>
+        <div class="stat-card"><div class="label">Chiffre estimé</div><div class="value" id="statRevenue">0 DA</div></div>
+    </div>
+
+    <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Rechercher (nom, téléphone, article, référence)..." oninput="renderOrders()">
+        <select id="statusFilter" onchange="renderOrders()">
+            <option value="">Tous les statuts</option>
+            <option value="nouveau">Nouveau</option>
+            <option value="en_cours">En cours</option>
+            <option value="traite">Traité</option>
+            <option value="annule">Annulé</option>
+        </select>
+    </div>
+
+    <div id="orderListWrap"></div>
+</div>
+
+<!-- ============ DETAIL MODAL ============ -->
+<div class="modal-overlay" id="detailOverlay">
+    <div class="modal-box" id="detailBox"></div>
+</div>
+
+<script>
+    /* ⚠️ Mot de passe simple côté client — suffisant pour dissuader un accès
+       occasionnel, pas pour protéger des données sensibles. Pour une vraie
+       sécurité, ce journal doit être remplacé par un backend serveur. */
+    const ADMIN_PASSWORD = 'sisko2026';
+    const STORAGE_KEY = 'sisko_orders';
+
+    function tryLogin() {
+        const val = document.getElementById('gatePassword').value;
+        if (val === ADMIN_PASSWORD) {
+            sessionStorage.setItem('sisko_admin_ok', '1');
+            showDashboard();
+        } else {
+            document.getElementById('gateError').classList.add('show');
+        }
+    }
+
+    function logout() {
+        sessionStorage.removeItem('sisko_admin_ok');
+        document.getElementById('dash').classList.remove('show');
+        document.getElementById('gate').style.display = 'flex';
+        document.getElementById('gatePassword').value = '';
+    }
+
+    function showDashboard() {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('dash').classList.add('show');
+        renderOrders();
+    }
+
+    if (sessionStorage.getItem('sisko_admin_ok') === '1') showDashboard();
+
+    function getOrders() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveOrders(orders) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+    }
+
+    function fmtDA(n) { return Number(n || 0).toLocaleString('fr-FR') + ' DA'; }
+
+    const STATUS_LABEL = { nouveau: 'Nouveau', en_cours: 'En cours', traite: 'Traité', annule: 'Annulé' };
+
+    function renderOrders() {
+        const orders = getOrders();
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+
+        document.getElementById('statTotal').textContent = orders.length;
+        document.getElementById('statNew').textContent = orders.filter(o => (o.status || 'nouveau') === 'nouveau').length;
+        document.getElementById('statDone').textContent = orders.filter(o => o.status === 'traite').length;
+        const revenue = orders.filter(o => o.status !== 'annule').reduce((s, o) => s + (o.total || 0), 0);
+        document.getElementById('statRevenue').textContent = fmtDA(revenue);
+
+        let filtered = orders.filter(o => {
+            if (statusFilter && (o.status || 'nouveau') !== statusFilter) return false;
+            if (!search) return true;
+            const hay = [o.id, o.customerName, o.phone, o.product, o.note].join(' ').toLowerCase();
+            return hay.includes(search);
+        });
+
+        const wrap = document.getElementById('orderListWrap');
+
+        if (orders.length === 0) {
+            wrap.innerHTML =
+                '<div class="empty-state">' +
+                    '<div class="icon">🗒️</div>' +
+                    '<h3>Aucune commande pour l\'instant</h3>' +
+                    '<p>Les commandes passées via le configurateur du site (sur cet appareil) apparaîtront ici automatiquement. En attendant, votre WhatsApp reste le canal principal pour recevoir les commandes.</p>' +
+                '</div>';
+            return;
+        }
+
+        if (filtered.length === 0) {
+            wrap.innerHTML = '<div class="empty-state"><div class="icon">🔎</div><h3>Aucun résultat</h3><p>Essayez une autre recherche ou un autre filtre.</p></div>';
+            return;
+        }
+
+        wrap.innerHTML = '<div class="order-list">' + filtered.map(o => {
+            const thumb = o.logoDataUrl
+                ? '<img src="' + o.logoDataUrl + '" alt="logo">'
+                : '<span>👕</span>';
+            const date = new Date(o.date);
+            const dateStr = isNaN(date) ? '' : date.toLocaleDateString('fr-FR') + ' ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+            return (
+                '<div class="order-card">' +
+                    '<div class="order-thumb">' + thumb + '</div>' +
+                    '<div class="order-main">' +
+                        '<div class="ref">' + o.id + ' · ' + dateStr + '</div>' +
+                        '<div class="title">' + o.product + ' — ' + o.size + ' / ' + o.color + ' × ' + o.qty + '</div>' +
+                        '<div class="customer">' + (o.customerName || '—') + ' · ' + (o.phone || '—') + '</div>' +
+                    '</div>' +
+                    '<div class="order-total">' + fmtDA(o.total) + '</div>' +
+                    '<select class="status-select" onchange="updateStatus(\'' + o.id + '\', this.value)">' +
+                        ['nouveau','en_cours','traite','annule'].map(s =>
+                            '<option value="' + s + '"' + ((o.status || 'nouveau') === s ? ' selected' : '') + '>' + STATUS_LABEL[s] + '</option>'
+                        ).join('') +
+                    '</select>' +
+                    '<div class="order-actions">' +
+                        '<button class="icon-btn" title="Détails" onclick="openDetail(\'' + o.id + '\')">👁</button>' +
+                        '<button class="icon-btn" title="Supprimer" onclick="deleteOrder(\'' + o.id + '\')">🗑</button>' +
+                    '</div>' +
+                '</div>'
+            );
+        }).join('') + '</div>';
+    }
+
+    function updateStatus(id, status) {
+        const orders = getOrders();
+        const o = orders.find(x => x.id === id);
+        if (o) { o.status = status; saveOrders(orders); renderOrders(); }
+    }
+
+    function deleteOrder(id) {
+        if (!confirm('Supprimer définitivement cette commande ?')) return;
+        const orders = getOrders().filter(o => o.id !== id);
+        saveOrders(orders);
+        renderOrders();
+    }
+
+    function clearAllOrders() {
+        if (!confirm('Vider tout le journal de commandes ? Cette action est irréversible.')) return;
+        saveOrders([]);
+        renderOrders();
+    }
+
+    function openDetail(id) {
+        const o = getOrders().find(x => x.id === id);
+        if (!o) return;
+        const box = document.getElementById('detailBox');
+        box.innerHTML =
+            '<h3>' + o.id + '</h3>' +
+            (o.logoDataUrl ? '<img class="modal-logo" src="' + o.logoDataUrl + '" alt="logo">' : '') +
+            '<div class="modal-row"><span>Article</span><span>' + o.product + '</span></div>' +
+            '<div class="modal-row"><span>Taille</span><span>' + o.size + '</span></div>' +
+            '<div class="modal-row"><span>Couleur</span><span>' + o.color + '</span></div>' +
+            '<div class="modal-row"><span>Quantité</span><span>' + o.qty + '</span></div>' +
+            '<div class="modal-row"><span>Total</span><span>' + fmtDA(o.total) + '</span></div>' +
+            '<div class="modal-row"><span>Nom</span><span>' + (o.customerName || '—') + '</span></div>' +
+            '<div class="modal-row"><span>Téléphone</span><span>' + (o.phone || '—') + '</span></div>' +
+            '<div class="modal-row"><span>Logo</span><span>' + (o.noLogo ? 'Sans logo' : (o.logoName || '—')) + '</span></div>' +
+            (o.logoNote ? '<div class="modal-row"><span>Placement</span><span>' + o.logoNote + '</span></div>' : '') +
+            (o.note ? '<div class="modal-row"><span>Remarque</span><span>' + o.note + '</span></div>' : '') +
+            '<div class="modal-close-row">' +
+                (o.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + o.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
+                '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
+            '</div>';
+        document.getElementById('detailOverlay').classList.add('open');
+    }
+
+    function closeDetail() {
+        document.getElementById('detailOverlay').classList.remove('open');
+    }
+
+    document.getElementById('detailOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'detailOverlay') closeDetail();
+    });
+
+    function exportCSV() {
+        const orders = getOrders();
+        if (orders.length === 0) { alert('Aucune commande à exporter.'); return; }
+        const headers = ['Référence','Date','Article','Taille','Couleur','Quantité','Total (DA)','Nom','Téléphone','Logo','Remarque','Statut'];
+        const rows = orders.map(o => [
+            o.id, o.date, o.product, o.size, o.color, o.qty, o.total,
+            o.customerName, o.phone, o.noLogo ? 'Sans logo' : (o.logoName || ''),
+            (o.note || '').replace(/\n/g, ' '), STATUS_LABEL[o.status] || o.status
+        ]);
+        const csv = [headers, ...rows]
+            .map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(','))
+            .join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'sisko-commandes-' + new Date().toISOString().slice(0,10) + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    // Rafraîchit automatiquement si une commande est ajoutée depuis un autre
+    // onglet ouvert sur le même navigateur (ex: la boutique ouverte à côté).
+    window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY && document.getElementById('dash').classList.contains('show')) {
+            renderOrders();
+        }
+    });
+</script>
+</body>
+</html>
