@@ -11,7 +11,7 @@
         padding: 0;
         font-family: 'Helvetica Neue', Arial, sans-serif;
     }
-
+ 
     :root {
         --bg: #0c0c0c;
         --surface: #171717;
@@ -23,15 +23,15 @@
         --accent-dark: #b30500;
         --on-accent: #ffffff;
     }
-
+ 
     body {
         background-color: var(--bg);
         color: var(--text);
         line-height: 1.5;
     }
-
+ 
     a { color: inherit; }
-
+ 
     /* HEADER */
     header {
         display: flex;
@@ -44,26 +44,26 @@
         top: 0;
         z-index: 50;
     }
-
+ 
     header .logo {
         font-weight: 800;
         font-size: 1.2rem;
         letter-spacing: 1px;
         color: var(--text);
     }
-
+ 
     header nav {
         display: flex;
         align-items: center;
         gap: 24px;
     }
-
+ 
     header nav a {
         text-decoration: none;
         color: var(--muted);
         font-size: 0.9rem;
     }
-
+ 
     header nav a.cta {
         background: var(--accent);
         color: var(--on-accent);
@@ -71,12 +71,12 @@
         border-radius: 6px;
         font-weight: 700;
     }
-
+ 
     @media (max-width: 900px) {
         header nav a:not(.cta) { display: none; }
         header { padding: 16px 20px; }
     }
-
+ 
     /* SCROLLING TICKER HEADLINE */
     .marquee-wrap {
         overflow: hidden;
@@ -84,14 +84,14 @@
         border-bottom: 1px solid var(--border);
         padding: 14px 0;
     }
-
+ 
     .marquee-track {
         display: flex;
         width: max-content;
         animation: scrollLeft 20s linear infinite;
         gap: 60px;
     }
-
+ 
     .marquee-track span {
         font-size: 1rem;
         font-weight: 800;
@@ -99,22 +99,22 @@
         color: var(--accent);
         white-space: nowrap;
     }
-
+ 
     .marquee-track span::after {
         content: "✦";
         margin-left: 60px;
         color: var(--muted);
     }
-
+ 
     @keyframes scrollLeft {
         from { transform: translateX(0); }
         to { transform: translateX(-50%); }
     }
-
+ 
     @media (prefers-reduced-motion: reduce) {
         .marquee-track { animation: none; }
     }
-
+ 
     /* HERO */
     .hero {
         max-width: 900px;
@@ -122,7 +122,7 @@
         padding: 0 20px;
         text-align: center;
     }
-
+ 
     .eyebrow {
         display: inline-block;
         font-size: 0.8rem;
@@ -134,7 +134,7 @@
         border-radius: 999px;
         margin-bottom: 24px;
     }
-
+ 
     .hero h1 {
         font-size: 2.75rem;
         line-height: 1.15;
@@ -142,18 +142,18 @@
         margin-bottom: 20px;
         color: var(--text);
     }
-
+ 
     .hero p.lead {
         font-size: 1.05rem;
         color: var(--muted);
         max-width: 600px;
         margin: 0 auto 32px;
     }
-
+ 
     .hero p.lead strong {
         color: var(--accent);
     }
-
+ 
     .btn-primary {
         display: inline-block;
         background: var(--accent);
@@ -165,12 +165,12 @@
         font-size: 1rem;
         transition: transform 0.15s ease, background 0.2s ease;
     }
-
+ 
     .btn-primary:hover {
         background: var(--accent-dark);
         transform: translateY(-2px);
     }
-
+ 
     .hero-ticker {
         margin-top: 40px;
         display: flex;
@@ -180,32 +180,32 @@
         font-size: 0.85rem;
         color: var(--muted);
     }
-
+ 
     .hero-ticker span::before {
         content: "✦";
         margin-right: 6px;
         color: var(--accent);
     }
-
+ 
     /* SECTION LABEL */
     .section-label {
         text-align: center;
         margin: 90px auto 10px;
     }
-
+ 
     .section-label .kicker {
         font-size: 0.8rem;
         letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--muted);
     }
-
+ 
     .section-label h2 {
         font-size: 2rem;
         margin-top: 8px;
         color: var(--text);
     }
-
+ 
     /* PRODUCT GRID */
     .pricing-grid {
         max-width: 1150px;
@@ -216,7 +216,7 @@
         gap: 24px;
         align-items: start;
     }
-
+ 
     .pack {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -227,36 +227,36 @@
         flex-direction: column;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
+ 
     .pack:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
-
+ 
     .pack.popular {
         border: 2px solid var(--accent);
     }
-
+ 
     .pack h3 {
         font-size: 1.4rem;
         margin-bottom: 10px;
         color: var(--text);
     }
-
+ 
     .pack .price {
         font-size: 2.1rem;
         font-weight: 800;
         margin: 4px 0 16px;
         color: var(--accent);
     }
-
+ 
     .pack .price sup {
         font-size: 1rem;
         font-weight: 600;
         margin-left: 2px;
         color: var(--muted);
     }
-
+ 
     /* OPTIONS */
     .option-label {
         font-size: 0.78rem;
@@ -267,14 +267,14 @@
         margin-bottom: 10px;
         display: block;
     }
-
+ 
     .size-row {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         margin-bottom: 22px;
     }
-
+ 
     .size-btn {
         border: 1px solid var(--border);
         background: var(--surface-2);
@@ -286,17 +286,17 @@
         cursor: pointer;
         transition: all 0.15s ease;
     }
-
+ 
     .size-btn:hover {
         border-color: var(--accent);
     }
-
+ 
     .size-btn.active {
         background: var(--accent);
         color: var(--on-accent);
         border-color: var(--accent);
     }
-
+ 
     /* COLORS */
     .color-row {
         display: flex;
@@ -304,7 +304,7 @@
         gap: 12px;
         margin-bottom: 22px;
     }
-
+ 
     .color-dot {
         width: 30px;
         height: 30px;
@@ -313,16 +313,16 @@
         border: 2px solid var(--border);
         transition: transform 0.15s ease, border-color 0.15s ease;
     }
-
+ 
     .color-dot:hover {
         transform: scale(1.1);
     }
-
+ 
     .color-dot.active {
         border-color: var(--accent);
         transform: scale(1.15);
     }
-
+ 
     /* QUANTITY */
     .qty-row {
         display: flex;
@@ -330,7 +330,7 @@
         gap: 10px;
         margin-bottom: 22px;
     }
-
+ 
     .qty-btn {
         width: 34px;
         height: 34px;
@@ -343,11 +343,11 @@
         cursor: pointer;
         line-height: 1;
     }
-
+ 
     .qty-btn:hover {
         border-color: var(--accent);
     }
-
+ 
     .qty-input {
         width: 56px;
         height: 34px;
@@ -359,7 +359,7 @@
         font-size: 0.95rem;
         font-weight: 700;
     }
-
+ 
     /* SINGLE PHOTO PREVIEW */
     .photo-single {
         position: relative;
@@ -375,19 +375,19 @@
         margin-bottom: 24px;
         transition: background 0.2s ease;
     }
-
+ 
     .photo-single img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
     }
-
+ 
     .photo-single .plus {
         font-size: 1.4rem;
         color: rgba(0,0,0,0.35);
     }
-
+ 
     .photo-single .color-caption {
         position: absolute;
         left: 0;
@@ -400,7 +400,7 @@
         padding: 6px 4px;
         letter-spacing: 0.3px;
     }
-
+ 
     .pack-btn {
         display: block;
         text-align: center;
@@ -415,17 +415,17 @@
         margin-top: auto;
         cursor: pointer;
     }
-
+ 
     .pack.popular .pack-btn {
         background: var(--accent);
         color: var(--on-accent);
     }
-
+ 
     .pack-btn:hover {
         background: var(--accent);
         color: var(--on-accent);
     }
-
+ 
     /* WHY CHOOSE */
     .why-grid {
         max-width: 1100px;
@@ -435,14 +435,14 @@
         grid-template-columns: repeat(4, 1fr);
         gap: 24px;
     }
-
+ 
     @media (max-width: 900px) {
         .why-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 560px) {
         .why-grid { grid-template-columns: 1fr; }
     }
-
+ 
     .why-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -450,24 +450,24 @@
         padding: 26px 22px;
         text-align: left;
     }
-
+ 
     .why-card .icon {
         font-size: 1.7rem;
         margin-bottom: 14px;
         display: block;
     }
-
+ 
     .why-card h4 {
         font-size: 1.02rem;
         margin-bottom: 8px;
         color: var(--text);
     }
-
+ 
     .why-card p {
         font-size: 0.88rem;
         color: var(--muted);
     }
-
+ 
     /* CTA BAND */
     .cta-band {
         max-width: 900px;
@@ -478,46 +478,46 @@
         border-radius: 20px;
         text-align: center;
     }
-
+ 
     .cta-band h2 {
         font-size: 1.8rem;
         margin-bottom: 14px;
     }
-
+ 
     .cta-band p {
         color: rgba(255,255,255,0.85);
         max-width: 480px;
         margin: 0 auto 28px;
         font-size: 0.95rem;
     }
-
+ 
     .cta-band .btn-primary {
         background: var(--on-accent);
         color: var(--accent-dark);
     }
-
+ 
     .cta-band .btn-primary:hover {
         background: #eeeeee;
     }
-
+ 
     /* HOW TO ORDER */
     .how-to-order {
         max-width: 900px;
         margin: 100px auto 0;
         padding: 0 20px;
     }
-
+ 
     .how-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
         margin-top: 30px;
     }
-
+ 
     @media (max-width: 700px) {
         .how-grid { grid-template-columns: 1fr; }
     }
-
+ 
     .how-step {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -525,7 +525,7 @@
         padding: 24px 20px;
         text-align: left;
     }
-
+ 
     .how-step .num {
         display: inline-flex;
         align-items: center;
@@ -539,18 +539,18 @@
         font-size: 0.9rem;
         margin-bottom: 14px;
     }
-
+ 
     .how-step h4 {
         font-size: 1rem;
         margin-bottom: 8px;
         color: var(--text);
     }
-
+ 
     .how-step p {
         font-size: 0.86rem;
         color: var(--muted);
     }
-
+ 
     /* FOOTER */
     footer {
         max-width: 1100px;
@@ -561,11 +561,11 @@
         gap: 30px;
         border-top: 1px solid var(--border);
     }
-
+ 
     @media (max-width: 700px) {
         footer { grid-template-columns: 1fr 1fr; }
     }
-
+ 
     footer h5 {
         font-size: 0.8rem;
         text-transform: uppercase;
@@ -573,38 +573,38 @@
         color: var(--muted);
         margin-bottom: 14px;
     }
-
+ 
     footer .brand-name {
         font-weight: 800;
         font-size: 1.1rem;
         margin-bottom: 8px;
         color: var(--text);
     }
-
+ 
     footer .brand-tag {
         font-size: 0.85rem;
         color: var(--muted);
         margin-bottom: 14px;
     }
-
+ 
     footer ul {
         list-style: none;
     }
-
+ 
     footer ul li {
         margin-bottom: 8px;
         font-size: 0.88rem;
     }
-
+ 
     footer ul li a {
         text-decoration: none;
         color: var(--muted);
     }
-
+ 
     footer ul li a:hover {
         color: var(--accent);
     }
-
+ 
     .footer-bottom {
         max-width: 1100px;
         margin: 0 auto;
@@ -613,10 +613,512 @@
         font-size: 0.8rem;
         color: var(--muted);
     }
+ 
+    .footer-bottom a {
+        color: var(--muted);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+    }
+ 
+    .footer-bottom a:hover { color: var(--accent); }
+ 
+    /* ============ SIMPLIFIED PRODUCT CARDS ============ */
+    .pack .thumb {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: #ffffff;
+        border: 1px solid var(--border);
+    }
+ 
+    .pack .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+ 
+    .pack .thumb .thumb-fallback {
+        font-size: 2.2rem;
+        opacity: 0.25;
+    }
+ 
+    .pack .desc {
+        font-size: 0.86rem;
+        color: var(--muted);
+        margin-bottom: 20px;
+    }
+ 
+    .pack .swatch-preview {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+    }
+ 
+    .pack .swatch-preview .sw {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+    }
+ 
+    /* ============ CONFIGURATOR MODAL ============ */
+    .cfg-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.72);
+        z-index: 200;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 30px 16px;
+        overflow-y: auto;
+        backdrop-filter: blur(2px);
+    }
+ 
+    .cfg-overlay.open { display: flex; }
+ 
+    .cfg-modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        width: 100%;
+        max-width: 720px;
+        margin: auto;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 60px);
+    }
+ 
+    .cfg-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        flex-shrink: 0;
+    }
+ 
+    .cfg-head h3 {
+        font-size: 1.1rem;
+        color: var(--text);
+    }
+ 
+    .cfg-close {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1;
+    }
+ 
+    .cfg-close:hover { color: var(--text); border-color: var(--accent); }
+ 
+    .cfg-steps {
+        display: flex;
+        align-items: center;
+        padding: 18px 24px 0;
+        flex-shrink: 0;
+    }
+ 
+    .cfg-step-dot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        position: relative;
+    }
+ 
+    .cfg-step-dot .n {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        transition: all 0.2s ease;
+    }
+ 
+    .cfg-step-dot .l {
+        font-size: 0.68rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        text-align: center;
+    }
+ 
+    .cfg-step-dot::before {
+        content: "";
+        position: absolute;
+        top: 14px;
+        left: -50%;
+        width: 100%;
+        height: 2px;
+        background: var(--border);
+        z-index: -1;
+    }
+ 
+    .cfg-step-dot:first-child::before { display: none; }
+ 
+    .cfg-step-dot.done .n {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+    }
+ 
+    .cfg-step-dot.done::before { background: var(--accent); }
+ 
+    .cfg-step-dot.active .n {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+ 
+    .cfg-step-dot.active .l { color: var(--text); }
+ 
+    .cfg-body {
+        padding: 24px;
+        overflow-y: auto;
+        flex: 1;
+    }
+ 
+    .cfg-panel { display: none; }
+    .cfg-panel.active { display: block; animation: cfgFade 0.2s ease; }
+ 
+    @keyframes cfgFade {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    .cfg-panel h4 {
+        font-size: 1.05rem;
+        margin-bottom: 4px;
+        color: var(--text);
+    }
+ 
+    .cfg-panel .sub {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 20px;
+    }
+ 
+    .cfg-product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+    }
+ 
+    .cfg-product-card {
+        background: var(--surface-2);
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        cursor: pointer;
+        text-align: left;
+        transition: border-color 0.15s ease, transform 0.15s ease;
+        color: var(--text);
+    }
+ 
+    .cfg-product-card:hover { transform: translateY(-2px); }
+ 
+    .cfg-product-card.active { border-color: var(--accent); background: rgba(225,6,0,0.08); }
+ 
+    .cfg-product-card .thumb-mini {
+        width: 100%;
+        aspect-ratio: 4/3;
+        border-radius: 8px;
+        background: #fff;
+        margin-bottom: 10px;
+        overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+    }
+ 
+    .cfg-product-card .thumb-mini img { width: 100%; height: 100%; object-fit: cover; }
+    .cfg-product-card .thumb-mini span { font-size: 1.6rem; opacity: 0.25; }
+ 
+    .cfg-product-card .pname { font-weight: 700; font-size: 0.92rem; margin-bottom: 2px; }
+    .cfg-product-card .pprice { font-size: 0.82rem; color: var(--accent); font-weight: 700; }
+ 
+    .cfg-size-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+ 
+    .cfg-size-btn {
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text);
+        font-size: 0.9rem;
+        font-weight: 700;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        min-width: 58px;
+    }
+ 
+    .cfg-size-btn:hover { border-color: var(--accent); }
+    .cfg-size-btn.active { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+ 
+    .cfg-color-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 28px;
+    }
+ 
+    .cfg-color-opt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+ 
+    .cfg-color-opt .dot {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        transition: all 0.15s ease;
+    }
+ 
+    .cfg-color-opt.active .dot { border-color: var(--accent); transform: scale(1.1); box-shadow: 0 0 0 3px rgba(225,6,0,0.2); }
+    .cfg-color-opt span.cname { font-size: 0.78rem; color: var(--muted); }
+    .cfg-color-opt.active span.cname { color: var(--text); font-weight: 700; }
+ 
+    .cfg-qty-block {
+        margin-top: 8px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+    }
+ 
+    .cfg-dropzone {
+        border: 2px dashed var(--border);
+        border-radius: 14px;
+        padding: 36px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.15s ease, background 0.15s ease;
+        background: var(--surface-2);
+    }
+ 
+    .cfg-dropzone:hover, .cfg-dropzone.drag { border-color: var(--accent); background: rgba(225,6,0,0.05); }
+ 
+    .cfg-dropzone .icon { font-size: 2rem; margin-bottom: 10px; }
+    .cfg-dropzone .main-txt { font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .cfg-dropzone .sub-txt { font-size: 0.8rem; color: var(--muted); }
+ 
+    .cfg-logo-preview {
+        display: none;
+        align-items: center;
+        gap: 16px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+    }
+ 
+    .cfg-logo-preview.show { display: flex; }
+ 
+    .cfg-logo-preview img {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 8px;
+        padding: 4px;
+    }
+ 
+    .cfg-logo-preview .name { font-size: 0.85rem; color: var(--text); word-break: break-all; flex: 1; }
+    .cfg-logo-preview button {
+        background: none;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 0.78rem;
+    }
+    .cfg-logo-preview button:hover { border-color: var(--accent); color: var(--accent); }
+ 
+    .cfg-skip-logo {
+        margin-top: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        color: var(--muted);
+    }
+ 
+    .cfg-field {
+        margin-bottom: 16px;
+    }
+ 
+    .cfg-field label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: var(--muted);
+        margin-bottom: 8px;
+    }
+ 
+    .cfg-field input, .cfg-field textarea {
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.92rem;
+    }
+ 
+    .cfg-field input:focus, .cfg-field textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+ 
+    .cfg-field textarea { resize: vertical; min-height: 70px; }
+ 
+    .cfg-recap {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-bottom: 22px;
+    }
+ 
+    .cfg-recap-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        padding: 7px 0;
+        border-bottom: 1px solid var(--border);
+        color: var(--muted);
+    }
+ 
+    .cfg-recap-row:last-child { border-bottom: none; }
+    .cfg-recap-row span:last-child { color: var(--text); font-weight: 600; text-align: right; }
+ 
+    .cfg-recap-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.15rem;
+        font-weight: 800;
+        padding-top: 14px;
+        margin-top: 6px;
+        border-top: 1px solid var(--border);
+        color: var(--text);
+    }
+ 
+    .cfg-recap-total span:last-child { color: var(--accent); }
+ 
+    .cfg-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 24px;
+        border-top: 1px solid var(--border);
+        flex-shrink: 0;
+    }
+ 
+    .cfg-btn {
+        padding: 12px 22px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        color: var(--text);
+        transition: all 0.15s ease;
+    }
+ 
+    .cfg-btn:hover { border-color: var(--muted); }
+ 
+    .cfg-btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+    }
+ 
+    .cfg-btn.primary:hover { background: var(--accent-dark); }
+ 
+    .cfg-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+ 
+    .cfg-live-price {
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-align: center;
+        flex: 1;
+    }
+ 
+    .cfg-live-price strong { color: var(--text); font-size: 1rem; }
+ 
+    .cfg-error {
+        color: var(--accent);
+        font-size: 0.8rem;
+        margin-top: 6px;
+        display: none;
+    }
+ 
+    .cfg-error.show { display: block; }
+ 
+    .cfg-success {
+        text-align: center;
+        padding: 20px 10px 6px;
+    }
+ 
+    .cfg-success .check {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(225,6,0,0.12);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 18px;
+    }
+ 
+    .cfg-success h4 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text); }
+    .cfg-success p { font-size: 0.9rem; color: var(--muted); max-width: 420px; margin: 0 auto 18px; }
+ 
+    @media (max-width: 560px) {
+        .cfg-steps { padding: 14px 12px 0; }
+        .cfg-step-dot .l { display: none; }
+        .cfg-body { padding: 18px; }
+        .cfg-foot { flex-wrap: wrap; }
+        .cfg-live-price { order: -1; width: 100%; text-align: left; }
+    }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-
+ 
 <header>
     <div class="logo">SISKO SHOP</div>
     <nav>
@@ -626,10 +1128,10 @@
         <a href="#">Secteurs</a>
         <a href="#">Avis</a>
         <a href="#">Contact</a>
-        <a href="#" class="cta">Configurer ma commande</a>
+        <a href="#" class="cta" onclick="openConfigurator(); return false;">Configurer ma commande</a>
     </nav>
 </header>
-
+ 
 <div class="marquee-wrap">
     <div class="marquee-track">
         <span>Bienvenue chez SISKO SHOP</span>
@@ -640,338 +1142,35 @@
         <span>Bienvenue chez SISKO SHOP</span>
     </div>
 </div>
-
+ 
 <main>
     <section class="hero">
         <span class="eyebrow">✦ Solutions entreprises</span>
         <h1>Bienvenue chez SISKO SHOP</h1>
         <p class="lead">Des articles clés-en-main pour habiller votre personnel, vos événements et vos équipes. Livraison à Alger, <strong>meilleure qualité et meilleur prix en Algérie</strong>.</p>
         <a href="https://wa.me/213770406106" class="btn-primary">Demander un devis →</a>
-
+ 
         <div class="hero-ticker">
             <span>Broderie &amp; DTF incluses</span>
             <span>Devis personnalisé disponible</span>
         </div>
     </section>
-
+ 
     <section id="packs">
         <div class="section-label">
             <div class="kicker">Nos produits</div>
             <h2>Choisissez votre article</h2>
         </div>
-
-        <div class="pricing-grid">
-
-            <!-- T-SHIRT -->
-            <div class="pack">
-                <h3>T-Shirt</h3>
-                <div class="price">750 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="tshirt-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="tshirt-color" data-preview="preview-tshirt">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-tshirt', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-tshirt" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-tshirt', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-tshirt" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('T-Shirt', 750, 'tshirt-size', 'tshirt-color', 'qty-tshirt'); return false;">Commander →</a>
-            </div>
-
-            <!-- SHORT -->
-            <div class="pack popular">
-                <h3>Short</h3>
-                <div class="price">1 150 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="short-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="short-color" data-preview="preview-short">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-short', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-short" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-short', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-short" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Short', 1150, 'short-size', 'short-color', 'qty-short'); return false;">Commander →</a>
-            </div>
-
-            <!-- PANTALON -->
-            <div class="pack">
-                <h3>Pantalon</h3>
-                <div class="price">1 200 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="pantalon-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="pantalon-color" data-preview="preview-pantalon">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-pantalon', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-pantalon" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-pantalon', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-pantalon" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Pantalon', 1200, 'pantalon-size', 'pantalon-color', 'qty-pantalon'); return false;">Commander →</a>
-            </div>
-
-            <!-- BAGGY T-SHIRT -->
-            <div class="pack">
-                <h3>Baggy T-Shirt</h3>
-                <div class="price">1 400 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="baggytshirt-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="baggytshirt-color" data-preview="preview-baggytshirt">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-baggytshirt', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-baggytshirt" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-baggytshirt', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-baggytshirt" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Baggy T-Shirt', 1400, 'baggytshirt-size', 'baggytshirt-color', 'qty-baggytshirt'); return false;">Commander →</a>
-            </div>
-
-            <!-- BAGGY SHORT -->
-            <div class="pack">
-                <h3>Baggy Short</h3>
-                <div class="price">1 400 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="baggyshort-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="baggyshort-color" data-preview="preview-baggyshort">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-baggyshort', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-baggyshort" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-baggyshort', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-baggyshort" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Baggy Short', 1400, 'baggyshort-size', 'baggyshort-color', 'qty-baggyshort'); return false;">Commander →</a>
-            </div>
-
-            <!-- CASQUETTE -->
-            <div class="pack">
-                <h3>Casquette</h3>
-                <div class="price">1 200 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="casquette-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="casquette-color" data-preview="preview-casquette">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-casquette', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-casquette" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-casquette', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-casquette" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Casquette', 1200, 'casquette-size', 'casquette-color', 'qty-casquette'); return false;">Commander →</a>
-            </div>
-
-            <!-- GILET DE SECURITE -->
-            <div class="pack">
-                <h3>Gilet de Sécurité</h3>
-                <div class="price">2 000 <sup>DA</sup></div>
-
-                <span class="option-label">Taille</span>
-                <div class="size-row" data-group="gilet-size">
-                    <button class="size-btn" onclick="selectOption(this)">S</button>
-                    <button class="size-btn" onclick="selectOption(this)">M</button>
-                    <button class="size-btn" onclick="selectOption(this)">L</button>
-                    <button class="size-btn" onclick="selectOption(this)">XL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXL</button>
-                    <button class="size-btn" onclick="selectOption(this)">XXXL</button>
-                </div>
-
-                <span class="option-label">Couleur</span>
-                <div class="color-row" data-group="gilet-color" data-preview="preview-gilet">
-                    <div class="color-dot active" style="background:#ffffff;" data-color-name="Blanc" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#000000;" data-color-name="Noir" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#8a8a8a;" data-color-name="Gris" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#c0392b;" data-color-name="Rouge" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#1f3a63;" data-color-name="Marine" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#2e7d4f;" data-color-name="Vert" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#d9c39a;" data-color-name="Beige" onclick="selectOption(this)"></div>
-                    <div class="color-dot" style="background:#5c1f2e;" data-color-name="Bordeaux" onclick="selectOption(this)"></div>
-                </div>
-
-                <span class="option-label">Quantité</span>
-                <div class="qty-row">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-gilet', -1)">−</button>
-                    <input type="number" class="qty-input" id="qty-gilet" value="1" min="1">
-                    <button type="button" class="qty-btn" onclick="stepQty('qty-gilet', 1)">+</button>
-                </div>
-
-                <span class="option-label">Aperçu</span>
-                <div class="photo-single" id="preview-gilet" style="background:#ffffff;">
-                    <span class="plus">+</span>
-                    <span class="color-caption">Blanc</span>
-                </div>
-
-                <a href="#" class="pack-btn" onclick="commander('Gilet de Sécurité', 2000, 'gilet-size', 'gilet-color', 'qty-gilet'); return false;">Commander →</a>
-            </div>
-
-        </div>
+ 
+        <div class="pricing-grid" id="packGrid"><!-- rempli par JS depuis PRODUCTS --></div>
     </section>
-
+ 
     <section>
         <div class="section-label">
             <div class="kicker">Pourquoi nous</div>
             <h2>Pourquoi choisir Sisko Shop ?</h2>
         </div>
-
+ 
         <div class="why-grid">
             <div class="why-card">
                 <span class="icon">🎨</span>
@@ -995,13 +1194,13 @@
             </div>
         </div>
     </section>
-
+ 
     <section class="how-to-order">
         <div class="section-label" style="margin-top:0;">
             <div class="kicker">Simple et rapide</div>
             <h2>Comment commander ?</h2>
         </div>
-
+ 
         <div class="how-grid">
             <div class="how-step">
                 <span class="num">1</span>
@@ -1020,14 +1219,136 @@
             </div>
         </div>
     </section>
-
+ 
     <div class="cta-band">
         <h2>Un besoin spécifique ? On vous fait un devis.</h2>
         <p>Quantités différentes, articles hors catalogue, délai urgent — contactez-nous et obtenez une réponse sous 6h.</p>
         <a href="https://wa.me/213770406106" class="btn-primary">Discuter sur WhatsApp</a>
     </div>
 </main>
-
+ 
+<!-- ============ CONFIGURATEUR DE COMMANDE (5 ÉTAPES) ============ -->
+<div class="cfg-overlay" id="cfgOverlay">
+    <div class="cfg-modal" role="dialog" aria-modal="true" aria-labelledby="cfgTitle">
+        <div class="cfg-head">
+            <h3 id="cfgTitle">Configurer ma commande</h3>
+            <button class="cfg-close" onclick="closeConfigurator()" aria-label="Fermer">✕</button>
+        </div>
+ 
+        <div class="cfg-steps" id="cfgSteps">
+            <div class="cfg-step-dot" data-step="1"><div class="n">1</div><div class="l">Produit</div></div>
+            <div class="cfg-step-dot" data-step="2"><div class="n">2</div><div class="l">Taille</div></div>
+            <div class="cfg-step-dot" data-step="3"><div class="n">3</div><div class="l">Couleur</div></div>
+            <div class="cfg-step-dot" data-step="4"><div class="n">4</div><div class="l">Logo</div></div>
+            <div class="cfg-step-dot" data-step="5"><div class="n">5</div><div class="l">Confirmer</div></div>
+        </div>
+ 
+        <div class="cfg-body" id="cfgBody">
+ 
+            <!-- STEP 1 : PRODUIT -->
+            <div class="cfg-panel" data-panel="1">
+                <h4>Quel article souhaitez-vous ?</h4>
+                <p class="sub">Sélectionnez un produit pour continuer.</p>
+                <div class="cfg-product-grid" id="cfgProductGrid"></div>
+            </div>
+ 
+            <!-- STEP 2 : TAILLE -->
+            <div class="cfg-panel" data-panel="2">
+                <h4>Choisissez la taille</h4>
+                <p class="sub" id="cfgSizeSub">Pour votre <strong></strong></p>
+                <div class="cfg-size-grid" id="cfgSizeGrid"></div>
+                <div class="cfg-error" id="cfgSizeError">Merci de sélectionner une taille.</div>
+            </div>
+ 
+            <!-- STEP 3 : COULEUR + QUANTITÉ -->
+            <div class="cfg-panel" data-panel="3">
+                <h4>Choisissez la couleur</h4>
+                <p class="sub">Et précisez la quantité souhaitée.</p>
+                <div class="cfg-color-grid" id="cfgColorGrid"></div>
+                <div class="cfg-error" id="cfgColorError">Merci de sélectionner une couleur.</div>
+ 
+                <div class="cfg-qty-block">
+                    <span class="option-label">Quantité</span>
+                    <div class="qty-row">
+                        <button type="button" class="qty-btn" onclick="cfgStepQty(-1)">−</button>
+                        <input type="number" class="qty-input" id="cfgQtyInput" value="1" min="1" onchange="cfgUpdateLivePrice()">
+                        <button type="button" class="qty-btn" onclick="cfgStepQty(1)">+</button>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- STEP 4 : LOGO -->
+            <div class="cfg-panel" data-panel="4">
+                <h4>Ajoutez votre logo</h4>
+                <p class="sub">Pour la broderie ou l'impression DTF. Formats acceptés : JPG, PNG, PDF.</p>
+ 
+                <div class="cfg-dropzone" id="cfgDropzone" onclick="document.getElementById('cfgLogoInput').click()">
+                    <div class="icon">📤</div>
+                    <div class="main-txt">Cliquez ou glissez votre fichier ici</div>
+                    <div class="sub-txt">Taille max recommandée : 10 Mo</div>
+                </div>
+                <input type="file" id="cfgLogoInput" accept="image/*,.pdf" style="display:none" onchange="cfgHandleLogoFile(this.files[0])">
+ 
+                <div class="cfg-logo-preview" id="cfgLogoPreview">
+                    <img id="cfgLogoImg" src="" alt="Aperçu logo">
+                    <div class="name" id="cfgLogoName"></div>
+                    <button type="button" onclick="cfgRemoveLogo()">Retirer</button>
+                </div>
+ 
+                <label class="cfg-skip-logo">
+                    <input type="checkbox" id="cfgNoLogo" onchange="cfgToggleNoLogo(this.checked)">
+                    Je n'ai pas de logo / pas de personnalisation pour cette commande
+                </label>
+ 
+                <div class="cfg-field" style="margin-top:18px;">
+                    <label for="cfgLogoNote">Précisions sur le placement (optionnel)</label>
+                    <textarea id="cfgLogoNote" placeholder="Ex : logo sur la poitrine gauche, broderie dos..."></textarea>
+                </div>
+            </div>
+ 
+            <!-- STEP 5 : CONFIRMATION -->
+            <div class="cfg-panel" data-panel="5">
+                <h4>Vérifiez et confirmez</h4>
+                <p class="sub">Un dernier coup d'œil avant l'envoi sur WhatsApp.</p>
+ 
+                <div class="cfg-recap" id="cfgRecap"></div>
+ 
+                <div class="cfg-field">
+                    <label for="cfgName">Nom &amp; prénom *</label>
+                    <input type="text" id="cfgName" placeholder="Votre nom">
+                </div>
+                <div class="cfg-field">
+                    <label for="cfgPhone">Téléphone *</label>
+                    <input type="tel" id="cfgPhone" placeholder="05 XX XX XX XX">
+                </div>
+                <div class="cfg-field">
+                    <label for="cfgNote">Remarque (optionnel)</label>
+                    <textarea id="cfgNote" placeholder="Ex : livraison à Alger centre, urgent..."></textarea>
+                </div>
+                <div class="cfg-error" id="cfgConfirmError">Merci de renseigner votre nom et votre numéro de téléphone.</div>
+            </div>
+ 
+            <!-- SUCCESS SCREEN -->
+            <div class="cfg-panel" data-panel="success">
+                <div class="cfg-success">
+                    <div class="check">✓</div>
+                    <h4>Commande enregistrée</h4>
+                    <p id="cfgSuccessMsg">WhatsApp va s'ouvrir dans un nouvel onglet avec votre commande pré-remplie. Il ne vous reste qu'à envoyer le message.</p>
+                    <button class="cfg-btn primary" onclick="cfgReset()">Nouvelle commande</button>
+                    <button class="cfg-btn" onclick="closeConfigurator()" style="margin-top:10px;">Fermer</button>
+                </div>
+            </div>
+ 
+        </div>
+ 
+        <div class="cfg-foot" id="cfgFoot">
+            <button class="cfg-btn" id="cfgBackBtn" onclick="cfgPrev()">← Retour</button>
+            <div class="cfg-live-price" id="cfgLivePrice"></div>
+            <button class="cfg-btn primary" id="cfgNextBtn" onclick="cfgNext()">Suivant →</button>
+        </div>
+    </div>
+</div>
+ 
 <footer>
     <div>
         <div class="brand-name">Sisko Shop</div>
@@ -1063,94 +1384,541 @@
         </ul>
     </div>
 </footer>
-
-<div class="footer-bottom">© 2026 Sisko Shop.</div>
-
+ 
+<div class="footer-bottom">© 2026 Sisko Shop. — <a href="admin.html">Espace équipe</a></div>
+ 
 <script>
-    // To plug in real product photos: add entries here.
-    // Format: 'preview-id': { 'ColorName': 'photo-url.jpg', ... }
-    const productImages = {
-        'preview-tshirt': {},
-        'preview-short': {},
-        'preview-pantalon': {},
-        'preview-baggytshirt': {},
-        'preview-baggyshort': {},
-        'preview-casquette': {},
-        'preview-gilet': {}
+    /* =====================================================================
+       CATALOGUE PRODUITS
+       — Source unique de vérité pour les cartes ET le configurateur.
+       ===================================================================== */
+    const WHATSAPP_NUMBER = '213770406106';
+    const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+ 
+    /* =====================================================================
+       SUPABASE — base de données des commandes
+       ⚠️ À FAIRE : remplacez la ligne ci-dessous par votre clé "anon public"
+       (Supabase → Project Settings → API → anon public). C'est une clé
+       publique, sans danger à exposer côté client.
+       ===================================================================== */
+    const SUPABASE_URL = 'https://nzxmtmbnoirgpwkenqnv.supabase.co';
+    const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
+    const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
+        ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        : null;
+ 
+    // Toutes les photos produit sont hébergées dans le bucket public Supabase.
+    const SUPABASE_BASE = 'https://nzxmtmbnoirgpwkenqnv.supabase.co/storage/v1/object/public/image/';
+ 
+    const COLOR_HEX = {
+        'Blanc': '#ffffff',
+        'Noir': '#000000',
+        'Vert': '#2ecc71',
+        'Bleu': '#2255cc',
+        'Jaune': '#f4c430',
+        'Rouge': '#e10600',
+        'Marine': '#1b2a4a',
+        'Rose': '#f4b8c1',
+        'Orange': '#f0902a',
+        'Gris clair': '#c9c9cf',
+        'Gris foncé': '#5a5e66',
+        'Anthracite': '#3c4048',
+        'Vert foncé': '#14532d',
+        'Bordeaux': '#6d1a2f',
+        'Bleu ciel': '#bcdff5',
+        'Beige': '#e9dfc9',
     };
-
-    function selectOption(el) {
-        const group = el.parentElement;
-        const isColor = el.classList.contains('color-dot');
-
-        group.querySelectorAll(isColor ? '.color-dot' : '.size-btn')
-            .forEach(item => item.classList.remove('active'));
-        el.classList.add('active');
-
-        if (isColor) {
-            const previewId = group.getAttribute('data-preview');
-            const preview = document.getElementById(previewId);
-            if (preview) {
-                const colorName = el.getAttribute('data-color-name');
-                const colorHex = el.style.background;
-                const caption = preview.querySelector('.color-caption');
-                const plus = preview.querySelector('.plus');
-                const existingImg = preview.querySelector('img');
-
-                const photoUrl = productImages[previewId] ? productImages[previewId][colorName] : null;
-
-                if (photoUrl) {
-                    preview.style.background = '#000';
-                    if (existingImg) {
-                        existingImg.src = photoUrl;
-                    } else {
-                        const img = document.createElement('img');
-                        img.src = photoUrl;
-                        preview.insertBefore(img, preview.firstChild);
-                    }
-                    if (plus) plus.style.display = 'none';
-                } else {
-                    preview.style.background = colorHex;
-                    if (existingImg) existingImg.remove();
-                    if (plus) plus.style.display = 'block';
-                }
-
-                if (caption) caption.textContent = colorName;
+ 
+    const PRODUCTS = [
+        {
+            id: 'tshirt', name: 'T-Shirt', price: 750,
+            desc: 'Coton unisexe — impression DTF ou broderie.',
+            colors: ['Blanc','Vert','Bleu','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
+            images: {
+                'Blanc': SUPABASE_BASE + 'IMG_2277.jpg',
+                'Vert': SUPABASE_BASE + 'IMG_2280.jpg',
+                'Bleu': SUPABASE_BASE + 'IMG_2283.jpg',
+                'Jaune': SUPABASE_BASE + 'IMG_2287.jpg',
+                'Rouge': SUPABASE_BASE + 'IMG_2289.jpg',
+                'Marine': SUPABASE_BASE + 'IMG_2282.jpg',
+                'Rose': SUPABASE_BASE + 'IMG_2285.jpg',
+                'Orange': SUPABASE_BASE + 'tshirt-orange.jpg',
+                'Gris clair': SUPABASE_BASE + 'tshirt-gris-clair.jpg',
+                'Anthracite': SUPABASE_BASE + 'tshirt-anthracite.jpg',
+                'Vert foncé': SUPABASE_BASE + 'tshirt-vert-fonce.jpg',
+                'Bordeaux': SUPABASE_BASE + 'tshirt-bordeaux.jpg',
+                'Bleu ciel': SUPABASE_BASE + 'tshirt-bleu-ciel.jpg',
+                'Beige': SUPABASE_BASE + 'tshirt-beige.jpg',
             }
+        },
+        {
+            id: 'polo', name: 'Polo', price: 1100,
+            desc: 'Piqué de coton, col boutonné — look pro pour l\'entreprise.',
+            colors: ['Blanc','Jaune','Gris clair','Gris foncé'],
+            images: {
+                'Blanc': SUPABASE_BASE + 'polo-blanc.jpg',
+                'Jaune': SUPABASE_BASE + 'polo-jaune.jpg',
+                'Gris clair': SUPABASE_BASE + 'polo-gris-clair.jpg',
+                'Gris foncé': SUPABASE_BASE + 'polo-gris-fonce.jpg',
+            }
+        },
+        { id: 'short',       name: 'Short',             price: 1150, desc: 'Coupe sport, idéal événements et équipes.',        colors: ['Blanc','Noir'], images: {}, popular: true },
+        { id: 'pantalon',    name: 'Pantalon',          price: 1200, desc: 'Confortable, pour un usage quotidien pro.',        colors: ['Blanc','Noir'], images: {} },
+        {
+            id: 'baggytshirt', name: 'Baggy T-Shirt', price: 1400,
+            desc: 'Coupe oversize, tendance streetwear.',
+            colors: ['Blanc','Noir'],
+            images: {
+                'Blanc': SUPABASE_BASE + 'baggy-tshirt-blanc.jpg',
+                'Noir': SUPABASE_BASE + 'baggy-tshirt-noir.jpg',
+            }
+        },
+        { id: 'baggyshort',  name: 'Baggy Short',       price: 1400, desc: 'Coupe ample, matière résistante.',                 colors: ['Blanc','Noir'], images: {} },
+        { id: 'casquette',   name: 'Casquette',         price: 1200, desc: 'Broderie logo à l\'avant, réglable.',              colors: ['Blanc','Noir'], images: {} },
+        { id: 'gilet',       name: 'Gilet de Sécurité', price: 2000, desc: 'Haute visibilité, floquage entreprise.',           colors: ['Blanc','Noir'], images: {} },
+    ];
+ 
+    function fmtDA(n) { return n.toLocaleString('fr-FR') + ' DA'; }
+ 
+    /* =====================================================================
+       RENDU DES CARTES PRODUITS (page d'accueil)
+       ===================================================================== */
+    function renderPackGrid() {
+        const grid = document.getElementById('packGrid');
+        grid.innerHTML = PRODUCTS.map(p => {
+            const img = p.images['Blanc'];
+            const thumb = img
+                ? '<img src="' + img + '" alt="' + p.name + '">'
+                : '<span class="thumb-fallback">👕</span>';
+            const swatches = p.colors.map(c => '<div class="sw" style="background:' + COLOR_HEX[c] + ';" title="' + c + '"></div>').join('');
+            return (
+                '<div class="pack' + (p.popular ? ' popular' : '') + '">' +
+                    '<div class="thumb">' + thumb + '</div>' +
+                    '<h3>' + p.name + '</h3>' +
+                    '<div class="price">' + p.price.toLocaleString('fr-FR') + ' <sup>DA</sup></div>' +
+                    '<p class="desc">' + p.desc + '</p>' +
+                    '<div class="swatch-preview">' + swatches + '</div>' +
+                    '<a href="#" class="pack-btn" onclick="openConfigurator(\'' + p.id + '\'); return false;">Configurer ma commande →</a>' +
+                '</div>'
+            );
+        }).join('');
+    }
+    renderPackGrid();
+ 
+    /* =====================================================================
+       CONFIGURATEUR — ÉTAT
+       ===================================================================== */
+    const cfg = {
+        step: 1,
+        productId: null,
+        size: null,
+        color: null,
+        qty: 1,
+        logoDataUrl: null,
+        logoName: null,
+        noLogo: false,
+        logoNote: '',
+    };
+ 
+    function cfgProduct() { return PRODUCTS.find(p => p.id === cfg.productId) || null; }
+ 
+    function openConfigurator(productId) {
+        cfgReset(false);
+        if (productId) {
+            cfg.productId = productId;
+            cfg.step = 2; // produit déjà choisi -> saute à la taille
+        }
+        document.getElementById('cfgOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        cfgRenderProductGrid();
+        cfgGoToStep(cfg.step);
+    }
+ 
+    function closeConfigurator() {
+        document.getElementById('cfgOverlay').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+ 
+    document.getElementById('cfgOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'cfgOverlay') closeConfigurator();
+    });
+ 
+    function cfgReset(rerender) {
+        cfg.step = 1;
+        cfg.productId = null;
+        cfg.size = null;
+        cfg.color = null;
+        cfg.qty = 1;
+        cfg.logoDataUrl = null;
+        cfg.logoName = null;
+        cfg.noLogo = false;
+        cfg.logoNote = '';
+ 
+        document.getElementById('cfgQtyInput').value = 1;
+        document.getElementById('cfgLogoInput').value = '';
+        document.getElementById('cfgLogoPreview').classList.remove('show');
+        document.getElementById('cfgNoLogo').checked = false;
+        document.getElementById('cfgLogoNote').value = '';
+        document.getElementById('cfgName').value = '';
+        document.getElementById('cfgPhone').value = '';
+        document.getElementById('cfgNote').value = '';
+        document.getElementById('cfgSizeError').classList.remove('show');
+        document.getElementById('cfgColorError').classList.remove('show');
+        document.getElementById('cfgConfirmError').classList.remove('show');
+ 
+        if (rerender !== false) {
+            cfgRenderProductGrid();
+            cfgGoToStep(1);
         }
     }
-
-    function stepQty(inputId, delta) {
-        const input = document.getElementById(inputId);
-        if (!input) return;
-        let value = parseInt(input.value, 10) || 1;
-        value = Math.max(1, value + delta);
+ 
+    /* ---------- STEP 1 : produit ---------- */
+    function cfgRenderProductGrid() {
+        const grid = document.getElementById('cfgProductGrid');
+        grid.innerHTML = PRODUCTS.map(p => {
+            const img = p.images['Blanc'];
+            const thumb = img ? '<img src="' + img + '" alt="">' : '<span>👕</span>';
+            const active = cfg.productId === p.id ? ' active' : '';
+            return (
+                '<div class="cfg-product-card' + active + '" onclick="cfgSelectProduct(\'' + p.id + '\')">' +
+                    '<div class="thumb-mini">' + thumb + '</div>' +
+                    '<div class="pname">' + p.name + '</div>' +
+                    '<div class="pprice">' + fmtDA(p.price) + '</div>' +
+                '</div>'
+            );
+        }).join('');
+    }
+ 
+    function cfgSelectProduct(id) {
+        cfg.productId = id;
+        cfg.size = null;
+        cfg.color = null;
+        cfgRenderProductGrid();
+        cfgUpdateLivePrice();
+        setTimeout(() => cfgNext(), 150);
+    }
+ 
+    /* ---------- STEP 2 : taille ---------- */
+    function cfgRenderSizeGrid() {
+        const p = cfgProduct();
+        document.querySelector('#cfgSizeSub strong').textContent = p ? p.name : '';
+        const grid = document.getElementById('cfgSizeGrid');
+        grid.innerHTML = SIZES.map(s => {
+            const active = cfg.size === s ? ' active' : '';
+            return '<button type="button" class="cfg-size-btn' + active + '" onclick="cfgSelectSize(\'' + s + '\')">' + s + '</button>';
+        }).join('');
+    }
+ 
+    function cfgSelectSize(s) {
+        cfg.size = s;
+        document.getElementById('cfgSizeError').classList.remove('show');
+        cfgRenderSizeGrid();
+    }
+ 
+    /* ---------- STEP 3 : couleur + quantité ---------- */
+    function cfgRenderColorGrid() {
+        const p = cfgProduct();
+        const grid = document.getElementById('cfgColorGrid');
+        if (!p) { grid.innerHTML = ''; return; }
+        grid.innerHTML = p.colors.map(c => {
+            const active = cfg.color === c ? ' active' : '';
+            return (
+                '<div class="cfg-color-opt' + active + '" onclick="cfgSelectColor(\'' + c + '\')">' +
+                    '<div class="dot" style="background:' + COLOR_HEX[c] + ';"></div>' +
+                    '<span class="cname">' + c + '</span>' +
+                '</div>'
+            );
+        }).join('');
+    }
+ 
+    function cfgSelectColor(c) {
+        cfg.color = c;
+        document.getElementById('cfgColorError').classList.remove('show');
+        cfgRenderColorGrid();
+    }
+ 
+    function cfgStepQty(delta) {
+        const input = document.getElementById('cfgQtyInput');
+        let value = Math.max(1, (parseInt(input.value, 10) || 1) + delta);
         input.value = value;
+        cfg.qty = value;
+        cfgUpdateLivePrice();
     }
-
-    function commander(productName, price, sizeGroup, colorGroup, qtyId) {
-        const sizeBtn = document.querySelector('[data-group="' + sizeGroup + '"] .size-btn.active');
-        const colorDot = document.querySelector('[data-group="' + colorGroup + '"] .color-dot.active');
-        const qtyInput = document.getElementById(qtyId);
-
-        const size = sizeBtn ? sizeBtn.textContent : 'non précisée';
-        const color = colorDot ? colorDot.getAttribute('data-color-name') : 'non précisée';
-        const qty = qtyInput ? (parseInt(qtyInput.value, 10) || 1) : 1;
-        const total = qty * price;
-
-        const message =
-            'Bonjour Sisko Shop, je souhaite commander :\n' +
-            '• Article : ' + productName + '\n' +
-            '• Prix unitaire : ' + price + ' DA\n' +
-            '• Taille : ' + size + '\n' +
-            '• Couleur : ' + color + '\n' +
-            '• Quantité : ' + qty + '\n' +
-            '• Total estimé : ' + total + ' DA';
-
-        const url = 'https://wa.me/213770406106?text=' + encodeURIComponent(message);
+ 
+    /* ---------- STEP 4 : logo ---------- */
+    const cfgDropzone = document.getElementById('cfgDropzone');
+    cfgDropzone.addEventListener('dragover', (e) => { e.preventDefault(); cfgDropzone.classList.add('drag'); });
+    cfgDropzone.addEventListener('dragleave', () => cfgDropzone.classList.remove('drag'));
+    cfgDropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        cfgDropzone.classList.remove('drag');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) cfgHandleLogoFile(e.dataTransfer.files[0]);
+    });
+ 
+    function cfgHandleLogoFile(file) {
+        if (!file) return;
+        document.getElementById('cfgNoLogo').checked = false;
+        cfg.noLogo = false;
+        cfg.logoName = file.name;
+ 
+        if (file.type === 'application/pdf') {
+            // Pas de miniature pour un PDF : on garde juste le nom du fichier.
+            cfg.logoDataUrl = null;
+            cfgShowLogoPreview(null, file.name);
+            return;
+        }
+ 
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                // Redimensionne pour rester léger en stockage local.
+                const maxW = 700;
+                const scale = Math.min(1, maxW / img.width);
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                cfg.logoDataUrl = dataUrl;
+                cfgShowLogoPreview(dataUrl, file.name);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+ 
+    function cfgShowLogoPreview(dataUrl, name) {
+        const preview = document.getElementById('cfgLogoPreview');
+        const imgEl = document.getElementById('cfgLogoImg');
+        imgEl.style.display = dataUrl ? 'block' : 'none';
+        if (dataUrl) imgEl.src = dataUrl;
+        document.getElementById('cfgLogoName').textContent = name;
+        preview.classList.add('show');
+    }
+ 
+    function cfgRemoveLogo() {
+        cfg.logoDataUrl = null;
+        cfg.logoName = null;
+        document.getElementById('cfgLogoInput').value = '';
+        document.getElementById('cfgLogoPreview').classList.remove('show');
+    }
+ 
+    function cfgToggleNoLogo(checked) {
+        cfg.noLogo = checked;
+        if (checked) cfgRemoveLogo();
+    }
+ 
+    /* ---------- STEP 5 : récap + confirmation ---------- */
+    function cfgRenderRecap() {
+        const p = cfgProduct();
+        if (!p) return;
+        const total = p.price * cfg.qty;
+        const logoLine = cfg.noLogo ? 'Sans logo' : (cfg.logoName || 'Non fourni');
+        document.getElementById('cfgRecap').innerHTML =
+            '<div class="cfg-recap-row"><span>Article</span><span>' + p.name + '</span></div>' +
+            '<div class="cfg-recap-row"><span>Taille</span><span>' + (cfg.size || '—') + '</span></div>' +
+            '<div class="cfg-recap-row"><span>Couleur</span><span>' + (cfg.color || '—') + '</span></div>' +
+            '<div class="cfg-recap-row"><span>Quantité</span><span>' + cfg.qty + '</span></div>' +
+            '<div class="cfg-recap-row"><span>Logo</span><span>' + logoLine + '</span></div>' +
+            '<div class="cfg-recap-total"><span>Total estimé</span><span>' + fmtDA(total) + '</span></div>';
+    }
+ 
+    function cfgUpdateLivePrice() {
+        const p = cfgProduct();
+        const qtyInput = document.getElementById('cfgQtyInput');
+        cfg.qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+        const el = document.getElementById('cfgLivePrice');
+        if (p) {
+            el.innerHTML = 'Total estimé : <strong>' + fmtDA(p.price * cfg.qty) + '</strong>';
+        } else {
+            el.innerHTML = '';
+        }
+    }
+ 
+    /* =====================================================================
+       NAVIGATION ENTRE ÉTAPES
+       ===================================================================== */
+    function cfgGoToStep(step) {
+        cfg.step = step;
+ 
+        document.querySelectorAll('.cfg-panel').forEach(el => el.classList.remove('active'));
+        document.querySelector('.cfg-panel[data-panel="' + step + '"]').classList.add('active');
+ 
+        document.querySelectorAll('.cfg-step-dot').forEach(dot => {
+            const n = parseInt(dot.getAttribute('data-step'), 10);
+            dot.classList.toggle('done', n < step);
+            dot.classList.toggle('active', n === step);
+        });
+ 
+        const foot = document.getElementById('cfgFoot');
+        const backBtn = document.getElementById('cfgBackBtn');
+        const nextBtn = document.getElementById('cfgNextBtn');
+ 
+        if (step === 'success') {
+            foot.style.display = 'none';
+        } else {
+            foot.style.display = 'flex';
+            backBtn.style.visibility = step === 1 ? 'hidden' : 'visible';
+            nextBtn.textContent = step === 5 ? 'Confirmer sur WhatsApp →' : 'Suivant →';
+        }
+ 
+        if (step === 2) cfgRenderSizeGrid();
+        if (step === 3) { cfgRenderColorGrid(); cfgUpdateLivePrice(); }
+        if (step === 5) cfgRenderRecap();
+        cfgUpdateLivePrice();
+    }
+ 
+    function cfgNext() {
+        if (cfg.step === 1) {
+            if (!cfg.productId) return;
+            cfgGoToStep(2);
+        } else if (cfg.step === 2) {
+            if (!cfg.size) { document.getElementById('cfgSizeError').classList.add('show'); return; }
+            cfgGoToStep(3);
+        } else if (cfg.step === 3) {
+            if (!cfg.color) { document.getElementById('cfgColorError').classList.add('show'); return; }
+            cfgGoToStep(4);
+        } else if (cfg.step === 4) {
+            cfg.logoNote = document.getElementById('cfgLogoNote').value.trim();
+            cfgGoToStep(5);
+        } else if (cfg.step === 5) {
+            cfgConfirmOrder();
+        }
+    }
+ 
+    function cfgPrev() {
+        if (cfg.step === 2) cfgGoToStep(1);
+        else if (cfg.step === 3) cfgGoToStep(2);
+        else if (cfg.step === 4) cfgGoToStep(3);
+        else if (cfg.step === 5) cfgGoToStep(4);
+    }
+ 
+    /* =====================================================================
+       CONFIRMATION — enregistrement "back-end" (local) + WhatsApp
+       ===================================================================== */
+    function cfgConfirmOrder() {
+        const name = document.getElementById('cfgName').value.trim();
+        const phone = document.getElementById('cfgPhone').value.trim();
+        const note = document.getElementById('cfgNote').value.trim();
+ 
+        if (!name || !phone) {
+            document.getElementById('cfgConfirmError').classList.add('show');
+            return;
+        }
+        document.getElementById('cfgConfirmError').classList.remove('show');
+ 
+        const p = cfgProduct();
+        const total = p.price * cfg.qty;
+        const order = {
+            id: 'CMD-' + Date.now().toString(36).toUpperCase(),
+            date: new Date().toISOString(),
+            product: p.name,
+            price: p.price,
+            size: cfg.size,
+            color: cfg.color,
+            qty: cfg.qty,
+            total: total,
+            logoDataUrl: cfg.logoDataUrl,
+            logoName: cfg.noLogo ? null : cfg.logoName,
+            logoNote: cfg.logoNote,
+            noLogo: cfg.noLogo,
+            customerName: name,
+            phone: phone,
+            note: note,
+            status: 'nouveau'
+        };
+ 
+        cfgSaveOrder(order);
+ 
+        const lines = [
+            'Bonjour Sisko Shop, je souhaite commander :',
+            '• Référence : ' + order.id,
+            '• Article : ' + order.product,
+            '• Taille : ' + order.size,
+            '• Couleur : ' + order.color,
+            '• Quantité : ' + order.qty,
+            '• Prix unitaire : ' + fmtDA(order.price),
+            '• Total estimé : ' + fmtDA(order.total),
+            '• Logo : ' + (order.noLogo ? 'Sans logo' : (order.logoName || 'à envoyer sur WhatsApp')),
+        ];
+        if (order.logoNote) lines.push('• Placement logo : ' + order.logoNote);
+        lines.push('• Nom : ' + order.customerName);
+        lines.push('• Téléphone : ' + order.phone);
+        if (order.note) lines.push('• Remarque : ' + order.note);
+        if (order.logoDataUrl) lines.push('', '⚠️ Merci de joindre votre fichier logo (téléchargé automatiquement) dans ce chat WhatsApp.');
+ 
+        const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+ 
+        if (order.logoDataUrl) {
+            cfgDownloadLogo(order.logoDataUrl, order.id);
+            document.getElementById('cfgSuccessMsg').textContent =
+                'Votre logo a été téléchargé sur votre appareil et WhatsApp va s\'ouvrir avec la commande pré-remplie. Joignez le fichier téléchargé au message avant de l\'envoyer.';
+        } else {
+            document.getElementById('cfgSuccessMsg').textContent =
+                'WhatsApp va s\'ouvrir dans un nouvel onglet avec votre commande pré-remplie. Il ne vous reste qu\'à envoyer le message.';
+        }
+ 
         window.open(url, '_blank');
+        cfgGoToStep('success');
     }
+ 
+    function cfgDownloadLogo(dataUrl, orderId) {
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = 'logo-' + orderId + '.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+ 
+    /* Enregistre la commande dans Supabase (visible depuis n'importe quel
+       appareil, y compris admin.html). Si la clé Supabase n'est pas encore
+       configurée, ou en cas de coupure réseau, la commande est aussi gardée
+       en local pour ne jamais rien perdre. */
+    async function cfgSaveOrder(order) {
+        // Toujours garder une copie locale de secours.
+        try {
+            const key = 'sisko_orders';
+            const existing = JSON.parse(localStorage.getItem(key) || '[]');
+            existing.unshift(order);
+            localStorage.setItem(key, JSON.stringify(existing));
+        } catch (err) {
+            console.error('Impossible d\'enregistrer la commande localement :', err);
+        }
+ 
+        if (!supabaseClient) return; // clé pas encore configurée
+ 
+        try {
+            const { error } = await supabaseClient.from('orders').insert({
+                id: order.id,
+                product: order.product,
+                price: order.price,
+                size: order.size,
+                color: order.color,
+                qty: order.qty,
+                total: order.total,
+                logo_data_url: order.logoDataUrl,
+                logo_name: order.logoName,
+                logo_note: order.logoNote,
+                no_logo: order.noLogo,
+                customer_name: order.customerName,
+                phone: order.phone,
+                note: order.note,
+                status: order.status,
+            });
+            if (error) console.error('Erreur Supabase (commande) :', error);
+        } catch (err) {
+            console.error('Impossible d\'enregistrer la commande sur Supabase :', err);
+        }
+    }
+ 
+    // Fermer le configurateur avec la touche Échap
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeConfigurator();
+    });
 </script>
-
+ 
 </body>
 </html>
