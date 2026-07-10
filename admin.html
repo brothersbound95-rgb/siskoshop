@@ -6,7 +6,7 @@
 <title>Sisko Shop — Espace équipe</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; }
-
+ 
     :root {
         --bg: #0c0c0c;
         --surface: #171717;
@@ -20,10 +20,10 @@
         --green: #2ecc71;
         --amber: #f2b134;
     }
-
+ 
     body { background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
     a { color: inherit; }
-
+ 
     /* ---------- LOGIN GATE ---------- */
     .gate {
         min-height: 100vh;
@@ -32,7 +32,7 @@
         justify-content: center;
         padding: 20px;
     }
-
+ 
     .gate-box {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -42,10 +42,10 @@
         max-width: 360px;
         text-align: center;
     }
-
+ 
     .gate-box h1 { font-size: 1.3rem; margin-bottom: 6px; }
     .gate-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 22px; }
-
+ 
     .gate-box input {
         width: 100%;
         background: var(--surface-2);
@@ -56,9 +56,9 @@
         font-size: 0.95rem;
         margin-bottom: 14px;
     }
-
+ 
     .gate-box input:focus { outline: none; border-color: var(--accent); }
-
+ 
     .btn {
         display: inline-block;
         background: var(--accent);
@@ -72,20 +72,20 @@
         width: 100%;
         transition: background 0.15s ease;
     }
-
+ 
     .btn:hover { background: var(--accent-dark); }
     .btn.ghost { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
     .btn.ghost:hover { border-color: var(--muted); }
-
+ 
     .gate-error { color: var(--accent); font-size: 0.82rem; margin-top: -6px; margin-bottom: 14px; display: none; }
     .gate-error.show { display: block; }
-
+ 
     .gate-note { margin-top: 18px; font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
-
+ 
     /* ---------- DASHBOARD ---------- */
     .dash { display: none; max-width: 1200px; margin: 0 auto; padding: 28px 20px 60px; }
     .dash.show { display: block; }
-
+ 
     .dash-header {
         display: flex;
         align-items: center;
@@ -96,11 +96,11 @@
         padding-bottom: 20px;
         border-bottom: 1px solid var(--border);
     }
-
+ 
     .dash-header .brand { font-weight: 800; font-size: 1.15rem; }
     .dash-header .brand span { color: var(--accent); }
     .dash-header .actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
+ 
     .btn-sm {
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -113,25 +113,25 @@
     }
     .btn-sm:hover { border-color: var(--muted); }
     .btn-sm.danger:hover { border-color: var(--accent); color: var(--accent); }
-
+ 
     .stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 14px;
         margin-bottom: 26px;
     }
-
+ 
     .stat-card {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 12px;
         padding: 18px 20px;
     }
-
+ 
     .stat-card .label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
     .stat-card .value { font-size: 1.5rem; font-weight: 800; }
     .stat-card .value.accent { color: var(--accent); }
-
+ 
     .toolbar {
         display: flex;
         gap: 10px;
@@ -139,7 +139,7 @@
         margin-bottom: 18px;
         align-items: center;
     }
-
+ 
     .toolbar input[type="text"] {
         flex: 1;
         min-width: 180px;
@@ -150,7 +150,7 @@
         color: var(--text);
         font-size: 0.88rem;
     }
-
+ 
     .toolbar select {
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -159,7 +159,7 @@
         color: var(--text);
         font-size: 0.85rem;
     }
-
+ 
     .empty-state {
         text-align: center;
         padding: 70px 20px;
@@ -168,13 +168,13 @@
         border: 1px dashed var(--border);
         border-radius: 14px;
     }
-
+ 
     .empty-state .icon { font-size: 2.4rem; margin-bottom: 14px; }
     .empty-state h3 { color: var(--text); margin-bottom: 8px; }
     .empty-state p { font-size: 0.88rem; max-width: 440px; margin: 0 auto; }
-
+ 
     .order-list { display: flex; flex-direction: column; gap: 12px; }
-
+ 
     .order-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -185,11 +185,11 @@
         gap: 16px;
         align-items: center;
     }
-
+ 
     @media (max-width: 900px) {
         .order-card { grid-template-columns: 1fr; }
     }
-
+ 
     .order-thumb {
         width: 52px;
         height: 52px;
@@ -203,14 +203,14 @@
     }
     .order-thumb img { width: 100%; height: 100%; object-fit: contain; }
     .order-thumb span { font-size: 1.3rem; opacity: 0.3; }
-
+ 
     .order-main .ref { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.4px; }
     .order-main .title { font-weight: 700; font-size: 0.98rem; margin: 2px 0 4px; }
     .order-main .meta { font-size: 0.82rem; color: var(--muted); }
     .order-main .customer { font-size: 0.82rem; color: var(--text); margin-top: 4px; }
-
+ 
     .order-total { font-weight: 800; color: var(--accent); font-size: 1.05rem; white-space: nowrap; }
-
+ 
     .status-select {
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -220,9 +220,9 @@
         font-size: 0.8rem;
         font-weight: 700;
     }
-
+ 
     .order-actions { display: flex; gap: 8px; }
-
+ 
     .icon-btn {
         background: var(--surface-2);
         border: 1px solid var(--border);
@@ -234,7 +234,7 @@
         font-size: 0.9rem;
     }
     .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
-
+ 
     /* ---------- DETAIL MODAL ---------- */
     .modal-overlay {
         display: none;
@@ -247,7 +247,7 @@
         padding: 20px;
     }
     .modal-overlay.open { display: flex; }
-
+ 
     .modal-box {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -258,7 +258,7 @@
         overflow-y: auto;
         padding: 26px;
     }
-
+ 
     .modal-box h3 { margin-bottom: 16px; }
     .modal-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
     .modal-row span:first-child { color: var(--muted); }
@@ -266,9 +266,10 @@
     .modal-logo { width: 100%; max-height: 220px; object-fit: contain; background: #fff; border-radius: 10px; margin: 16px 0; padding: 10px; }
     .modal-close-row { margin-top: 18px; display: flex; gap: 10px; }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
-
+ 
 <!-- ============ LOGIN GATE ============ -->
 <div class="gate" id="gate">
     <div class="gate-box">
@@ -283,7 +284,7 @@
         </div>
     </div>
 </div>
-
+ 
 <!-- ============ DASHBOARD ============ -->
 <div class="dash" id="dash">
     <div class="dash-header">
@@ -294,14 +295,14 @@
             <button class="btn-sm" onclick="logout()">Déconnexion</button>
         </div>
     </div>
-
+ 
     <div class="stats">
         <div class="stat-card"><div class="label">Commandes totales</div><div class="value" id="statTotal">0</div></div>
         <div class="stat-card"><div class="label">Nouvelles</div><div class="value accent" id="statNew">0</div></div>
         <div class="stat-card"><div class="label">Traitées</div><div class="value" id="statDone">0</div></div>
         <div class="stat-card"><div class="label">Chiffre estimé</div><div class="value" id="statRevenue">0 DA</div></div>
     </div>
-
+ 
     <div class="toolbar">
         <input type="text" id="searchInput" placeholder="Rechercher (nom, téléphone, article, référence)..." oninput="renderOrders()">
         <select id="statusFilter" onchange="renderOrders()">
@@ -312,22 +313,35 @@
             <option value="annule">Annulé</option>
         </select>
     </div>
-
+ 
     <div id="orderListWrap"></div>
 </div>
-
+ 
 <!-- ============ DETAIL MODAL ============ -->
 <div class="modal-overlay" id="detailOverlay">
     <div class="modal-box" id="detailBox"></div>
 </div>
-
+ 
 <script>
     /* ⚠️ Mot de passe simple côté client — suffisant pour dissuader un accès
        occasionnel, pas pour protéger des données sensibles. Pour une vraie
        sécurité, ce journal doit être remplacé par un backend serveur. */
     const ADMIN_PASSWORD = 'sisko2026';
-    const STORAGE_KEY = 'sisko_orders';
-
+ 
+    /* =====================================================================
+       SUPABASE — même base que index.html
+       ⚠️ À FAIRE : collez ici la même clé "anon public" que dans index.html
+       (Supabase → Project Settings → API → anon public).
+       ===================================================================== */
+    const SUPABASE_URL = 'https://nzxmtmbnoirgpwkenqnv.supabase.co';
+    const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
+    const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
+        ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+        : null;
+ 
+    // Cache local des commandes chargées depuis Supabase (pour filtrer/chercher sans re-requêter à chaque frappe).
+    let ordersCache = [];
+ 
     function tryLogin() {
         const val = document.getElementById('gatePassword').value;
         if (val === ADMIN_PASSWORD) {
@@ -337,58 +351,101 @@
             document.getElementById('gateError').classList.add('show');
         }
     }
-
+ 
     function logout() {
         sessionStorage.removeItem('sisko_admin_ok');
         document.getElementById('dash').classList.remove('show');
         document.getElementById('gate').style.display = 'flex';
         document.getElementById('gatePassword').value = '';
     }
-
+ 
     function showDashboard() {
         document.getElementById('gate').style.display = 'none';
         document.getElementById('dash').classList.add('show');
+        loadOrders();
+        subscribeRealtime();
+    }
+ 
+    if (sessionStorage.getItem('sisko_admin_ok') === '1') showDashboard();
+ 
+    // Convertit une ligne Supabase (snake_case) vers le format utilisé par l'UI (camelCase).
+    function fromRow(r) {
+        return {
+            id: r.id,
+            date: r.created_at,
+            product: r.product,
+            price: r.price,
+            size: r.size,
+            color: r.color,
+            qty: r.qty,
+            total: r.total,
+            logoDataUrl: r.logo_data_url,
+            logoName: r.logo_name,
+            logoNote: r.logo_note,
+            noLogo: r.no_logo,
+            customerName: r.customer_name,
+            phone: r.phone,
+            note: r.note,
+            status: r.status || 'nouveau',
+        };
+    }
+ 
+    async function loadOrders() {
+        if (!supabaseClient) {
+            // Clé pas encore configurée : on retombe sur l'ancien journal local (si présent).
+            try { ordersCache = JSON.parse(localStorage.getItem('sisko_orders') || '[]'); }
+            catch (e) { ordersCache = []; }
+            renderOrders();
+            return;
+        }
+        const { data, error } = await supabaseClient
+            .from('orders')
+            .select('*')
+            .order('created_at', { ascending: false });
+        if (error) {
+            console.error('Erreur chargement commandes :', error);
+            ordersCache = [];
+        } else {
+            ordersCache = (data || []).map(fromRow);
+        }
         renderOrders();
     }
-
-    if (sessionStorage.getItem('sisko_admin_ok') === '1') showDashboard();
-
-    function getOrders() {
-        try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        } catch (e) {
-            return [];
-        }
+ 
+    // Rafraîchit automatiquement quand une commande est ajoutée/modifiée par
+    // n'importe quel appareil (site client, ou un autre onglet admin).
+    function subscribeRealtime() {
+        if (!supabaseClient || subscribeRealtime._done) return;
+        subscribeRealtime._done = true;
+        supabaseClient
+            .channel('orders-changes')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => loadOrders())
+            .subscribe();
     }
-
-    function saveOrders(orders) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-    }
-
+ 
     function fmtDA(n) { return Number(n || 0).toLocaleString('fr-FR') + ' DA'; }
-
+ 
     const STATUS_LABEL = { nouveau: 'Nouveau', en_cours: 'En cours', traite: 'Traité', annule: 'Annulé' };
-
+ 
     function renderOrders() {
-        const orders = getOrders();
+        const orders = ordersCache;
         const search = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
-
+ 
         document.getElementById('statTotal').textContent = orders.length;
         document.getElementById('statNew').textContent = orders.filter(o => (o.status || 'nouveau') === 'nouveau').length;
         document.getElementById('statDone').textContent = orders.filter(o => o.status === 'traite').length;
         const revenue = orders.filter(o => o.status !== 'annule').reduce((s, o) => s + (o.total || 0), 0);
         document.getElementById('statRevenue').textContent = fmtDA(revenue);
-
+ 
         let filtered = orders.filter(o => {
             if (statusFilter && (o.status || 'nouveau') !== statusFilter) return false;
             if (!search) return true;
             const hay = [o.id, o.customerName, o.phone, o.product, o.note].join(' ').toLowerCase();
             return hay.includes(search);
         });
-
+ 
         const wrap = document.getElementById('orderListWrap');
-
+ 
         if (orders.length === 0) {
             wrap.innerHTML =
                 '<div class="empty-state">' +
@@ -398,12 +455,12 @@
                 '</div>';
             return;
         }
-
+ 
         if (filtered.length === 0) {
             wrap.innerHTML = '<div class="empty-state"><div class="icon">🔎</div><h3>Aucun résultat</h3><p>Essayez une autre recherche ou un autre filtre.</p></div>';
             return;
         }
-
+ 
         wrap.innerHTML = '<div class="order-list">' + filtered.map(o => {
             const thumb = o.logoDataUrl
                 ? '<img src="' + o.logoDataUrl + '" alt="logo">'
@@ -432,28 +489,48 @@
             );
         }).join('') + '</div>';
     }
-
-    function updateStatus(id, status) {
-        const orders = getOrders();
-        const o = orders.find(x => x.id === id);
-        if (o) { o.status = status; saveOrders(orders); renderOrders(); }
+ 
+    async function updateStatus(id, status) {
+        const o = ordersCache.find(x => x.id === id);
+        if (o) o.status = status; // mise à jour optimiste de l'affichage
+        renderOrders();
+ 
+        if (supabaseClient) {
+            const { error } = await supabaseClient.from('orders').update({ status }).eq('id', id);
+            if (error) console.error('Erreur mise à jour statut :', error);
+        } else {
+            localStorage.setItem('sisko_orders', JSON.stringify(ordersCache));
+        }
     }
-
-    function deleteOrder(id) {
+ 
+    async function deleteOrder(id) {
         if (!confirm('Supprimer définitivement cette commande ?')) return;
-        const orders = getOrders().filter(o => o.id !== id);
-        saveOrders(orders);
+        ordersCache = ordersCache.filter(o => o.id !== id);
         renderOrders();
+ 
+        if (supabaseClient) {
+            const { error } = await supabaseClient.from('orders').delete().eq('id', id);
+            if (error) console.error('Erreur suppression :', error);
+        } else {
+            localStorage.setItem('sisko_orders', JSON.stringify(ordersCache));
+        }
     }
-
-    function clearAllOrders() {
+ 
+    async function clearAllOrders() {
         if (!confirm('Vider tout le journal de commandes ? Cette action est irréversible.')) return;
-        saveOrders([]);
+        ordersCache = [];
         renderOrders();
+ 
+        if (supabaseClient) {
+            const { error } = await supabaseClient.from('orders').delete().neq('id', '__none__');
+            if (error) console.error('Erreur suppression globale :', error);
+        } else {
+            localStorage.setItem('sisko_orders', '[]');
+        }
     }
-
+ 
     function openDetail(id) {
-        const o = getOrders().find(x => x.id === id);
+        const o = ordersCache.find(x => x.id === id);
         if (!o) return;
         const box = document.getElementById('detailBox');
         box.innerHTML =
@@ -475,17 +552,17 @@
             '</div>';
         document.getElementById('detailOverlay').classList.add('open');
     }
-
+ 
     function closeDetail() {
         document.getElementById('detailOverlay').classList.remove('open');
     }
-
+ 
     document.getElementById('detailOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'detailOverlay') closeDetail();
     });
-
+ 
     function exportCSV() {
-        const orders = getOrders();
+        const orders = ordersCache;
         if (orders.length === 0) { alert('Aucune commande à exporter.'); return; }
         const headers = ['Référence','Date','Article','Taille','Couleur','Quantité','Total (DA)','Nom','Téléphone','Logo','Remarque','Statut'];
         const rows = orders.map(o => [
@@ -504,14 +581,10 @@
         a.click();
         a.remove();
     }
-
-    // Rafraîchit automatiquement si une commande est ajoutée depuis un autre
-    // onglet ouvert sur le même navigateur (ex: la boutique ouverte à côté).
-    window.addEventListener('storage', (e) => {
-        if (e.key === STORAGE_KEY && document.getElementById('dash').classList.contains('show')) {
-            renderOrders();
-        }
-    });
+ 
+    // NB : la mise à jour multi-appareils est désormais gérée par
+    // subscribeRealtime() (Supabase), plus fiable que l'ancien événement
+    // 'storage' qui ne fonctionnait qu'entre onglets du même navigateur.
 </script>
 </body>
 </html>
