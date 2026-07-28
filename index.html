@@ -664,6 +664,7 @@
 
     .pack .swatch-preview {
         display: flex;
+        flex-wrap: wrap;
         gap: 8px;
         margin-bottom: 24px;
     }
@@ -673,6 +674,18 @@
         height: 18px;
         border-radius: 50%;
         border: 2px solid var(--border);
+        cursor: pointer;
+        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .pack .swatch-preview .sw:hover {
+        transform: scale(1.15);
+    }
+
+    .pack .swatch-preview .sw.active {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(225,6,0,0.25);
+        transform: scale(1.15);
     }
 
     /* ============ CONFIGURATOR MODAL ============ */
@@ -1447,7 +1460,7 @@
             colors: ['Blanc','Vert','Bleu','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
             images: {
                 'Blanc': img('t-shirt blanc.jpg'),
-                'noir': img('t-shirt noir.jpg'),
+                'Bleu': img('tshirt bleu .jpg'),
                 'Jaune': img('tshirt jaune.jpg'),
                 'Rouge': img('t shirt rouge .jpg'),
                 'Marine': img('tshirt bleu nuit.jpg'),
@@ -1505,17 +1518,34 @@
     /* =====================================================================
        RENDU DES CARTES PRODUITS (page d'accueil)
        ===================================================================== */
+    function cardThumbHTML(p, color) {
+        const url = p.images[color];
+        return url
+            ? '<img src="' + url + '" alt="' + p.name + ' ' + color + '">'
+            : '<span class="thumb-fallback">👕</span>';
+    }
+
+    function selectCardColor(pid, color) {
+        const p = PRODUCTS.find(x => x.id === pid);
+        if (!p) return;
+        const thumbBox = document.getElementById('thumb-' + pid);
+        if (thumbBox) thumbBox.innerHTML = cardThumbHTML(p, color);
+        document.querySelectorAll('.sw[data-pid="' + pid + '"]').forEach(el => {
+            el.classList.toggle('active', el.dataset.color === color);
+        });
+    }
+
     function renderPackGrid() {
         const grid = document.getElementById('packGrid');
         grid.innerHTML = PRODUCTS.map(p => {
-            const img = p.images['Blanc'];
-            const thumb = img
-                ? '<img src="' + img + '" alt="' + p.name + '">'
-                : '<span class="thumb-fallback">👕</span>';
-            const swatches = p.colors.map(c => '<div class="sw" style="background:' + COLOR_HEX[c] + ';" title="' + c + '"></div>').join('');
+            const defaultColor = p.colors[0];
+            const thumb = cardThumbHTML(p, defaultColor);
+            const swatches = p.colors.map((c, i) =>
+                '<div class="sw' + (i === 0 ? ' active' : '') + '" data-pid="' + p.id + '" data-color="' + c + '" style="background:' + COLOR_HEX[c] + ';" title="' + c + '" onclick="selectCardColor(\'' + p.id + '\', \'' + c + '\')"></div>'
+            ).join('');
             return (
                 '<div class="pack' + (p.popular ? ' popular' : '') + '">' +
-                    '<div class="thumb">' + thumb + '</div>' +
+                    '<div class="thumb" id="thumb-' + p.id + '">' + thumb + '</div>' +
                     '<h3>' + p.name + '</h3>' +
                     '<div class="price">' + p.price.toLocaleString('fr-FR') + ' <sup>DA</sup></div>' +
                     '<p class="desc">' + p.desc + '</p>' +
