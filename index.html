@@ -379,7 +379,7 @@
     .photo-single img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         display: block;
     }
 
@@ -640,12 +640,20 @@
     .pack .thumb img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .pack .thumb .thumb-fallback {
         font-size: 2.2rem;
         opacity: 0.25;
+    }
+
+    /* Zoom léger uniquement sur la photo du Gilet de Sécurité */
+    .pack .thumb img[src*="gilet-securite.jpg"],
+    .cfg-product-card .thumb-mini img[src*="gilet-securite.jpg"],
+    .photo-single img[src*="gilet-securite.jpg"] {
+        transform: scale(1.25);
+        transform-origin: center;
     }
 
     .pack .desc {
@@ -848,7 +856,7 @@
         display: flex; align-items: center; justify-content: center;
     }
 
-    .cfg-product-card .thumb-mini img { width: 100%; height: 100%; object-fit: cover; }
+    .cfg-product-card .thumb-mini img { width: 100%; height: 100%; object-fit: contain; }
     .cfg-product-card .thumb-mini span { font-size: 1.6rem; opacity: 0.25; }
 
     .cfg-product-card .pname { font-weight: 700; font-size: 0.92rem; margin-bottom: 2px; }
@@ -1264,6 +1272,7 @@
             <div class="cfg-panel" data-panel="3">
                 <h4>Choisissez la couleur</h4>
                 <p class="sub">Et précisez la quantité souhaitée.</p>
+                <div class="photo-single" id="cfgColorPhoto"></div>
                 <div class="cfg-color-grid" id="cfgColorGrid"></div>
                 <div class="cfg-error" id="cfgColorError">Merci de sélectionner une couleur.</div>
 
@@ -1629,6 +1638,22 @@
     }
 
     /* ---------- STEP 3 : couleur + quantité ---------- */
+    function cfgRenderColorPhoto() {
+        const p = cfgProduct();
+        const box = document.getElementById('cfgColorPhoto');
+        if (!p) { box.innerHTML = ''; return; }
+        const url = cfg.color ? p.images[cfg.color] : null;
+        if (url) {
+            box.innerHTML = '<img src="' + url + '" alt="' + p.name + ' ' + cfg.color + '">' +
+                '<div class="color-caption">' + cfg.color + '</div>';
+        } else if (cfg.color) {
+            box.innerHTML = '<span class="plus">👕</span>' +
+                '<div class="color-caption">' + cfg.color + ' — photo à venir</div>';
+        } else {
+            box.innerHTML = '<span class="plus">👕</span>';
+        }
+    }
+
     function cfgRenderColorGrid() {
         const p = cfgProduct();
         const grid = document.getElementById('cfgColorGrid');
@@ -1642,6 +1667,7 @@
                 '</div>'
             );
         }).join('');
+        cfgRenderColorPhoto();
     }
 
     function cfgSelectColor(c) {
