@@ -373,215 +373,16 @@
     .modal-row span:last-child { font-weight: 600; text-align: right; }
     .modal-logo { width: 100%; max-height: 220px; object-fit: contain; background: #fff; border-radius: 10px; margin: 16px 0; padding: 10px; }
     .modal-close-row { margin-top: 18px; display: flex; gap: 10px; }
-
-    /* ---------- CRM : PIPELINE KANBAN ---------- */
-    .pipeline-board {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(160px, 1fr));
-        gap: 12px;
-        overflow-x: auto;
-        padding-bottom: 8px;
-    }
-
-    @media (max-width: 1100px) {
-        .pipeline-board { grid-template-columns: repeat(3, minmax(200px, 1fr)); }
-    }
-
-    .pipeline-col {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        min-height: 200px;
-    }
-
-    .pipeline-col-head {
-        padding: 12px 14px;
-        border-bottom: 1px solid var(--border);
-        font-size: 0.78rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .pipeline-col-head .count {
-        background: var(--surface-2);
-        border-radius: 999px;
-        padding: 2px 8px;
-        font-size: 0.72rem;
-        color: var(--muted);
-    }
-
-    .pipeline-cards { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-
-    .lead-card {
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 12px;
-        cursor: pointer;
-        transition: border-color 0.15s ease;
-    }
-
-    .lead-card:hover { border-color: var(--muted); }
-
-    .lead-card .lname { font-weight: 700; font-size: 0.88rem; margin-bottom: 4px; }
-    .lead-card .lmeta { font-size: 0.75rem; color: var(--muted); }
-    .lead-card .lvalue { font-size: 0.82rem; color: var(--accent); font-weight: 700; margin-top: 6px; }
-
-    .lead-card .stage-actions {
-        display: flex;
-        gap: 4px;
-        margin-top: 8px;
-        flex-wrap: wrap;
-    }
-
-    .stage-btn {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.68rem;
-        padding: 3px 7px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .stage-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ---------- CRM : TÂCHES ---------- */
-    .task-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .task-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 14px 16px;
-        display: grid;
-        grid-template-columns: auto 1fr auto auto;
-        gap: 14px;
-        align-items: center;
-    }
-
-    .task-card.done { opacity: 0.55; }
-    .task-card.done .task-title { text-decoration: line-through; }
-
-    .task-check {
-        width: 22px;
-        height: 22px;
-        border-radius: 6px;
-        border: 2px solid var(--border);
-        background: var(--surface-2);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        flex-shrink: 0;
-    }
-
-    .task-check.checked { background: var(--green); border-color: var(--green); color: #fff; }
-
-    .task-title { font-weight: 700; font-size: 0.92rem; }
-    .task-meta { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
-
-    .priority-badge {
-        font-size: 0.68rem;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 999px;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
-    }
-
-    .priority-badge.haute { background: rgba(225,6,0,0.15); color: var(--accent); }
-    .priority-badge.normale { background: rgba(242,177,52,0.15); color: var(--amber); }
-    .priority-badge.basse { background: rgba(156,156,156,0.15); color: var(--muted); }
-
-    .task-overdue { color: var(--accent); font-weight: 700; }
-
-    /* ---------- CRM : FORMULAIRES ---------- */
-    .crm-form {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .crm-form h4 { font-size: 0.95rem; margin-bottom: 14px; }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 12px;
-        margin-bottom: 14px;
-    }
-
-    .form-field label {
-        display: block;
-        font-size: 0.72rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-        color: var(--muted);
-        margin-bottom: 6px;
-    }
-
-    .form-field input, .form-field select, .form-field textarea {
-        width: 100%;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 10px 12px;
-        color: var(--text);
-        font-size: 0.88rem;
-    }
-
-    .form-field textarea { resize: vertical; min-height: 70px; }
-
-    .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
-        outline: none;
-        border-color: var(--accent);
-    }
-
-    /* ---------- CRM : TAGS & ACTIVITÉ ---------- */
-    .tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-
-    .tag {
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        padding: 4px 10px;
-        font-size: 0.75rem;
-        font-weight: 600;
-    }
-
-    .activity-feed { margin-top: 14px; }
-
-    .activity-item {
-        padding: 10px 0;
-        border-bottom: 1px solid var(--border);
-        font-size: 0.84rem;
-    }
-
-    .activity-item:last-child { border-bottom: none; }
-    .activity-item .act-date { font-size: 0.72rem; color: var(--muted); margin-bottom: 3px; }
-    .activity-item .act-desc { color: var(--text); }
-
-    .modal-box.wide { max-width: 560px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/crm.js"></script>
 </head>
 <body>
  
 <!-- ============ LOGIN GATE ============ -->
 <div class="gate" id="gate">
     <div class="gate-box">
-        <h1>CRM Sisko Shop</h1>
-        <p>Pipeline, commandes, clients &amp; tâches</p>
+        <h1>Espace équipe</h1>
+        <p>Accès réservé — commandes Sisko Shop</p>
         <input type="password" id="gatePassword" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') tryLogin()">
         <div class="gate-error" id="gateError">Mot de passe incorrect.</div>
         <button class="btn" onclick="tryLogin()">Entrer</button>
@@ -595,7 +396,7 @@
 <!-- ============ DASHBOARD ============ -->
 <div class="dash" id="dash">
     <div class="dash-header">
-        <div class="brand">SISKO SHOP <span>·</span> CRM</div>
+        <div class="brand">SISKO SHOP <span>·</span> Espace équipe</div>
         <div class="actions">
             <button class="btn-sm" onclick="exportCSV()">⬇ Exporter en CSV</button>
             <button class="btn-sm danger" onclick="clearAllOrders()">🗑 Vider le journal</button>
@@ -605,10 +406,8 @@
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Vue d'ensemble</button>
-        <button class="tab-btn" data-tab="pipeline" onclick="switchTab('pipeline')">Pipeline</button>
         <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')">Commandes</button>
         <button class="tab-btn" data-tab="clients" onclick="switchTab('clients')">Clients</button>
-        <button class="tab-btn" data-tab="tasks" onclick="switchTab('tasks')">Tâches</button>
     </div>
 
     <!-- ===== ONGLET : VUE D'ENSEMBLE ===== -->
@@ -622,8 +421,6 @@
         <div class="stats" style="margin-top:-12px;">
             <div class="stat-card"><div class="label">Clients uniques</div><div class="value" id="statClients">0</div></div>
             <div class="stat-card"><div class="label">Panier moyen</div><div class="value" id="statAvgBasket">0 DA</div></div>
-            <div class="stat-card"><div class="label">Prospects actifs</div><div class="value accent" id="statOpenLeads">0</div></div>
-            <div class="stat-card"><div class="label">Tâches en attente</div><div class="value" id="statPendingTasks">0</div></div>
         </div>
 
         <div class="dash-grid-2">
@@ -636,33 +433,6 @@
                 <div id="topClientsList"></div>
             </div>
         </div>
-    </div>
-
-    <!-- ===== ONGLET : PIPELINE CRM ===== -->
-    <div class="tab-panel" id="panel-pipeline">
-        <div class="crm-form">
-            <h4>+ Nouveau prospect</h4>
-            <div class="form-grid">
-                <div class="form-field"><label>Nom *</label><input type="text" id="leadName" placeholder="Nom du contact"></div>
-                <div class="form-field"><label>Téléphone *</label><input type="tel" id="leadPhone" placeholder="05 XX XX XX XX"></div>
-                <div class="form-field"><label>Email</label><input type="email" id="leadEmail" placeholder="email@entreprise.dz"></div>
-                <div class="form-field"><label>Entreprise</label><input type="text" id="leadCompany" placeholder="Nom de l'entreprise"></div>
-                <div class="form-field"><label>Valeur estimée (DA)</label><input type="number" id="leadValue" placeholder="0" min="0"></div>
-                <div class="form-field"><label>Source</label>
-                    <select id="leadSource">
-                        <option value="site">Site web</option>
-                        <option value="whatsapp">WhatsApp</option>
-                        <option value="instagram">Instagram</option>
-                        <option value="bouche_a_oreille">Bouche-à-oreille</option>
-                        <option value="salon">Salon / Événement</option>
-                        <option value="autre">Autre</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-field"><label>Notes</label><textarea id="leadNotes" placeholder="Besoin, quantités, délai..."></textarea></div>
-            <button class="btn-sm" style="background:var(--accent);color:#fff;border-color:var(--accent);" onclick="addLead()">Ajouter au pipeline</button>
-        </div>
-        <div id="pipelineBoard"></div>
     </div>
 
     <!-- ===== ONGLET : COMMANDES ===== -->
@@ -689,27 +459,6 @@
 
         <div id="clientListWrap"></div>
     </div>
-
-    <!-- ===== ONGLET : TÂCHES ===== -->
-    <div class="tab-panel" id="panel-tasks">
-        <div class="crm-form">
-            <h4>+ Nouvelle tâche de suivi</h4>
-            <div class="form-grid">
-                <div class="form-field"><label>Titre *</label><input type="text" id="taskTitle" placeholder="Rappeler le client, envoyer devis..."></div>
-                <div class="form-field"><label>Téléphone client</label><input type="tel" id="taskPhone" placeholder="05 XX XX XX XX"></div>
-                <div class="form-field"><label>Échéance</label><input type="date" id="taskDue"></div>
-                <div class="form-field"><label>Priorité</label>
-                    <select id="taskPriority">
-                        <option value="basse">Basse</option>
-                        <option value="normale" selected>Normale</option>
-                        <option value="haute">Haute</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn-sm" style="background:var(--accent);color:#fff;border-color:var(--accent);" onclick="addTask()">Créer la tâche</button>
-        </div>
-        <div id="taskListWrap"></div>
-    </div>
 </div>
  
 <!-- ============ DETAIL MODAL ============ -->
@@ -733,13 +482,9 @@
     const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
         ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null;
-
-    SiskoCRM.init(supabaseClient);
  
     // Cache local des commandes chargées depuis Supabase (pour filtrer/chercher sans re-requêter à chaque frappe).
     let ordersCache = [];
-    let leadsCache = [];
-    let tasksCache = [];
  
     function tryLogin() {
         const val = document.getElementById('gatePassword').value;
@@ -762,7 +507,6 @@
         document.getElementById('gate').style.display = 'none';
         document.getElementById('dash').classList.add('show');
         loadOrders();
-        loadCRM();
         subscribeRealtime();
     }
  
@@ -809,197 +553,6 @@
             ordersCache = (data || []).map(fromRow);
         }
         renderAll();
-        loadCRM();
-    }
-
-    async function loadCRM() {
-        leadsCache = await SiskoCRM.getLeads();
-        tasksCache = await SiskoCRM.getTasks();
-        for (const o of ordersCache) {
-            await SiskoCRM.syncClientFromOrder(o);
-        }
-        renderPipeline();
-        renderTasks();
-    }
-
-    /* =====================================================================
-       CRM — PIPELINE
-       ===================================================================== */
-    function renderPipeline() {
-        const wrap = document.getElementById('pipelineBoard');
-        if (!wrap) return;
-
-        const stages = SiskoCRM.LEAD_STAGE_ORDER;
-        const labels = SiskoCRM.LEAD_STAGES;
-
-        if (leadsCache.length === 0) {
-            wrap.innerHTML = '<div class="empty-state"><div class="icon">📊</div><h3>Pipeline vide</h3><p>Ajoutez des prospects manuellement ou via le formulaire de contact du site.</p></div>';
-            return;
-        }
-
-        wrap.innerHTML = '<div class="pipeline-board">' + stages.map(stage => {
-            const cards = leadsCache.filter(l => l.stage === stage);
-            const cardsHtml = cards.map(l => {
-                const nextStages = stages.filter(s => s !== stage).slice(0, 2);
-                const stageBtns = nextStages.map(s =>
-                    '<button class="stage-btn" onclick="event.stopPropagation();moveLead(\'' + l.id + '\',\'' + s + '\')">' + labels[s] + ' →</button>'
-                ).join('');
-                return (
-                    '<div class="lead-card" onclick="openLeadDetail(\'' + l.id + '\')">' +
-                        '<div class="lname">' + l.name + '</div>' +
-                        '<div class="lmeta">' + (l.phone || '') + (l.company ? ' · ' + l.company : '') + '</div>' +
-                        (l.value ? '<div class="lvalue">' + fmtDA(l.value) + '</div>' : '') +
-                        '<div class="stage-actions">' + stageBtns + '</div>' +
-                    '</div>'
-                );
-            }).join('');
-
-            return (
-                '<div class="pipeline-col">' +
-                    '<div class="pipeline-col-head">' + labels[stage] + '<span class="count">' + cards.length + '</span></div>' +
-                    '<div class="pipeline-cards">' + (cardsHtml || '<p style="color:var(--muted);font-size:0.78rem;padding:8px;">—</p>') + '</div>' +
-                '</div>'
-            );
-        }).join('') + '</div>';
-    }
-
-    async function addLead() {
-        const name = document.getElementById('leadName').value.trim();
-        const phone = document.getElementById('leadPhone').value.trim();
-        if (!name || !phone) { alert('Nom et téléphone sont obligatoires.'); return; }
-
-        await SiskoCRM.saveLead({
-            name,
-            phone,
-            email: document.getElementById('leadEmail').value.trim(),
-            company: document.getElementById('leadCompany').value.trim(),
-            value: parseInt(document.getElementById('leadValue').value, 10) || 0,
-            source: document.getElementById('leadSource').value,
-            notes: document.getElementById('leadNotes').value.trim(),
-            stage: 'nouveau',
-        });
-
-        document.getElementById('leadName').value = '';
-        document.getElementById('leadPhone').value = '';
-        document.getElementById('leadEmail').value = '';
-        document.getElementById('leadCompany').value = '';
-        document.getElementById('leadValue').value = '';
-        document.getElementById('leadNotes').value = '';
-
-        leadsCache = await SiskoCRM.getLeads();
-        renderPipeline();
-        renderOverview();
-    }
-
-    async function moveLead(id, stage) {
-        await SiskoCRM.updateLeadStage(id, stage);
-        leadsCache = await SiskoCRM.getLeads();
-        renderPipeline();
-        renderOverview();
-    }
-
-    function openLeadDetail(id) {
-        const l = leadsCache.find(x => x.id === id);
-        if (!l) return;
-        const box = document.getElementById('detailBox');
-        box.className = 'modal-box wide';
-        box.innerHTML =
-            '<h3>' + l.name + '</h3>' +
-            '<div class="modal-row"><span>Téléphone</span><span>' + l.phone + '</span></div>' +
-            (l.email ? '<div class="modal-row"><span>Email</span><span>' + l.email + '</span></div>' : '') +
-            (l.company ? '<div class="modal-row"><span>Entreprise</span><span>' + l.company + '</span></div>' : '') +
-            '<div class="modal-row"><span>Étape</span><span>' + SiskoCRM.LEAD_STAGES[l.stage] + '</span></div>' +
-            (l.value ? '<div class="modal-row"><span>Valeur</span><span>' + fmtDA(l.value) + '</span></div>' : '') +
-            '<div class="modal-row"><span>Source</span><span>' + l.source + '</span></div>' +
-            (l.notes ? '<div class="modal-row"><span>Notes</span><span>' + l.notes + '</span></div>' : '') +
-            '<div class="modal-close-row">' +
-                '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + l.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' +
-                '<button class="btn-sm danger" style="flex:1;" onclick="deleteLeadConfirm(\'' + l.id + '\')">Supprimer</button>' +
-                '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
-            '</div>';
-        document.getElementById('detailOverlay').classList.add('open');
-    }
-
-    async function deleteLeadConfirm(id) {
-        if (!confirm('Supprimer ce prospect ?')) return;
-        await SiskoCRM.deleteLead(id);
-        leadsCache = await SiskoCRM.getLeads();
-        closeDetail();
-        renderPipeline();
-        renderOverview();
-    }
-
-    /* =====================================================================
-       CRM — TÂCHES
-       ===================================================================== */
-    function renderTasks() {
-        const wrap = document.getElementById('taskListWrap');
-        if (!wrap) return;
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (tasksCache.length === 0) {
-            wrap.innerHTML = '<div class="empty-state"><div class="icon">✅</div><h3>Aucune tâche</h3><p>Créez des rappels pour ne jamais oublier un suivi client.</p></div>';
-            return;
-        }
-
-        const sorted = [...tasksCache].sort((a, b) => {
-            if (a.done !== b.done) return a.done ? 1 : -1;
-            return new Date(a.dueDate || '9999') - new Date(b.dueDate || '9999');
-        });
-
-        wrap.innerHTML = '<div class="task-list">' + sorted.map(t => {
-            const due = t.dueDate ? new Date(t.dueDate) : null;
-            const overdue = due && !t.done && due < today;
-            const dueStr = due ? due.toLocaleDateString('fr-FR') : 'Sans échéance';
-            return (
-                '<div class="task-card' + (t.done ? ' done' : '') + '">' +
-                    '<div class="task-check' + (t.done ? ' checked' : '') + '" onclick="toggleTaskDone(\'' + t.id + '\')">' + (t.done ? '✓' : '') + '</div>' +
-                    '<div><div class="task-title">' + t.title + '</div>' +
-                    '<div class="task-meta">' + (t.phone ? t.phone + ' · ' : '') +
-                    '<span class="' + (overdue ? 'task-overdue' : '') + '">' + dueStr + (overdue ? ' (en retard)' : '') + '</span></div></div>' +
-                    '<span class="priority-badge ' + t.priority + '">' + SiskoCRM.TASK_PRIORITIES[t.priority] + '</span>' +
-                    '<button class="icon-btn" title="Supprimer" onclick="deleteTaskConfirm(\'' + t.id + '\')">🗑</button>' +
-                '</div>'
-            );
-        }).join('') + '</div>';
-    }
-
-    async function addTask() {
-        const title = document.getElementById('taskTitle').value.trim();
-        if (!title) { alert('Le titre est obligatoire.'); return; }
-
-        await SiskoCRM.saveTask({
-            title,
-            phone: document.getElementById('taskPhone').value.trim(),
-            dueDate: document.getElementById('taskDue').value || null,
-            priority: document.getElementById('taskPriority').value,
-            done: false,
-        });
-
-        document.getElementById('taskTitle').value = '';
-        document.getElementById('taskPhone').value = '';
-        document.getElementById('taskDue').value = '';
-
-        tasksCache = await SiskoCRM.getTasks();
-        renderTasks();
-        renderOverview();
-    }
-
-    async function toggleTaskDone(id) {
-        await SiskoCRM.toggleTask(id);
-        tasksCache = await SiskoCRM.getTasks();
-        renderTasks();
-        renderOverview();
-    }
-
-    async function deleteTaskConfirm(id) {
-        if (!confirm('Supprimer cette tâche ?')) return;
-        await SiskoCRM.deleteTask(id);
-        tasksCache = await SiskoCRM.getTasks();
-        renderTasks();
-        renderOverview();
     }
  
     // Rafraîchit automatiquement quand une commande est ajoutée/modifiée par
@@ -1010,8 +563,6 @@
         supabaseClient
             .channel('orders-changes')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => loadOrders())
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, () => loadCRM())
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_tasks' }, () => loadCRM())
             .subscribe();
     }
  
@@ -1092,17 +643,13 @@
         document.getElementById('panel-' + tab).classList.add('active');
         if (tab === 'clients') renderClients();
         if (tab === 'overview') renderOverview();
-        if (tab === 'pipeline') renderPipeline();
-        if (tab === 'tasks') renderTasks();
     }
 
-    /* Rafraîchit tous les onglets d'un coup (après chargement / modif / suppression). */
+    /* Rafraîchit les 3 onglets d'un coup (après chargement / modif / suppression). */
     function renderAll() {
         renderOrders();
         renderClients();
         renderOverview();
-        renderPipeline();
-        renderTasks();
     }
 
     /* =====================================================================
@@ -1176,81 +723,30 @@
     }
 
     function openClientDetail(phoneDigits) {
-        const c = getClients().find(x => SiskoCRM.phoneKey(x.phone) === phoneDigits);
+        const c = getClients().find(x => x.phone.replace(/[^0-9]/g, '') === phoneDigits);
         if (!c) return;
+        const ordersHtml = c.orders
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map(o => (
+                '<div class="modal-row" style="cursor:pointer;" onclick="closeDetail();setTimeout(()=>openDetail(\'' + o.id + '\'),150)">' +
+                    '<span>' + o.id + ' · ' + new Date(o.date).toLocaleDateString('fr-FR') + '</span>' +
+                    '<span>' + o.product + ' — ' + fmtDA(o.total) + '</span>' +
+                '</div>'
+            )).join('');
 
-        SiskoCRM.getClientProfile(c.phone).then(profile => {
-            const p = profile || { phone: c.phone, name: c.name, email: '', company: '', tags: [], notes: '' };
-            SiskoCRM.getActivities(c.phone).then(activities => {
-                const tagsHtml = (p.tags || []).map(t => '<span class="tag">' + t + '</span>').join('') || '<span style="color:var(--muted);font-size:0.82rem;">Aucun tag</span>';
-                const actHtml = activities.length
-                    ? activities.slice(0, 10).map(a => (
-                        '<div class="activity-item"><div class="act-date">' + new Date(a.date).toLocaleString('fr-FR') + '</div><div class="act-desc">' + a.description + '</div></div>'
-                    )).join('')
-                    : '<p style="color:var(--muted);font-size:0.85rem;">Aucune activité enregistrée.</p>';
-
-                const ordersHtml = c.orders
-                    .sort((a, b) => new Date(b.date) - new Date(a.date))
-                    .map(o => (
-                        '<div class="modal-row" style="cursor:pointer;" onclick="closeDetail();setTimeout(()=>openDetail(\'' + o.id + '\'),150)">' +
-                            '<span>' + o.id + ' · ' + new Date(o.date).toLocaleDateString('fr-FR') + '</span>' +
-                            '<span>' + o.product + ' — ' + fmtDA(o.total) + '</span>' +
-                        '</div>'
-                    )).join('');
-
-                const box = document.getElementById('detailBox');
-                box.className = 'modal-box wide';
-                box.innerHTML =
-                    '<h3>' + c.name + '</h3>' +
-                    '<div class="modal-row"><span>Téléphone</span><span>' + (c.phone || '—') + '</span></div>' +
-                    '<div class="modal-row"><span>Nb. commandes</span><span>' + c.orderCount + '</span></div>' +
-                    '<div class="modal-row"><span>Total dépensé</span><span>' + fmtDA(c.totalSpent) + '</span></div>' +
-                    '<h3 style="margin-top:18px;font-size:0.9rem;color:var(--muted);">Profil CRM</h3>' +
-                    '<div class="form-grid" style="margin-top:10px;">' +
-                        '<div class="form-field"><label>Email</label><input type="email" id="crmClientEmail" value="' + (p.email || '') + '"></div>' +
-                        '<div class="form-field"><label>Entreprise</label><input type="text" id="crmClientCompany" value="' + (p.company || '') + '"></div>' +
-                        '<div class="form-field"><label>Tags (séparés par virgule)</label><input type="text" id="crmClientTags" value="' + (p.tags || []).join(', ') + '"></div>' +
-                    '</div>' +
-                    '<div class="form-field"><label>Notes</label><textarea id="crmClientNotes">' + (p.notes || '') + '</textarea></div>' +
-                    '<div class="tag-list">' + tagsHtml + '</div>' +
-                    '<button class="btn-sm" style="background:var(--accent);color:#fff;border-color:var(--accent);margin-bottom:14px;" onclick="saveClientCRM(\'' + phoneDigits + '\')">Enregistrer le profil</button>' +
-                    '<h3 style="font-size:0.9rem;color:var(--muted);">Historique commandes</h3>' +
-                    ordersHtml +
-                    '<h3 style="margin-top:18px;font-size:0.9rem;color:var(--muted);">Activité récente</h3>' +
-                    '<div class="activity-feed">' + actHtml + '</div>' +
-                    '<div class="form-field" style="margin-top:14px;"><label>Ajouter une note</label><textarea id="crmNewNote" placeholder="Appel effectué, devis envoyé..."></textarea></div>' +
-                    '<button class="btn-sm" onclick="addClientNote(\'' + phoneDigits + '\')">Ajouter note</button>' +
-                    '<div class="modal-close-row">' +
-                        (c.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + c.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
-                        '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
-                    '</div>';
-                document.getElementById('detailOverlay').classList.add('open');
-            });
-        });
-    }
-
-    async function saveClientCRM(phoneDigits) {
-        const c = getClients().find(x => SiskoCRM.phoneKey(x.phone) === phoneDigits);
-        if (!c) return;
-        const tagsRaw = document.getElementById('crmClientTags').value;
-        await SiskoCRM.saveClientProfile({
-            phone: c.phone,
-            name: c.name,
-            email: document.getElementById('crmClientEmail').value.trim(),
-            company: document.getElementById('crmClientCompany').value.trim(),
-            tags: tagsRaw.split(',').map(t => t.trim()).filter(Boolean),
-            notes: document.getElementById('crmClientNotes').value.trim(),
-        });
-        await SiskoCRM.addActivity({ phone: c.phone, type: 'note', description: 'Profil client mis à jour' });
-        openClientDetail(phoneDigits);
-    }
-
-    async function addClientNote(phoneDigits) {
-        const c = getClients().find(x => SiskoCRM.phoneKey(x.phone) === phoneDigits);
-        const note = document.getElementById('crmNewNote').value.trim();
-        if (!c || !note) return;
-        await SiskoCRM.addActivity({ phone: c.phone, type: 'note', description: note });
-        openClientDetail(phoneDigits);
+        const box = document.getElementById('detailBox');
+        box.innerHTML =
+            '<h3>' + c.name + '</h3>' +
+            '<div class="modal-row"><span>Téléphone</span><span>' + (c.phone || '—') + '</span></div>' +
+            '<div class="modal-row"><span>Nb. commandes</span><span>' + c.orderCount + '</span></div>' +
+            '<div class="modal-row"><span>Total dépensé</span><span>' + fmtDA(c.totalSpent) + '</span></div>' +
+            '<h3 style="margin-top:18px;font-size:0.9rem;color:var(--muted);">Historique des commandes</h3>' +
+            ordersHtml +
+            '<div class="modal-close-row">' +
+                (c.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + c.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
+                '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
+            '</div>';
+        document.getElementById('detailOverlay').classList.add('open');
     }
 
     /* =====================================================================
@@ -1268,13 +764,6 @@
             const avg = valid.length ? valid.reduce((s, o) => s + (o.total || 0), 0) / valid.length : 0;
             elAvg.textContent = fmtDA(Math.round(avg));
         }
-
-        SiskoCRM.getStats(orders).then(stats => {
-            const elLeads = document.getElementById('statOpenLeads');
-            const elTasks = document.getElementById('statPendingTasks');
-            if (elLeads) elLeads.textContent = stats.openLeads;
-            if (elTasks) elTasks.textContent = stats.pendingTasks;
-        });
 
         const recentWrap = document.getElementById('recentOrdersList');
         if (recentWrap) {
