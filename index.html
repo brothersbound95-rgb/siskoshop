@@ -1135,8 +1135,96 @@
         .cfg-foot { flex-wrap: wrap; }
         .cfg-live-price { order: -1; width: 100%; text-align: left; }
     }
+
+    /* ============ FORMULAIRE CONTACT / CRM ============ */
+    .contact-section {
+        max-width: 700px;
+        margin: 100px auto 0;
+        padding: 0 20px;
+    }
+
+    .contact-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px 28px;
+    }
+
+    .contact-box h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+        color: var(--text);
+    }
+
+    .contact-box .sub {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 22px;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    @media (max-width: 560px) {
+        .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-field label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: var(--muted);
+        margin-bottom: 6px;
+    }
+
+    .contact-field input, .contact-field textarea, .contact-field select {
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.92rem;
+    }
+
+    .contact-field textarea { resize: vertical; min-height: 90px; }
+
+    .contact-field input:focus, .contact-field textarea:focus, .contact-field select:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+    .contact-success {
+        display: none;
+        text-align: center;
+        padding: 30px 10px;
+    }
+
+    .contact-success.show { display: block; }
+
+    .contact-success .check {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: rgba(225,6,0,0.12);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        margin: 0 auto 14px;
+    }
+
+    .contact-success p { color: var(--muted); font-size: 0.9rem; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/crm.js"></script>
 </head>
 <body>
 
@@ -1148,7 +1236,7 @@
         <a href="#">Produits</a>
         <a href="#">Secteurs</a>
         <a href="#">Avis</a>
-        <a href="#">Contact</a>
+        <a href="#contact">Contact</a>
         <a href="#" class="cta" onclick="openConfigurator(); return false;">Configurer ma commande</a>
     </nav>
 </header>
@@ -1246,6 +1334,37 @@
         <p>Quantités différentes, articles hors catalogue, délai urgent — contactez-nous et obtenez une réponse sous 6h.</p>
         <a href="https://wa.me/213770406106" class="btn-primary">Discuter sur WhatsApp</a>
     </div>
+
+    <!-- Formulaire contact → CRM -->
+    <section class="contact-section" id="contact">
+        <div class="section-label" style="margin-top:0;">
+            <div class="kicker">Contact</div>
+            <h2>Demandez votre devis</h2>
+        </div>
+        <div class="contact-box">
+            <div id="contactFormWrap">
+                <h3>Parlez-nous de votre projet</h3>
+                <p class="sub">Uniformes, événements, grandes quantités — on vous rappelle sous 6h.</p>
+                <div class="contact-grid">
+                    <div class="contact-field"><label for="contactName">Nom *</label><input type="text" id="contactName" placeholder="Votre nom"></div>
+                    <div class="contact-field"><label for="contactPhone">Téléphone *</label><input type="tel" id="contactPhone" placeholder="05 XX XX XX XX"></div>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-field"><label for="contactEmail">Email</label><input type="email" id="contactEmail" placeholder="email@entreprise.dz"></div>
+                    <div class="contact-field"><label for="contactCompany">Entreprise</label><input type="text" id="contactCompany" placeholder="Nom de l'entreprise"></div>
+                </div>
+                <div class="contact-field"><label for="contactMessage">Votre besoin *</label><textarea id="contactMessage" placeholder="Ex : 50 polos brodés pour mon équipe, livraison à Alger..."></textarea></div>
+                <div class="cfg-error" id="contactError">Merci de renseigner votre nom, téléphone et besoin.</div>
+                <button class="btn-primary" style="width:100%;margin-top:8px;border:none;cursor:pointer;" onclick="submitContact()">Envoyer ma demande →</button>
+            </div>
+            <div class="contact-success" id="contactSuccess">
+                <div class="check">✓</div>
+                <h3>Demande envoyée !</h3>
+                <p>Notre équipe vous contactera sous 6h. Vous pouvez aussi nous écrire directement sur WhatsApp.</p>
+                <a href="https://wa.me/213770406106" class="btn-primary" style="margin-top:16px;display:inline-block;">WhatsApp</a>
+            </div>
+        </div>
+    </section>
 </main>
 
 <!-- ============ CONFIGURATEUR DE COMMANDE (5 ÉTAPES) ============ -->
@@ -1407,7 +1526,7 @@
     </div>
 </footer>
 
-<div class="footer-bottom">© 2026 Sisko Shop. — <a href="admin.html">Espace équipe</a></div>
+<div class="footer-bottom">© 2026 Sisko Shop. — <a href="admin.html">CRM &amp; Espace équipe</a></div>
 
 <script>
     /* =====================================================================
@@ -1428,6 +1547,8 @@
     const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
         ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null;
+
+    SiskoCRM.init(supabaseClient);
 
     // Toutes les photos produit sont hébergées dans le bucket public Supabase.
     const SUPABASE_BASE = 'https://nzxmtmbnoirgpwkenqnv.supabase.co/storage/v1/object/public/image/';
@@ -1957,6 +2078,14 @@
             console.error('Impossible d\'enregistrer la commande localement :', err);
         }
 
+        // Sync CRM : profil client + activité
+        await SiskoCRM.syncClientFromOrder(order);
+        await SiskoCRM.addActivity({
+            phone: order.phone,
+            type: 'order',
+            description: 'Commande ' + order.id + ' — ' + order.product + ' × ' + order.qty + ' (' + fmtDA(order.total) + ')',
+        });
+
         if (!supabaseClient) return; // clé pas encore configurée
 
         try {
@@ -1987,6 +2116,34 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeConfigurator();
     });
+
+    /* =====================================================================
+       FORMULAIRE CONTACT → CRM
+       ===================================================================== */
+    async function submitContact() {
+        const name = document.getElementById('contactName').value.trim();
+        const phone = document.getElementById('contactPhone').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+
+        if (!name || !phone || !message) {
+            document.getElementById('contactError').classList.add('show');
+            return;
+        }
+        document.getElementById('contactError').classList.remove('show');
+
+        await SiskoCRM.saveLead({
+            name,
+            phone,
+            email: document.getElementById('contactEmail').value.trim(),
+            company: document.getElementById('contactCompany').value.trim(),
+            notes: message,
+            source: 'site',
+            stage: 'nouveau',
+        });
+
+        document.getElementById('contactFormWrap').style.display = 'none';
+        document.getElementById('contactSuccess').classList.add('show');
+    }
 </script>
 
 </body>
