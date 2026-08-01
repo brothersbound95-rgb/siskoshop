@@ -537,6 +537,7 @@
                 <option value="traite">Traité</option>
                 <option value="annule">Annulé</option>
             </select>
+            <button class="btn-sm" onclick="openNewOrderModal()">+ Nouvelle commande</button>
         </div>
 
         <div id="orderListWrap"></div>
@@ -612,6 +613,11 @@
 <!-- ============ STOCK MODAL ============ -->
 <div class="modal-overlay" id="stockOverlay">
     <div class="modal-box" id="stockBox" style="max-width:640px;"></div>
+</div>
+
+<!-- ============ NEW ORDER MODAL ============ -->
+<div class="modal-overlay" id="newOrderOverlay">
+    <div class="modal-box" id="newOrderBox" style="max-width:520px;"></div>
 </div>
 
 <!-- ============ BOUTON WHATSAPP FLOTTANT (contact rapide) ============ -->
@@ -1387,6 +1393,110 @@
         closeStockModal();
         await loadInventory();
         renderStockTab();
+    }
+
+    /* =====================================================================
+       NOUVELLE COMMANDE MANUELLE (ajoutée par l'équipe, ex. commande reçue
+       par téléphone / WhatsApp direct, sans passer par le configurateur)
+       ===================================================================== */
+    function openNewOrderModal() {
+        const box = document.getElementById('newOrderBox');
+        const productOptions = productsCache.map(p => '<option value="' + p.id + '">' + p.name + ' — ' + fmtDA(p.price) + '</option>').join('');
+
+        box.innerHTML =
+            '<h3>Nouvelle commande</h3>' +
+            '<div class="form-row"><label>Produit</label><select id="noProduct" onchange="noUpdateProductFields()">' +
+                '<option value="">— Choisir —</option>' + productOptions +
+            '</select></div>' +
+            '<div class="form-row form-row-inline">' +
+                '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Couleur</label><select id="noColor"><option value="">—</option></select></div>' +
+                '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Taille</label><select id="noSize">' +
+                    SIZES.map(s => '<option value="' + s + '">' + s + '</option>').join('') +
+                '</select></div>' +
+            '</div>' +
+            '<div class="form-row form-row-inline">' +
+                '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Quantité</label><input type="number" id="noQty" value="1" min="1"></div>' +
+                '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Prix unitaire (DA)</label><input type="number" id="noPrice" value="0"></div>' +
+            '</div>' +
+            '<div class="form-row"><label>Nom du client</label><input type="text" id="noCustomerName" placeholder="Ex. Yacine B."></div>' +
+            '<div class="form-row"><label>Téléphone</label><input type="text" id="noPhone" placeholder="Ex. 0770406106"></div>' +
+            '<div class="form-row"><label>Remarque</label><textarea id="noNote" placeholder="Détails, logo, adresse..."></textarea></div>' +
+            '<div class="form-row"><label>Statut</label><select id="noStatus">' +
+                ['nouveau','en_cours','traite','annule'].map(s => '<option value="' + s + '">' + STATUS_LABEL[s] + '</option>').join('') +
+            '</select></div>' +
+            '<div class="modal-close-row">' +
+                '<button class="btn-sm" style="flex:1;" onclick="saveNewOrder()">💾 Enregistrer la commande</button>' +
+                '<button class="btn-sm" style="flex:1;" onclick="closeNewOrderModal()">Annuler</button>' +
+            '</div>';
+
+        document.getElementById('newOrderOverlay').classList.add('open');
+    }
+
+    function noUpdateProductFields() {
+        const pid = document.getElementById('noProduct').value;
+        const p = productsCache.find(x => x.id === pid);
+        const colorSelect = document.getElementById('noColor');
+        if (!p) { colorSelect.innerHTML = '<option value="">—</option>'; return; }
+        colorSelect.innerHTML = (p.colors || []).map(c => '<option value="' + c + '">' + c + '</option>').join('');
+        document.getElementById('noPrice').value = p.price;
+    }
+
+    function closeNewOrderModal() {
+        document.getElementById('newOrderOverlay').classList.remove('open');
+    }
+
+    document.getElementById('newOrderOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'newOrderOverlay') closeNewOrderModal();
+    });
+
+    async function saveNewOrder() {
+        const productId = document.getElementById('noProduct').value;
+        const p = productsCache.find(x => x.id === productId);
+        const color = document.getElementById('noColor').value;
+        const size = document.getElementById('noSize').value;
+        const qty = Number(document.getElementById('noQty').value) || 1;
+        const price = Number(document.getElementById('noPrice').value) || 0;
+        const customerName = document.getElementById('noCustomerName').value.trim();
+        const phone = document.getElementById('noPhone').value.trim();
+        const note = document.getElementById('noNote').value.trim();
+        const status = document.getElementById('noStatus').value;
+
+        if (!p) { alert('Merci de choisir un produit.'); return; }
+        if (!color) { alert('Merci de choisir une couleur.'); return; }
+
+        const order = {
+            id: 'CMD-' + Date.now().toString(36).toUpperCase(),
+            product_id: productId,
+            product: p.name,
+            price: price,
+            size: size,
+            color: color,
+            qty: qty,
+            total: price * qty,
+            customer_name: customerName,
+            phone: phone,
+            note: note,
+            status: status,
+        };
+
+        if (supabaseClient) {
+            const { error } = await supabaseClient.from('orders').insert(order);
+            if (error) { console.error('Erreur ajout commande :', error); alert('Erreur lors de l\'enregistrement de la commande.'); return; }
+            if (supabaseClient.rpc) {
+                const { error: stockError } = await supabaseClient.rpc('decrement_stock', { p_product_id: productId, p_color: color, p_size: size, p_qty: qty });
+                if (stockError) console.error('Erreur déduction stock :', stockError);
+            }
+        } else {
+            try {
+                const local = JSON.parse(localStorage.getItem('sisko_orders') || '[]');
+                local.unshift({ ...order, date: new Date().toISOString(), customerName, logoDataUrl: null });
+                localStorage.setItem('sisko_orders', JSON.stringify(local));
+            } catch (e) { console.error(e); }
+        }
+
+        closeNewOrderModal();
+        await loadOrders();
+        await loadInventory();
     }
 
     /* =====================================================================
