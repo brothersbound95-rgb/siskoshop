@@ -924,6 +924,16 @@
     .cfg-color-opt span.cname { font-size: 0.78rem; color: var(--muted); }
     .cfg-color-opt.active span.cname { color: var(--text); font-weight: 700; }
 
+    .stock-badge {
+        font-size: 0.66rem;
+        font-weight: 700;
+        padding: 2px 7px;
+        border-radius: 20px;
+        white-space: nowrap;
+    }
+    .stock-badge.low { background: rgba(242,177,52,0.18); color: #f2b134; }
+    .stock-badge.out { background: rgba(225,6,0,0.15); color: var(--accent); }
+
     .cfg-qty-block {
         margin-top: 8px;
         padding-top: 20px;
@@ -1511,10 +1521,11 @@
     /* =====================================================================
        SUPABASE — base de données des commandes
        ⚠️ À FAIRE : remplacez la ligne ci-dessous par votre clé "anon public"
-       eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56eG10bWJub2lyZ3B3a2VucW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDk1MjcsImV4cCI6MjA5ODU4NTUyN30.Afj0RuHq4sB22feRsi9xBe0Ri60aiObKCFPenb-zfts
+       (Supabase → Project Settings → API → anon public). C'est une clé
+       publique, sans danger à exposer côté client.
        ===================================================================== */
     const SUPABASE_URL = 'https://nzxmtmbnoirgpwkenqnv.supabase.co';
-    const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56eG10bWJub2lyZ3B3a2VucW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDk1MjcsImV4cCI6MjA5ODU4NTUyN30.Afj0RuHq4sB22feRsi9xBe0Ri60aiObKCFPenb-zfts';
     const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
         ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null;
@@ -1648,6 +1659,59 @@
     function fmtDA(n) { return n.toLocaleString('fr-FR') + ' DA'; }
 
     /* =====================================================================
+       INVENTAIRE — stock par produit / couleur / taille (table "inventory")
+       Le stock est indicatif : on l'affiche (badge "stock faible" / "rupture")
+       mais on n'empêche jamais de commander.
+       ===================================================================== */
+    const LOW_STOCK_THRESHOLD = 3;
+    let inventoryMap = new Map(); // clé "productId|color|size" -> quantité
+
+    function stockKey(productId, color, size) { return productId + '|' + color + '|' + size; }
+
+    // Retourne la quantité en stock, ou null si ce variant n'est pas suivi.
+    function getStock(productId, color, size) {
+        const v = inventoryMap.get(stockKey(productId, color, size));
+        return v === undefined ? null : v;
+    }
+
+    function stockBadgeHtml(qty) {
+        if (qty === null) return '';
+        if (qty <= 0) return '<span class="stock-badge out">Rupture</span>';
+        if (qty <= LOW_STOCK_THRESHOLD) return '<span class="stock-badge low">Stock faible (' + qty + ')</span>';
+        return '';
+    }
+
+    async function loadInventoryFromSupabase() {
+        if (!supabaseClient) return;
+        try {
+            const { data, error } = await supabaseClient.from('inventory').select('*');
+            if (error) { console.error('Erreur chargement stock :', error); return; }
+            inventoryMap = new Map();
+            (data || []).forEach(r => inventoryMap.set(stockKey(r.product_id, r.color, r.size), r.quantity));
+            if (typeof cfgRenderColorGrid === 'function' && document.getElementById('cfgOverlay')?.classList.contains('open')) {
+                cfgRenderColorGrid();
+            }
+        } catch (e) {
+            console.error('Erreur chargement stock :', e);
+        }
+    }
+
+    // Déduit le stock côté Supabase après une commande (fonction SQL
+    // "decrement_stock" — voir supabase-setup.sql). Échec silencieux : on ne
+    // bloque jamais une commande à cause du suivi de stock.
+    async function decrementStock(productId, color, size, qty) {
+        if (!supabaseClient || !productId || !color || !size) return;
+        try {
+            const { error } = await supabaseClient.rpc('decrement_stock', {
+                p_product_id: productId, p_color: color, p_size: size, p_qty: qty
+            });
+            if (error) console.error('Erreur déduction stock :', error);
+        } catch (e) {
+            console.error('Erreur déduction stock :', e);
+        }
+    }
+
+    /* =====================================================================
        RENDU DES CARTES PRODUITS (page d'accueil)
        ===================================================================== */
     function cardThumbHTML(p, color) {
@@ -1689,6 +1753,7 @@
     }
     renderPackGrid();
     loadProductsFromSupabase(); // remplace le catalogue par défaut dès que Supabase répond
+    loadInventoryFromSupabase(); // charge le stock (badges "stock faible" / "rupture")
 
     /* =====================================================================
        CONFIGURATEUR — ÉTAT
@@ -1823,10 +1888,12 @@
         if (!p) { grid.innerHTML = ''; return; }
         grid.innerHTML = p.colors.map(c => {
             const active = cfg.color === c ? ' active' : '';
+            const badge = cfg.size ? stockBadgeHtml(getStock(p.id, c, cfg.size)) : '';
             return (
                 '<div class="cfg-color-opt' + active + '" onclick="cfgSelectColor(\'' + c + '\')">' +
                     '<div class="dot" style="background:' + COLOR_HEX[c] + ';"></div>' +
                     '<span class="cname">' + c + '</span>' +
+                    badge +
                 '</div>'
             );
         }).join('');
@@ -2016,6 +2083,7 @@
         const order = {
             id: 'CMD-' + Date.now().toString(36).toUpperCase(),
             date: new Date().toISOString(),
+            productId: p.id,
             product: p.name,
             price: p.price,
             size: cfg.size,
@@ -2095,6 +2163,7 @@
         try {
             const { error } = await supabaseClient.from('orders').insert({
                 id: order.id,
+                product_id: order.productId,
                 product: order.product,
                 price: order.price,
                 size: order.size,
@@ -2111,6 +2180,7 @@
                 status: order.status,
             });
             if (error) console.error('Erreur Supabase (commande) :', error);
+            else decrementStock(order.productId, order.color, order.size, order.qty);
         } catch (err) {
             console.error('Impossible d\'enregistrer la commande sur Supabase :', err);
         }
