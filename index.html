@@ -1135,6 +1135,96 @@
         .cfg-foot { flex-wrap: wrap; }
         .cfg-live-price { order: -1; width: 100%; text-align: left; }
     }
+
+    /* ---------- CONNEXION (équipe / owner) ---------- */
+    .login-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.72);
+        z-index: 500;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        backdrop-filter: blur(2px);
+    }
+    .login-overlay.open { display: flex; }
+    .login-box {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px 28px;
+        width: 100%;
+        max-width: 360px;
+        text-align: center;
+        position: relative;
+    }
+    .login-box h3 { font-size: 1.15rem; margin-bottom: 6px; }
+    .login-box p { color: var(--muted); font-size: 0.84rem; margin-bottom: 20px; }
+    .login-box input {
+        width: 100%;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 14px;
+        color: var(--text);
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+    .login-box input:focus { outline: none; border-color: var(--accent); }
+    .login-box .login-error {
+        color: var(--accent);
+        font-size: 0.8rem;
+        margin: -4px 0 12px;
+        display: none;
+    }
+    .login-box button.login-submit {
+        width: 100%;
+        background: var(--accent);
+        border: none;
+        border-radius: 10px;
+        padding: 12px;
+        color: var(--on-accent);
+        font-weight: 700;
+        font-size: 0.92rem;
+        cursor: pointer;
+    }
+    .login-box button.login-submit:hover { background: var(--accent-dark); }
+    .login-box .login-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: var(--muted);
+        font-size: 1.2rem;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .login-box .login-close:hover { color: var(--text); }
+
+    /* ---------- BOUTON WHATSAPP FLOTTANT ---------- */
+    .wa-float {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: #25d366;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+        z-index: 400;
+        text-decoration: none;
+        transition: transform 0.15s ease;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 30px; height: 30px; }
+    @media (max-width: 600px) {
+        .wa-float { right: 14px; bottom: 14px; width: 52px; height: 52px; }
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -1150,6 +1240,7 @@
         <a href="#">Avis</a>
         <a href="#">Contact</a>
         <a href="#" class="cta" onclick="openConfigurator(); return false;">Configurer ma commande</a>
+        <a href="#" onclick="openLoginModal(); return false;" title="Espace équipe / gestion">🔐 Connexion</a>
     </nav>
 </header>
 
@@ -1407,7 +1498,7 @@
     </div>
 </footer>
 
-<div class="footer-bottom">© 2026 Sisko Shop. — <a href="admin.html">Espace équipe</a></div>
+<div class="footer-bottom">© 2026 Sisko Shop. — <a href="#" onclick="openLoginModal(); return false;">Espace équipe</a></div>
 
 <script>
     /* =====================================================================
@@ -1453,7 +1544,11 @@
         'Beige': '#e9dfc9',
     };
 
-    const PRODUCTS = [
+    // DEFAULT_PRODUCTS sert de secours si Supabase n'est pas encore configuré,
+    // ou si la table "products" est vide. Dès que Supabase répond avec des
+    // produits, PRODUCTS est remplacé par les données de la base (gérables
+    // depuis l'onglet "Produits" de l'espace équipe).
+    const DEFAULT_PRODUCTS = [
         {
             id: 'tshirt', name: 'T-Shirt', price: 750,
             desc: 'Coton unisexe — impression DTF ou broderie.',
@@ -1513,6 +1608,44 @@
         },
     ];
 
+    // Catalogue effectif utilisé par toute la page (cartes + configurateur).
+    let PRODUCTS = DEFAULT_PRODUCTS;
+
+    // Convertit une ligne Supabase (snake_case) vers le format utilisé par l'UI.
+    function productFromRow(r) {
+        return {
+            id: r.id,
+            name: r.name,
+            price: r.price,
+            desc: r.description || '',
+            colors: r.colors || [],
+            images: r.images || {},
+            popular: !!r.popular,
+        };
+    }
+
+    // Charge le catalogue produits depuis Supabase (table "products", gérée
+    // depuis l'onglet "Produits" de l'espace équipe). Si Supabase n'est pas
+    // configuré ou la table est vide, on garde le catalogue par défaut.
+    async function loadProductsFromSupabase() {
+        if (!supabaseClient) return;
+        try {
+            const { data, error } = await supabaseClient
+                .from('products')
+                .select('*')
+                .eq('active', true)
+                .order('sort_order', { ascending: true });
+            if (error) { console.error('Erreur chargement produits :', error); return; }
+            if (data && data.length > 0) {
+                PRODUCTS = data.map(productFromRow);
+                renderPackGrid();
+                if (typeof cfgRenderProductGrid === 'function') cfgRenderProductGrid();
+            }
+        } catch (e) {
+            console.error('Erreur chargement produits :', e);
+        }
+    }
+
     function fmtDA(n) { return n.toLocaleString('fr-FR') + ' DA'; }
 
     /* =====================================================================
@@ -1556,6 +1689,7 @@
         }).join('');
     }
     renderPackGrid();
+    loadProductsFromSupabase(); // remplace le catalogue par défaut dès que Supabase répond
 
     /* =====================================================================
        CONFIGURATEUR — ÉTAT
@@ -1985,9 +2119,68 @@
 
     // Fermer le configurateur avec la touche Échap
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeConfigurator();
+        if (e.key === 'Escape') { closeConfigurator(); closeLoginModal(); }
     });
+
+    /* =====================================================================
+       CONNEXION — un seul point d'entrée pour l'équipe et pour le profit.
+       Le mot de passe saisi détermine automatiquement la destination :
+       - mot de passe équipe  -> admin.html
+       - mot de passe owner   -> owner.html
+       ⚠️ Ces deux valeurs doivent rester identiques à ADMIN_PASSWORD (dans
+       admin.html) et OWNER_PASSWORD (dans owner.html). Si vous changez l'un,
+       changez-le aussi ici.
+       ===================================================================== */
+    const ADMIN_PASSWORD = 'sisko2026';
+    const OWNER_PASSWORD = 'sisko-profit-2026';
+
+    function openLoginModal() {
+        document.getElementById('loginOverlay').classList.add('open');
+        document.getElementById('loginError').style.display = 'none';
+        document.getElementById('loginPassword').value = '';
+        setTimeout(() => document.getElementById('loginPassword').focus(), 50);
+    }
+
+    function closeLoginModal() {
+        document.getElementById('loginOverlay').classList.remove('open');
+    }
+
+    document.getElementById('loginOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'loginOverlay') closeLoginModal();
+    });
+
+    function submitLogin() {
+        const val = document.getElementById('loginPassword').value;
+        if (val === ADMIN_PASSWORD) {
+            sessionStorage.setItem('sisko_admin_ok', '1');
+            window.location.href = 'admin.html';
+        } else if (val === OWNER_PASSWORD) {
+            sessionStorage.setItem('sisko_owner_ok', '1');
+            window.location.href = 'owner.html';
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    }
 </script>
+
+<!-- ============ MODAL CONNEXION (équipe / owner) ============ -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+        <button class="login-close" onclick="closeLoginModal()" aria-label="Fermer">✕</button>
+        <h3>Connexion</h3>
+        <p>Entrez votre mot de passe — vous serez redirigé automatiquement vers votre espace.</p>
+        <input type="password" id="loginPassword" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') submitLogin()">
+        <div class="login-error" id="loginError">Mot de passe incorrect.</div>
+        <button class="login-submit" onclick="submitLogin()">Se connecter</button>
+    </div>
+</div>
+
+<!-- ============ BOUTON WHATSAPP FLOTTANT ============ -->
+<a class="wa-float" href="https://wa.me/213770406106" target="_blank" rel="noopener" aria-label="Discuter sur WhatsApp" title="Discuter sur WhatsApp">
+    <svg viewBox="0 0 32 32" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.001 3C9.11 3 3.5 8.61 3.5 15.5c0 2.42.66 4.68 1.8 6.63L3 29l7.06-2.25a12.4 12.4 0 0 0 5.94 1.52h.01c6.89 0 12.5-5.61 12.5-12.5S22.89 3 16.001 3zm0 22.7h-.01a10.2 10.2 0 0 1-5.2-1.43l-.37-.22-4.19 1.34 1.36-4.08-.24-.42a10.17 10.17 0 0 1-1.56-5.39c0-5.64 4.59-10.23 10.22-10.23 2.73 0 5.3 1.07 7.23 3s3 4.5 3 7.23c0 5.64-4.59 10.2-10.24 10.2zm5.6-7.65c-.31-.15-1.82-.9-2.1-1-.28-.1-.49-.15-.69.16-.2.3-.79 1-.97 1.2-.18.2-.36.23-.67.08-.31-.16-1.3-.48-2.48-1.54-.92-.82-1.54-1.83-1.72-2.14-.18-.31-.02-.47.13-.62.14-.14.31-.36.46-.54.15-.18.2-.3.31-.5.1-.2.05-.38-.02-.53-.08-.15-.69-1.66-.94-2.28-.25-.6-.5-.52-.69-.53h-.59c-.2 0-.53.08-.81.38-.28.31-1.06 1.03-1.06 2.52s1.09 2.92 1.24 3.12c.15.2 2.14 3.27 5.19 4.58.73.31 1.29.5 1.73.64.73.23 1.39.2 1.92.12.59-.09 1.82-.74 2.07-1.46.26-.71.26-1.32.18-1.45-.07-.13-.28-.2-.59-.36z"/>
+    </svg>
+</a>
 
 </body>
 </html>
