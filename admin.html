@@ -437,6 +437,19 @@
     .color-row input[type="file"] { max-width: 140px; font-size: 0.75rem; color: var(--muted); }
     .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
     .checkbox-row input { width: auto; }
+
+    /* ---------- STOCK ---------- */
+    .stock-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .stock-table th, .stock-table td { padding: 6px 8px; text-align: center; border-bottom: 1px solid var(--border); }
+    .stock-table th:first-child, .stock-table td:first-child { text-align: left; }
+    .stock-table input[type="number"] { width: 58px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 6px; color: var(--text); text-align: center; }
+    .stock-table input.low-stock { border-color: #f2b134; color: #f2b134; }
+    .stock-table input.out-stock { border-color: var(--accent); color: var(--accent); }
+    .low-stock-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .low-stock-item:last-child { border-bottom: none; }
+    .low-stock-item .qty-tag { font-weight: 700; }
+    .low-stock-item .qty-tag.out { color: var(--accent); }
+    .low-stock-item .qty-tag.low { color: #f2b134; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
@@ -452,7 +465,7 @@
         <div class="gate-error" id="gateError">Mot de passe incorrect.</div>
         <button class="btn" onclick="tryLogin()">Entrer</button>
         <div class="gate-note">
-            Mot de passe par défaut : <strong>sisko2026</strong> — <br><br>
+            Mot de passe par défaut : <strong>sisko2026</strong> — à changer directement dans le fichier admin.html (variable ADMIN_PASSWORD) avant mise en ligne.<br><br>
             ⚠️ Ceci est un journal de commandes local au navigateur : il n'affiche que les commandes passées depuis cet appareil (ou synchronisées via un autre onglet ouvert dessus). WhatsApp reste le canal de confirmation officiel de chaque commande.
         </div>
     </div>
@@ -474,6 +487,7 @@
         <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')">Commandes</button>
         <button class="tab-btn" data-tab="clients" onclick="switchTab('clients')">Clients</button>
         <button class="tab-btn" data-tab="produits" onclick="switchTab('produits')">Produits</button>
+        <button class="tab-btn" data-tab="stock" onclick="switchTab('stock')">Stock</button>
         <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Statistiques</button>
     </div>
 
@@ -536,6 +550,18 @@
         <div id="productListWrap"></div>
     </div>
 
+    <!-- ===== ONGLET : STOCK ===== -->
+    <div class="tab-panel" id="panel-stock">
+        <div class="panel-box" id="lowStockBox" style="display:none;">
+            <h3>⚠️ À réapprovisionner</h3>
+            <div id="lowStockList"></div>
+        </div>
+        <div class="toolbar">
+            <input type="text" id="stockSearchInput" placeholder="Rechercher un produit..." oninput="renderStockTab()">
+        </div>
+        <div id="stockListWrap"></div>
+    </div>
+
     <!-- ===== ONGLET : STATISTIQUES ===== -->
     <div class="tab-panel" id="panel-stats">
         <div class="toolbar">
@@ -573,6 +599,11 @@
     <div class="modal-box" id="productBox" style="max-width:560px;"></div>
 </div>
 
+<!-- ============ STOCK MODAL ============ -->
+<div class="modal-overlay" id="stockOverlay">
+    <div class="modal-box" id="stockBox" style="max-width:640px;"></div>
+</div>
+
 <!-- ============ BOUTON WHATSAPP FLOTTANT (contact rapide) ============ -->
 <a class="wa-float" href="https://wa.me/213770406106" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp" title="Contacter sur WhatsApp">
     <svg viewBox="0 0 32 32" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
@@ -588,10 +619,11 @@
  
     /* =====================================================================
        SUPABASE — même base que index.html
-      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56eG10bWJub2lyZ3B3a2VucW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDk1MjcsImV4cCI6MjA5ODU4NTUyN30.Afj0RuHq4sB22feRsi9xBe0Ri60aiObKCFPenb-zfts
+       ⚠️ À FAIRE : collez ici la même clé "anon public" que dans index.html
+       (Supabase → Project Settings → API → anon public).
        ===================================================================== */
     const SUPABASE_URL = 'https://nzxmtmbnoirgpwkenqnv.supabase.co';
-    const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im56eG10bWJub2lyZ3B3a2VucW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDk1MjcsImV4cCI6MjA5ODU4NTUyN30.Afj0RuHq4sB22feRsi9xBe0Ri60aiObKCFPenb-zfts';
     const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_ANON_KEY !== 'PASTE_YOUR_ANON_PUBLIC_KEY_HERE')
         ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         : null;
@@ -621,6 +653,7 @@
         document.getElementById('dash').classList.add('show');
         loadOrders();
         loadProducts();
+        loadInventory();
         subscribeRealtime();
     }
  
@@ -758,6 +791,7 @@
         if (tab === 'clients') renderClients();
         if (tab === 'overview') renderOverview();
         if (tab === 'produits') renderProducts();
+        if (tab === 'stock') renderStockTab();
         if (tab === 'stats') renderStats();
     }
 
@@ -1202,6 +1236,142 @@
         } else {
             localStorage.setItem('sisko_products', JSON.stringify(productsCache));
         }
+    }
+
+    /* =====================================================================
+       STOCK — inventaire par produit / couleur / taille (table "inventory")
+       Le stock est indicatif pour le site (badge), mais géré précisément ici.
+       ===================================================================== */
+    const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+    const LOW_STOCK_THRESHOLD = 3;
+    let inventoryCache = []; // [{product_id, color, size, quantity}]
+
+    function invQty(productId, color, size) {
+        const row = inventoryCache.find(r => r.product_id === productId && r.color === color && r.size === size);
+        return row ? row.quantity : 0;
+    }
+
+    async function loadInventory() {
+        if (!supabaseClient) {
+            try { inventoryCache = JSON.parse(localStorage.getItem('sisko_inventory') || '[]'); }
+            catch (e) { inventoryCache = []; }
+        } else {
+            const { data, error } = await supabaseClient.from('inventory').select('*');
+            if (error) { console.error('Erreur chargement stock :', error); inventoryCache = []; }
+            else inventoryCache = data || [];
+        }
+        if (document.getElementById('panel-stock')?.classList.contains('active')) renderStockTab();
+    }
+
+    function renderStockTab() {
+        const wrap = document.getElementById('stockListWrap');
+        const search = (document.getElementById('stockSearchInput')?.value || '').toLowerCase();
+        if (!wrap) return;
+
+        if (productsCache.length === 0) {
+            wrap.innerHTML = '<div class="empty-state"><div class="icon">📦</div><h3>Aucun produit</h3><p>Ajoutez d\'abord vos produits dans l\'onglet « Produits », puis revenez ici pour gérer leur stock.</p></div>';
+            document.getElementById('lowStockBox').style.display = 'none';
+            return;
+        }
+
+        // Bandeau "à réapprovisionner"
+        const lowItems = [];
+        productsCache.forEach(p => {
+            (p.colors || []).forEach(c => {
+                SIZES.forEach(s => {
+                    const qty = invQty(p.id, c, s);
+                    if (qty <= LOW_STOCK_THRESHOLD) lowItems.push({ product: p.name, color: c, size: s, qty });
+                });
+            });
+        });
+        lowItems.sort((a, b) => a.qty - b.qty);
+        const lowBox = document.getElementById('lowStockBox');
+        if (lowItems.length) {
+            lowBox.style.display = 'block';
+            document.getElementById('lowStockList').innerHTML = lowItems.slice(0, 20).map(it => (
+                '<div class="low-stock-item">' +
+                    '<span>' + it.product + ' — ' + it.color + ' / ' + it.size + '</span>' +
+                    '<span class="qty-tag ' + (it.qty <= 0 ? 'out' : 'low') + '">' + (it.qty <= 0 ? 'Rupture' : it.qty + ' restant(s)') + '</span>' +
+                '</div>'
+            )).join('') + (lowItems.length > 20 ? '<div class="low-stock-item"><span style="color:var(--muted);">+ ' + (lowItems.length - 20) + ' autre(s) variant(s)…</span></div>' : '');
+        } else {
+            lowBox.style.display = 'none';
+        }
+
+        // Liste des produits
+        const filtered = productsCache.filter(p => !search || p.name.toLowerCase().includes(search));
+        wrap.innerHTML = '<div class="product-list">' + filtered.map(p => {
+            const colors = p.colors || [];
+            const totalUnits = colors.reduce((sum, c) => sum + SIZES.reduce((s2, sz) => s2 + invQty(p.id, c, sz), 0), 0);
+            return (
+                '<div class="product-card" style="grid-template-columns:56px 1fr auto auto;">' +
+                    '<div class="product-thumb"><span>📦</span></div>' +
+                    '<div class="product-main"><div class="pname">' + p.name + '</div><div class="pmeta">' + totalUnits + ' unité(s) en stock (toutes tailles/couleurs)</div></div>' +
+                    '<div class="p-actions"><button class="btn-sm" onclick="openStockModal(\'' + p.id + '\')">Gérer le stock</button></div>' +
+                '</div>'
+            );
+        }).join('') + '</div>';
+    }
+
+    function openStockModal(productId) {
+        const p = productsCache.find(x => x.id === productId);
+        if (!p) return;
+        const colors = p.colors && p.colors.length ? p.colors : ['Défaut'];
+
+        const box = document.getElementById('stockBox');
+        let table = '<h3>Stock — ' + p.name + '</h3>' +
+            '<div style="overflow-x:auto; margin-top:14px;"><table class="stock-table"><thead><tr><th>Couleur</th>' +
+            SIZES.map(s => '<th>' + s + '</th>').join('') + '</tr></thead><tbody>';
+
+        colors.forEach(c => {
+            table += '<tr><td>' + c + '</td>';
+            SIZES.forEach(s => {
+                const qty = invQty(productId, c, s);
+                const cls = qty <= 0 ? 'out-stock' : (qty <= LOW_STOCK_THRESHOLD ? 'low-stock' : '');
+                table += '<td><input type="number" min="0" class="' + cls + '" id="stk-' + s.replace(/[^a-zA-Z0-9]/g,'') + '-' + c.replace(/[^a-zA-Z0-9]/g,'') + '" data-color="' + c + '" data-size="' + s + '" value="' + qty + '" oninput="this.className = (Number(this.value)<=0 ? \'out-stock\' : (Number(this.value)<=' + LOW_STOCK_THRESHOLD + ' ? \'low-stock\' : \'\'))"></td>';
+            });
+            table += '</tr>';
+        });
+        table += '</tbody></table></div>' +
+            '<div class="modal-close-row">' +
+                '<button class="btn-sm" style="flex:1;" onclick="saveStock(\'' + productId + '\')">💾 Enregistrer le stock</button>' +
+                '<button class="btn-sm" style="flex:1;" onclick="closeStockModal()">Fermer</button>' +
+            '</div>';
+        box.innerHTML = table;
+        document.getElementById('stockOverlay').classList.add('open');
+    }
+
+    function closeStockModal() {
+        document.getElementById('stockOverlay').classList.remove('open');
+    }
+
+    document.getElementById('stockOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'stockOverlay') closeStockModal();
+    });
+
+    async function saveStock(productId) {
+        const inputs = Array.from(document.querySelectorAll('#stockBox input[data-color]'));
+        const rows = inputs.map(inp => ({
+            product_id: productId,
+            color: inp.dataset.color,
+            size: inp.dataset.size,
+            quantity: Number(inp.value) || 0,
+        }));
+
+        if (supabaseClient) {
+            const { error } = await supabaseClient.from('inventory').upsert(rows);
+            if (error) { console.error('Erreur sauvegarde stock :', error); alert('Erreur lors de la sauvegarde du stock.'); return; }
+        } else {
+            rows.forEach(row => {
+                const i = inventoryCache.findIndex(r => r.product_id === row.product_id && r.color === row.color && r.size === row.size);
+                if (i >= 0) inventoryCache[i] = row; else inventoryCache.push(row);
+            });
+            localStorage.setItem('sisko_inventory', JSON.stringify(inventoryCache));
+        }
+
+        closeStockModal();
+        await loadInventory();
+        renderStockTab();
     }
 
     /* =====================================================================
