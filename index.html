@@ -88,7 +88,7 @@
     .marquee-track {
         display: flex;
         width: max-content;
-        animation: scrollLeft 20s linear infinite;
+        animation: scrollLeft 42s linear infinite;
         gap: 60px;
     }
 
@@ -1257,23 +1257,45 @@
 <div class="marquee-wrap">
     <div class="marquee-track">
         <span>Bienvenue chez SISKO SHOP</span>
+        <span>T-Shirt — 750 DA</span>
+        <span>Polo — 1 100 DA</span>
+        <span>Short — 1 150 DA</span>
+        <span>Pantalon — 1 200 DA</span>
+        <span>T-Shirt Oversize — 1 400 DA</span>
+        <span>Baggy Short — 1 400 DA</span>
+        <span>Casquette — 1 200 DA</span>
+        <span>Gilet de Sécurité — 2 000 DA</span>
+        <span>📍 Alger, Algérie</span>
+        <span>📦 Livraison 69 wilayas</span>
+        <span>💬 WhatsApp : 0770 40 61 06</span>
+        <span>Broderie &amp; DTF sur place</span>
+        <span>Devis personnalisé sous 6h</span>
         <span>Bienvenue chez SISKO SHOP</span>
-        <span>Bienvenue chez SISKO SHOP</span>
-        <span>Bienvenue chez SISKO SHOP</span>
-        <span>Bienvenue chez SISKO SHOP</span>
-        <span>Bienvenue chez SISKO SHOP</span>
+        <span>T-Shirt — 750 DA</span>
+        <span>Polo — 1 100 DA</span>
+        <span>Short — 1 150 DA</span>
+        <span>Pantalon — 1 200 DA</span>
+        <span>T-Shirt Oversize — 1 400 DA</span>
+        <span>Baggy Short — 1 400 DA</span>
+        <span>Casquette — 1 200 DA</span>
+        <span>Gilet de Sécurité — 2 000 DA</span>
+        <span>📍 Alger, Algérie</span>
+        <span>📦 Livraison 69 wilayas</span>
+        <span>💬 WhatsApp : 0770 40 61 06</span>
+        <span>Broderie &amp; DTF sur place</span>
+        <span>Devis personnalisé sous 6h</span>
     </div>
 </div>
 
 <main>
     <section class="hero">
-        <span class="eyebrow">✦ Solutions entreprises</span>
+        <span class="eyebrow">✦ Sous-traitant ✦ Solutions entreprises</span>
         <h1>Bienvenue chez SISKO SHOP</h1>
-        <p class="lead">Des articles clés-en-main pour habiller votre personnel, vos événements et vos équipes. Livraison à Alger, <strong>meilleure qualité et meilleur prix en Algérie</strong>.</p>
+        <p class="lead">Des articles clés-en-main pour habiller votre personnel, vos événements et vos équipes. Livraison 69 wilayas, <strong>meilleure qualité et meilleur prix en Algérie</strong>.</p>
         <a href="https://wa.me/213770406106" class="btn-primary">Demander un devis →</a>
 
         <div class="hero-ticker">
-            <span>Broderie &amp; DTF incluses</span>
+            <span>Broderie &amp; DTF sur place</span>
             <span>Devis personnalisé disponible</span>
         </div>
     </section>
@@ -1492,7 +1514,7 @@
             <li><a href="#">T-shirt</a></li>
             <li><a href="#">Short</a></li>
             <li><a href="#">Pantalon</a></li>
-            <li><a href="#">Baggy T-shirt</a></li>
+            <li><a href="#">T-shirt Oversize</a></li>
             <li><a href="#">Baggy Short</a></li>
             <li><a href="#">Casquette</a></li>
             <li><a href="#">Gilet de sécurité</a></li>
@@ -1517,6 +1539,34 @@
        ===================================================================== */
     const WHATSAPP_NUMBER = '213770406106';
     const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+    /* =====================================================================
+       SON DE CONFIRMATION DE COMMANDE
+       — Généré directement en JS (aucun fichier audio nécessaire), joue un
+       petit "ding" à chaque commande validée.
+       ===================================================================== */
+    function playOrderSound() {
+        try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [880, 1175]; // petit carillon (La5 puis Ré6)
+            notes.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const start = ctx.currentTime + i * 0.12;
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(start);
+                osc.stop(start + 0.4);
+            });
+        } catch (err) {
+            console.error('Son de confirmation indisponible :', err);
+        }
+    }
 
     /* =====================================================================
        SUPABASE — base de données des commandes
@@ -1562,7 +1612,7 @@
         {
             id: 'tshirt', name: 'T-Shirt', price: 750,
             desc: 'Coton unisexe — impression DTF ou broderie.',
-            colors: ['Bleu','Blanc','Vert','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
+            colors: ['Bleu','Blanc','Noir','Vert','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
             images: {
                 'Bleu': img('tshirt bleu .jpg'), 
                 'Blanc': img('t-shirt blanc.jpg'),
@@ -1576,18 +1626,21 @@
                 'Bordeaux': img('tshirt-bordeaux.jpg'),
                 'Bleu ciel': img('tshirt-bleu-ciel.jpg'),
                 'Beige': img('tshirt-beige.jpg'),
-                // 'Vert' et 'Vert foncé' : pas encore de photo dans Supabase — à ajouter.
+                // 'Vert', 'Vert foncé' et 'Noir' : pas encore de photo dans Supabase — à ajouter.
             }
         },
         {
             id: 'polo', name: 'Polo', price: 1100,
             desc: 'Piqué de coton, col boutonné — look pro pour l\'entreprise.',
-            colors: ['Blanc','Jaune','Gris clair','Gris foncé'],
+            colors: ['Bleu','Blanc','Noir','Vert','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Gris foncé','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
             images: {
                 'Blanc': img('polo-blanc.jpg'),
                 'Jaune': img('polo-jaune.jpg'),
                 'Gris clair': img('polo-gris-clair.jpg'),
                 'Gris foncé': img('polo-gris-fonce.jpg'),
+                // 'Bleu', 'Noir', 'Vert', 'Rouge', 'Marine', 'Rose', 'Orange',
+                // 'Anthracite', 'Vert foncé', 'Bordeaux', 'Bleu ciel', 'Beige' :
+                // pas encore de photo dans Supabase — à ajouter.
             }
         },
         { id: 'short',       name: 'Short',             price: 1150, desc: 'Coupe sport, idéal événements et équipes.',        colors: ['Blanc','Noir','Gris'], 
@@ -1600,7 +1653,7 @@
          , popular: true },
         { id: 'pantalon',    name: 'Pantalon',          price: 1200, desc: 'Confortable, pour un usage quotidien pro.',        colors: ['Blanc','Noir'], images: {} },
         {
-            id: 'baggytshirt', name: 'Baggy T-Shirt', price: 1400,
+            id: 'baggytshirt', name: 'T-Shirt Oversize', price: 1400,
             desc: 'Coupe oversize, tendance streetwear.',
             colors: ['Blanc','Noir'],
             images: {
@@ -2108,6 +2161,7 @@
         };
 
         cfgSaveOrder(order);
+        playOrderSound();
 
         const lines = [
             'Bonjour Sisko Shop, je souhaite commander :',
