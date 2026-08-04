@@ -1595,6 +1595,7 @@
         'Marine': '#1b2a4a',
         'Rose': '#f4b8c1',
         'Orange': '#f0902a',
+        'Gris': '#9a9a9a',
         'Gris clair': '#c9c9cf',
         'Gris foncé': '#5a5e66',
         'Anthracite': '#3c4048',
@@ -1643,19 +1644,26 @@
                 // pas encore de photo dans Supabase — à ajouter.
             }
         },
-        { id: 'short',       name: 'Short',             price: 1150, desc: 'Coupe sport, idéal événements et équipes.',        colors: ['Blanc','Noir','Gris'], 
-         images: { 
-           'Blanc': img('Short-blanc.jpg'),
-           'Noir': img('Short-Noir.jpg'),
-           'gris': img('Short-Gris.jpg'),  
-        }
-         
-         , popular: true },
-        { id: 'pantalon',    name: 'Pantalon',          price: 1200, desc: 'Confortable, pour un usage quotidien pro.',        colors: ['Gris','Noir'],
-         images: {
-            'Gris': img('pantalon-Gris.jpg')
-            'Noir': img('pantalon-Noir.jpg')
-         } },
+        {
+            id: 'short', name: 'Short', price: 1150,
+            desc: 'Coupe sport, idéal événements et équipes.',
+            colors: ['Blanc','Noir','Gris'],
+            images: {
+                'Blanc': img('Short-blanc.jpg'),
+                'Noir': img('Short-Noir.jpg'),
+                'Gris': img('Short-Gris.jpg'),
+            },
+            popular: true
+        },
+        {
+            id: 'pantalon', name: 'Pantalon', price: 1200,
+            desc: 'Confortable, pour un usage quotidien pro.',
+            colors: ['Gris','Noir'],
+            images: {
+                'Gris': img('pantalon-Gris.jpg'),
+                'Noir': img('pantalon-Noir.jpg'),
+            }
+        },
         {
             id: 'baggytshirt', name: 'T-Shirt Oversize', price: 1400,
             desc: 'Coupe oversize, tendance streetwear.',
