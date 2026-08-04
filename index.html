@@ -1651,7 +1651,11 @@
         }
          
          , popular: true },
-        { id: 'pantalon',    name: 'Pantalon',          price: 1200, desc: 'Confortable, pour un usage quotidien pro.',        colors: ['Blanc','Noir'], images: {} },
+        { id: 'pantalon',    name: 'Pantalon',          price: 1200, desc: 'Confortable, pour un usage quotidien pro.',        colors: ['Gris','Noir'],
+         images: {
+            'Gris': img('pantalon-Gris.jpg')
+            'Noir': img('pantalon-Noir.jpg')
+         } },
         {
             id: 'baggytshirt', name: 'T-Shirt Oversize', price: 1400,
             desc: 'Coupe oversize, tendance streetwear.',
