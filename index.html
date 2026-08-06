@@ -1628,7 +1628,6 @@
                 'Bleu ciel': img('tshirt-bleu-ciel.jpg'),
                 'Beige': img('tshirt-beige.jpg'),
                 // 'Vert', 'Vert foncé' et 'Noir' : pas encore de photo dans Supabase — à ajouter.
-                // Dès que tu uploades la photo, ajoute par ex. : 'Noir': img('tshirt-noir.jpg'),
             }
         },
         {
@@ -1642,7 +1641,7 @@
                 'Gris foncé': img('polo-gris-fonce.jpg'),
                 // 'Bleu', 'Noir', 'Vert', 'Rouge', 'Marine', 'Rose', 'Orange',
                 // 'Anthracite', 'Vert foncé', 'Bordeaux', 'Bleu ciel', 'Beige' :
-                // pas encore de photo dans Supabase — à ajouter (ex: 'Bleu': img('polo-bleu.jpg')).
+                // pas encore de photo dans Supabase — à ajouter.
             }
         },
         {
@@ -1668,11 +1667,10 @@
         {
             id: 'baggytshirt', name: 'T-Shirt Oversize', price: 1400,
             desc: 'Coupe oversize, tendance streetwear.',
-            colors: ['Blanc','Noir','Gris'],
+            colors: ['Blanc','Noir'],
             images: {
                 'Blanc': img('baggy-tshirt-blanc.jpg'),
                 'Noir': img('baggy-tshirt-noir.jpg'),
-                // 'Gris' : pas encore de photo dans Supabase — à ajouter (ex: 'Gris': img('baggy-tshirt-gris.jpg')).
             }
         },
         { id: 'baggyshort',  name: 'Baggy Short',       price: 1400, desc: 'Coupe ample, matière résistante.',                 colors: ['Blanc','Noir'], images: {} },
@@ -1689,20 +1687,6 @@
                 'Blanc': img('gilet-securite.jpg'),
                 'Noir': img('gilet-securite.jpg'),
             }
-        },
-        {
-            id: 'gilet-travail', name: 'Gilet de Travail', price: 2200, desc: 'Robuste, poches multiples, idéal pour le terrain.', colors: ['Standard'],
-            images: {
-                'Standard': img('gilet-de-travail.jpg'),
-            }
-        },
-        {
-            id: 'totebag', name: 'Tote Bag', price: 700,
-            desc: 'Sac en toile résistante, personnalisable, idéal pour le quotidien.',
-            colors: ['Bleu','Blanc','Noir','Vert','Jaune','Rouge','Marine','Rose','Orange','Gris clair','Gris foncé','Anthracite','Vert foncé','Bordeaux','Bleu ciel','Beige'],
-            images: {}
-            // Aucune photo dans Supabase pour l'instant — à ajouter au fur et à mesure,
-            // ex: 'Blanc': img('tote-bag-blanc.jpg'), 'Noir': img('tote-bag-noir.jpg'), etc.
         },
     ];
  
@@ -1976,12 +1960,12 @@
         if (!p) { grid.innerHTML = ''; return; }
         grid.innerHTML = p.colors.map(c => {
             const active = cfg.color === c ? ' active' : '';
-            const badge = cfg.size ? stockBadgeHtml(getStock(p.id, c, cfg.size)) : '';
+            // Le badge de stock (rupture / stock faible) n'est plus affiché au client —
+            // il reste visible uniquement dans l'espace équipe (admin.html, onglet "Stock").
             return (
                 '<div class="cfg-color-opt' + active + '" onclick="cfgSelectColor(\'' + c + '\')">' +
                     '<div class="dot" style="background:' + COLOR_HEX[c] + ';"></div>' +
                     '<span class="cname">' + c + '</span>' +
-                    badge +
                 '</div>'
             );
         }).join('');
