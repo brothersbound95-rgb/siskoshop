@@ -471,11 +471,12 @@
     <div class="gate-box">
         <h1>Espace équipe</h1>
         <p>Accès réservé — commandes Sisko Shop</p>
-        <input type="password" id="gatePassword" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') tryLogin()">
-        <div class="gate-error" id="gateError">Mot de passe incorrect.</div>
+        <input type="email" id="gateEmail" placeholder="Email" autocomplete="username" onkeydown="if(event.key==='Enter') document.getElementById('gatePassword').focus()">
+        <input type="password" id="gatePassword" placeholder="Mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter') tryLogin()">
+        <div class="gate-error" id="gateError">Email ou mot de passe incorrect.</div>
         <button class="btn" onclick="tryLogin()">Entrer</button>
         <div class="gate-note">
-            Mot de passe par défaut : <strong>sisko2026</strong> — à changer directement dans le fichier admin.html (variable ADMIN_PASSWORD) avant mise en ligne.<br><br>
+            Connexion sécurisée via Supabase Auth. Pour créer ou changer un accès admin, va dans ton dashboard Supabase → Authentication → Users.<br><br>
             ⚠️ Ceci est un journal de commandes local au navigateur : il n'affiche que les commandes passées depuis cet appareil (ou synchronisées via un autre onglet ouvert dessus). WhatsApp reste le canal de confirmation officiel de chaque commande.
         </div>
     </div>
@@ -631,7 +632,6 @@
     /* ⚠️ Mot de passe simple côté client — suffisant pour dissuader un accès
        occasionnel, pas pour protéger des données sensibles. Pour une vraie
        sécurité, ce journal doit être remplacé par un backend serveur. */
-    const ADMIN_PASSWORD = 'sisko2026';
  
     /* =====================================================================
        SUPABASE — même base que index.html
@@ -647,23 +647,31 @@
     // Cache local des commandes chargées depuis Supabase (pour filtrer/chercher sans re-requêter à chaque frappe).
     let ordersCache = [];
  
-    function tryLogin() {
-        const val = document.getElementById('gatePassword').value;
-        if (val === ADMIN_PASSWORD) {
-            sessionStorage.setItem('sisko_admin_ok', '1');
-            showDashboard();
-        } else {
+    async function tryLogin() {
+        const email = document.getElementById('gateEmail').value.trim();
+        const password = document.getElementById('gatePassword').value;
+        document.getElementById('gateError').classList.remove('show');
+        if (!supabaseClient) {
+            document.getElementById('gateError').textContent = 'Connexion Supabase indisponible.';
             document.getElementById('gateError').classList.add('show');
+            return;
         }
+        const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) {
+            document.getElementById('gateError').textContent = 'Email ou mot de passe incorrect.';
+            document.getElementById('gateError').classList.add('show');
+            return;
+        }
+        showDashboard();
     }
- 
-    function logout() {
-        sessionStorage.removeItem('sisko_admin_ok');
+
+    async function logout() {
+        if (supabaseClient) await supabaseClient.auth.signOut();
         document.getElementById('dash').classList.remove('show');
         document.getElementById('gate').style.display = 'flex';
         document.getElementById('gatePassword').value = '';
     }
- 
+
     function showDashboard() {
         document.getElementById('gate').style.display = 'none';
         document.getElementById('dash').classList.add('show');
@@ -672,8 +680,13 @@
         loadInventory();
         subscribeRealtime();
     }
- 
-    if (sessionStorage.getItem('sisko_admin_ok') === '1') showDashboard();
+
+    // Vérifie une session Supabase Auth existante (au lieu d'un simple flag local non sécurisé).
+    (async function checkExistingSession() {
+        if (!supabaseClient) return;
+        const { data } = await supabaseClient.auth.getSession();
+        if (data && data.session) showDashboard();
+    })();
  
     // Convertit une ligne Supabase (snake_case) vers le format utilisé par l'UI (camelCase).
     function fromRow(r) {
