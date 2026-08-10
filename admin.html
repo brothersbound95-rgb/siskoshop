@@ -384,6 +384,27 @@
     .modal-logo { width: 100%; max-height: 220px; object-fit: contain; background: #fff; border-radius: 10px; margin: 16px 0; padding: 10px; }
     .modal-close-row { margin-top: 18px; display: flex; gap: 10px; }
 
+    /* ---------- PIÈCE JOINTE COMMANDE (admin) ---------- */
+    .attach-box {
+        margin-top: 16px;
+        padding: 14px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+    }
+    .attach-box .attach-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 10px; }
+    .attach-current { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .attach-current .attach-thumb {
+        width: 44px; height: 44px; border-radius: 8px; background: #fff; border: 1px solid var(--border);
+        display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; font-size: 1.2rem;
+    }
+    .attach-current .attach-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .attach-current .attach-name { font-size: 0.85rem; word-break: break-all; flex: 1; }
+    .attach-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .attach-input-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .attach-input-row input[type="file"] { flex: 1; min-width: 160px; font-size: 0.78rem; color: var(--muted); }
+    .attach-status { font-size: 0.78rem; color: var(--muted); margin-top: 8px; min-height: 1em; }
+
     /* ---------- BOUTON WHATSAPP FLOTTANT ---------- */
     .wa-float {
         position: fixed;
@@ -471,8 +492,8 @@
     <div class="gate-box">
         <h1>Espace équipe</h1>
         <p>Accès réservé — commandes Sisko Shop</p>
-        <input type="email" id="gateEmail" placeholder="Email" autocomplete="username" onkeydown="if(event.key==='Enter') document.getElementById('gatePassword').focus()">
-        <input type="password" id="gatePassword" placeholder="Mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter') tryLogin()">
+        <input type="email" id="gateEmail" placeholder="Email" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')" onkeydown="if(event.key==='Enter') document.getElementById('gatePassword').focus()">
+        <input type="password" id="gatePassword" placeholder="Mot de passe" autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly')" onkeydown="if(event.key==='Enter') tryLogin()">
         <div class="gate-error" id="gateError">Email ou mot de passe incorrect.</div>
         <button class="btn" onclick="tryLogin()">Entrer</button>
         <div class="gate-note">
@@ -646,6 +667,17 @@
  
     // Cache local des commandes chargées depuis Supabase (pour filtrer/chercher sans re-requêter à chaque frappe).
     let ordersCache = [];
+
+    // Empêche le navigateur de pré-remplir automatiquement l'email et le mot de passe
+    // à l'ouverture de la page (certains navigateurs le font même avec autocomplete="off").
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const ge = document.getElementById('gateEmail');
+            const gp = document.getElementById('gatePassword');
+            if (ge) ge.value = '';
+            if (gp) gp.value = '';
+        }, 80);
+    });
  
     async function tryLogin() {
         const email = document.getElementById('gateEmail').value.trim();
@@ -707,6 +739,8 @@
             phone: r.phone,
             note: r.note,
             status: r.status || 'nouveau',
+            adminAttachmentUrl: r.admin_attachment_url || null,
+            adminAttachmentName: r.admin_attachment_name || null,
         };
     }
  
@@ -1024,6 +1058,7 @@
             '<div class="modal-row"><span>Logo</span><span>' + (o.noLogo ? 'Sans logo' : (o.logoName || '—')) + '</span></div>' +
             (o.logoNote ? '<div class="modal-row"><span>Placement</span><span>' + o.logoNote + '</span></div>' : '') +
             (o.note ? '<div class="modal-row"><span>Remarque</span><span>' + o.note + '</span></div>' : '') +
+            renderAttachBox(o) +
             '<div class="modal-close-row">' +
                 '<button class="btn-sm" style="flex:1;background:rgba(46,204,113,0.16);border-color:#2ecc71;color:#2ecc71;" onclick="updateStatus(\'' + o.id + '\',\'traite\'); openDetail(\'' + o.id + '\');">✅ Confirmer</button>' +
                 '<button class="btn-sm" style="flex:1;background:rgba(156,156,156,0.14);border-color:var(--muted);color:var(--muted);" onclick="updateStatus(\'' + o.id + '\',\'annule\'); openDetail(\'' + o.id + '\');">✕ Annuler</button>' +
@@ -1033,6 +1068,96 @@
                 '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
             '</div>';
         document.getElementById('detailOverlay').classList.add('open');
+    }
+ 
+    // Construit le bloc "pièce jointe" (photo ou fichier ajouté par l'équipe) affiché dans le détail d'une commande.
+    function renderAttachBox(o) {
+        const isImg = o.adminAttachmentUrl && /\.(jpe?g|png|gif|webp)(\?|$)/i.test(o.adminAttachmentUrl);
+        const current = o.adminAttachmentUrl
+            ? '<div class="attach-current">' +
+                  '<div class="attach-thumb">' + (isImg ? '<img src="' + o.adminAttachmentUrl + '">' : '📎') + '</div>' +
+                  '<div class="attach-name">' + (o.adminAttachmentName || 'Fichier joint') + '</div>' +
+              '</div>' +
+              '<div class="attach-actions">' +
+                  '<button class="btn-sm" onclick="downloadOrderAttachment(\'' + o.id + '\')">⬇️ Télécharger</button>' +
+                  '<button class="btn-sm danger" onclick="removeOrderAttachment(\'' + o.id + '\')">🗑️ Retirer</button>' +
+              '</div>'
+            : '<div class="attach-status" id="attachEmpty-' + o.id + '">Aucune photo ni fichier ajouté pour cette commande.</div>';
+        return '<div class="attach-box">' +
+            '<div class="attach-title">Pièce jointe (équipe)</div>' +
+            current +
+            '<div class="attach-input-row" style="margin-top:10px;">' +
+                '<input type="file" id="attachInput-' + o.id + '" onchange="onOrderAttachmentChosen(\'' + o.id + '\', this)">' +
+            '</div>' +
+            '<div class="attach-status" id="attachStatus-' + o.id + '"></div>' +
+        '</div>';
+    }
+ 
+    // Envoie une photo/fichier vers le bucket public "image" de Supabase et l'attache à la commande.
+    async function onOrderAttachmentChosen(orderId, input) {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const statusEl = document.getElementById('attachStatus-' + orderId);
+        if (!supabaseClient) {
+            if (statusEl) statusEl.textContent = "Connexion à la base indisponible : impossible d'enregistrer le fichier.";
+            return;
+        }
+        if (statusEl) statusEl.textContent = 'Envoi en cours...';
+        const ext = (file.name.split('.').pop() || 'bin').toLowerCase();
+        const path = 'orders/' + orderId + '/' + Date.now() + '.' + ext;
+        const { error: upErr } = await supabaseClient.storage.from('image').upload(path, file, { upsert: true });
+        if (upErr) {
+            console.error('Erreur upload pièce jointe :', upErr);
+            if (statusEl) statusEl.textContent = "Échec de l'envoi. Réessaie.";
+            return;
+        }
+        const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
+        const url = data ? data.publicUrl : null;
+        const { error: dbErr } = await supabaseClient
+            .from('orders')
+            .update({ admin_attachment_url: url, admin_attachment_name: file.name })
+            .eq('id', orderId);
+        if (dbErr) {
+            console.error('Erreur enregistrement pièce jointe :', dbErr);
+            if (statusEl) statusEl.textContent = "Fichier envoyé mais non enregistré sur la commande.";
+            return;
+        }
+        const o = ordersCache.find(x => x.id === orderId);
+        if (o) { o.adminAttachmentUrl = url; o.adminAttachmentName = file.name; }
+        openDetail(orderId);
+    }
+ 
+    async function removeOrderAttachment(orderId) {
+        if (!supabaseClient) return;
+        const { error } = await supabaseClient
+            .from('orders')
+            .update({ admin_attachment_url: null, admin_attachment_name: null })
+            .eq('id', orderId);
+        if (error) { console.error('Erreur suppression pièce jointe :', error); return; }
+        const o = ordersCache.find(x => x.id === orderId);
+        if (o) { o.adminAttachmentUrl = null; o.adminAttachmentName = null; }
+        openDetail(orderId);
+    }
+ 
+    // Force le téléchargement du fichier (plutôt que de l'ouvrir dans un nouvel onglet).
+    async function downloadOrderAttachment(orderId) {
+        const o = ordersCache.find(x => x.id === orderId);
+        if (!o || !o.adminAttachmentUrl) return;
+        try {
+            const res = await fetch(o.adminAttachmentUrl);
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = o.adminAttachmentName || ('fichier-' + o.id);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(blobUrl);
+        } catch (e) {
+            console.error('Erreur téléchargement :', e);
+            window.open(o.adminAttachmentUrl, '_blank');
+        }
     }
  
     function closeDetail() {
