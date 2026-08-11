@@ -837,6 +837,7 @@
                     '</select>' +
                     '<div class="order-actions">' +
                         '<button class="icon-btn" title="Détails" onclick="openDetail(\'' + o.id + '\')">👁</button>' +
+                        '<button class="icon-btn" title="Imprimer" onclick="printOrder(\'' + o.id + '\')">🖨</button>' +
                         '<button class="icon-btn" title="Supprimer" onclick="deleteOrder(\'' + o.id + '\')">🗑</button>' +
                     '</div>' +
                 '</div>'
@@ -1065,11 +1066,85 @@
             '</div>' +
             '<div class="modal-close-row">' +
                 (o.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + o.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
+                '<button class="btn-sm" style="flex:1;" onclick="printOrder(\'' + o.id + '\')">🖨 Imprimer</button>' +
+            '</div>' +
+            '<div class="modal-close-row">' +
                 '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
             '</div>';
         document.getElementById('detailOverlay').classList.add('open');
     }
  
+    /* =====================================================================
+       IMPRESSION D'UNE COMMANDE — génère un bon de commande imprimable
+       (ouvre une fenêtre dédiée avec une mise en page simple, puis lance
+       automatiquement la boîte de dialogue d'impression du navigateur).
+       ===================================================================== */
+    function printOrder(id) {
+        const o = ordersCache.find(x => x.id === id);
+        if (!o) return;
+        const status = o.status || 'nouveau';
+        const date = new Date(o.date);
+        const dateStr = isNaN(date) ? '—' : date.toLocaleDateString('fr-FR') + ' à ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
+
+        const rows = [
+            ['Référence', o.id],
+            ['Date', dateStr],
+            ['Statut', STATUS_LABEL[status] || status],
+            ['Article', o.product],
+            ['Taille', o.size || '—'],
+            ['Couleur', o.color || '—'],
+            ['Quantité', o.qty],
+            ['Prix unitaire', fmtDA(o.price)],
+            ['Total', fmtDA(o.total)],
+            ['Client', o.customerName || '—'],
+            ['Téléphone', o.phone || '—'],
+            ['Logo', o.noLogo ? 'Sans logo' : (o.logoName || '—')],
+        ];
+        if (o.logoNote) rows.push(['Placement logo', o.logoNote]);
+        if (o.note) rows.push(['Remarque', o.note]);
+
+        const rowsHtml = rows.map(([label, value]) =>
+            '<tr><td class="label">' + label + '</td><td class="value">' + (value ?? '—') + '</td></tr>'
+        ).join('');
+
+        const logoHtml = o.logoDataUrl ? '<img class="order-logo" src="' + o.logoDataUrl + '" alt="logo">' : '';
+
+        const html =
+            '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' +
+            '<title>Bon de commande — ' + o.id + '</title>' +
+            '<style>' +
+                '* { box-sizing: border-box; }' +
+                'body { font-family: Arial, Helvetica, sans-serif; color: #111; padding: 32px; max-width: 640px; margin: 0 auto; }' +
+                '.header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #111; padding-bottom: 14px; margin-bottom: 22px; }' +
+                '.header h1 { font-size: 1.3rem; margin: 0 0 4px; }' +
+                '.header .sub { font-size: 0.8rem; color: #555; }' +
+                '.order-logo { max-width: 90px; max-height: 90px; object-fit: contain; border: 1px solid #ddd; border-radius: 6px; }' +
+                'table { width: 100%; border-collapse: collapse; }' +
+                'td { padding: 9px 6px; border-bottom: 1px solid #e2e2e2; font-size: 0.92rem; vertical-align: top; }' +
+                'td.label { color: #555; width: 38%; font-weight: 600; }' +
+                'td.value { font-weight: 500; }' +
+                '.footer { margin-top: 30px; font-size: 0.72rem; color: #888; text-align: center; }' +
+                '@media print { body { padding: 12px; } }' +
+            '</style></head><body>' +
+                '<div class="header">' +
+                    '<div><h1>Sisko Shop — Bon de commande</h1><div class="sub">Imprimé le ' + new Date().toLocaleString('fr-FR') + '</div></div>' +
+                    logoHtml +
+                '</div>' +
+                '<table>' + rowsHtml + '</table>' +
+                '<div class="footer">Document généré depuis l\'espace équipe Sisko Shop.</div>' +
+            '</body></html>';
+
+        const win = window.open('', '_blank', 'width=700,height=900');
+        if (!win) { alert('Merci d\'autoriser les fenêtres pop-up pour imprimer.'); return; }
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+        win.focus();
+        win.onload = () => { win.print(); };
+        // Filet de sécurité si onload ne se déclenche pas immédiatement.
+        setTimeout(() => { try { win.print(); } catch (e) {} }, 400);
+    }
+
     // Construit le bloc "pièce jointe" (photo ou fichier ajouté par l'équipe) affiché dans le détail d'une commande.
     function renderAttachBox(o) {
         const isImg = o.adminAttachmentUrl && /\.(jpe?g|png|gif|webp)(\?|$)/i.test(o.adminAttachmentUrl);
