@@ -1955,6 +1955,28 @@
         if (e.target.id === 'newOrderOverlay') closeNewOrderModal();
     });
 
+    // Envoie une commande à Supabase ; si la base signale une colonne
+    // manquante (schéma pas à jour), retire ce champ et réessaie plutôt que
+    // de bloquer complètement l'enregistrement. Renvoie les champs perdus
+    // pour pouvoir prévenir l'équipe.
+    async function insertOrderWithFallback(order) {
+        const payload = { ...order };
+        const missingFields = [];
+        for (let attempt = 0; attempt < 8; attempt++) {
+            const { error } = await supabaseClient.from('orders').insert(payload);
+            if (!error) return { error: null, missingFields };
+            const match = /Could not find the '([^']+)' column/.exec(error.message || '');
+            if (match && Object.prototype.hasOwnProperty.call(payload, match[1])) {
+                console.warn('Colonne "' + match[1] + '" absente de la table orders — nouvelle tentative sans ce champ.');
+                delete payload[match[1]];
+                missingFields.push(match[1]);
+                continue;
+            }
+            return { error, missingFields };
+        }
+        return { error: { message: 'Trop de colonnes manquantes dans la table orders.' }, missingFields };
+    }
+
     async function saveNewOrder() {
         if (noCart.length === 0) {
             alert('Merci d\'ajouter au moins un article à la commande (bouton "+ Ajouter cet article").');
@@ -2016,11 +2038,14 @@
 
         if (supabaseClient) {
             try {
-                const { error } = await supabaseClient.from('orders').insert(order);
+                const { error, missingFields } = await insertOrderWithFallback(order);
                 if (error) {
                     console.error('Erreur ajout commande :', error);
                     alert('Erreur lors de l\'enregistrement de la commande : ' + (error.message || 'erreur inconnue') + (error.hint ? ('\n' + error.hint) : ''));
                     return;
+                }
+                if (missingFields.length) {
+                    alert('⚠️ Commande enregistrée, mais certaines informations n\'ont pas pu être sauvegardées car ta base Supabase n\'a pas encore ces colonnes : ' + missingFields.join(', ') + '.\nDemande à Claude la requête SQL pour ajouter ces colonnes.');
                 }
             } catch (e) {
                 console.error('Erreur réseau ajout commande :', e);
