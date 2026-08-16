@@ -125,7 +125,7 @@
         border-bottom: 1px solid var(--border);
         overflow-x: auto;
     }
-
+ 
     .tab-btn {
         background: none;
         border: none;
@@ -137,13 +137,13 @@
         border-bottom: 2px solid transparent;
         white-space: nowrap;
     }
-
+ 
     .tab-btn:hover { color: var(--text); }
     .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
-
+ 
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
-
+ 
     .stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -254,7 +254,7 @@
     .status-select.st-en_cours { background: rgba(245,197,24,0.18); border-color: var(--yellow); color: var(--yellow); }
     .status-select.st-traite { background: rgba(46,204,113,0.16); border-color: #2ecc71; color: #2ecc71; }
     .status-select.st-annule { background: rgba(225,6,0,0.16); border-color: var(--red); color: #ff6b63; }
-
+ 
     .status-pill { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
     .status-pill.st-nouveau { background: rgba(59,130,246,0.16); color: #7eaaff; }
     .status-pill.st-en_cours { background: rgba(245,197,24,0.18); color: var(--yellow); }
@@ -277,7 +277,7 @@
  
     /* ---------- CLIENTS ---------- */
     .client-list { display: flex; flex-direction: column; gap: 12px; }
-
+ 
     .client-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -290,14 +290,14 @@
         cursor: pointer;
         transition: border-color 0.15s ease;
     }
-
+ 
     .client-card:hover { border-color: var(--muted); }
-
+ 
     @media (max-width: 900px) {
         .client-card { grid-template-columns: 44px 1fr; }
         .client-card .client-stat { grid-column: 2; }
     }
-
+ 
     .client-avatar {
         width: 44px;
         height: 44px;
@@ -311,15 +311,15 @@
         color: var(--accent);
         flex-shrink: 0;
     }
-
+ 
     .client-main .name { font-weight: 700; font-size: 0.98rem; }
     .client-main .phone { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-
+ 
     .client-stat { text-align: right; white-space: nowrap; }
     .client-stat .num { font-weight: 800; font-size: 1rem; }
     .client-stat .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
     .client-stat.spent .num { color: var(--accent); }
-
+ 
     /* Mini top-clients (onglet Vue d'ensemble) */
     .panel-box {
         background: var(--surface);
@@ -328,9 +328,9 @@
         padding: 22px 24px;
         margin-bottom: 20px;
     }
-
+ 
     .panel-box h3 { font-size: 1rem; margin-bottom: 16px; }
-
+ 
     .mini-row {
         display: flex;
         align-items: center;
@@ -348,14 +348,14 @@
         font-size: 0.72rem; font-weight: 800; flex-shrink: 0;
     }
     .mini-row .mini-val { font-weight: 700; color: var(--accent); white-space: nowrap; }
-
+ 
     .dash-grid-2 {
         display: grid;
         grid-template-columns: 1.3fr 1fr;
         gap: 20px;
     }
     @media (max-width: 900px) { .dash-grid-2 { grid-template-columns: 1fr; } }
-
+ 
     /* ---------- DETAIL MODAL ---------- */
     .modal-overlay {
         display: none;
@@ -386,7 +386,7 @@
     .modal-row span:last-child { font-weight: 600; text-align: right; }
     .modal-logo { width: 100%; max-height: 220px; object-fit: contain; background: #fff; border-radius: 10px; margin: 16px 0; padding: 10px; }
     .modal-close-row { margin-top: 18px; display: flex; gap: 10px; }
-
+ 
     /* ---------- PIÈCE JOINTE COMMANDE (admin) ---------- */
     .attach-box {
         margin-top: 16px;
@@ -407,7 +407,7 @@
     .attach-input-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .attach-input-row input[type="file"] { flex: 1; min-width: 160px; font-size: 0.78rem; color: var(--muted); }
     .attach-status { font-size: 0.78rem; color: var(--muted); margin-top: 8px; min-height: 1em; }
-
+ 
     /* ---------- BOUTON WHATSAPP FLOTTANT ---------- */
     .wa-float {
         position: fixed;
@@ -427,7 +427,7 @@
     }
     .wa-float:hover { transform: scale(1.08); }
     .wa-float svg { width: 30px; height: 30px; }
-
+ 
     /* ---------- PRODUITS ---------- */
     .product-list { display: flex; flex-direction: column; gap: 12px; }
     .product-card {
@@ -454,7 +454,7 @@
     .badge.inactive { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
     .badge.popular { background: rgba(225,6,0,0.15); color: var(--accent); }
     .p-actions { display: flex; gap: 8px; }
-
+ 
     /* ---------- FORM (modal produit) ---------- */
     .form-row { margin-bottom: 14px; }
     .form-row label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
@@ -471,7 +471,7 @@
     .color-row input[type="file"] { max-width: 140px; font-size: 0.75rem; color: var(--muted); }
     .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
     .checkbox-row input { width: auto; }
-
+ 
     /* ---------- STOCK ---------- */
     .stock-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     .stock-table th, .stock-table td { padding: 6px 8px; text-align: center; border-bottom: 1px solid var(--border); }
@@ -516,7 +516,7 @@
             <button class="btn-sm" onclick="logout()">Déconnexion</button>
         </div>
     </div>
-
+ 
     <div class="tabs">
         <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Vue d'ensemble</button>
         <button class="tab-btn" data-tab="orders" onclick="switchTab('orders')">Commandes</button>
@@ -525,7 +525,7 @@
         <button class="tab-btn" data-tab="stock" onclick="switchTab('stock')">Stock</button>
         <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Statistiques</button>
     </div>
-
+ 
     <!-- ===== ONGLET : VUE D'ENSEMBLE ===== -->
     <div class="tab-panel active" id="panel-overview">
         <div class="stats">
@@ -538,7 +538,7 @@
             <div class="stat-card"><div class="label">Clients uniques</div><div class="value" id="statClients">0</div></div>
             <div class="stat-card"><div class="label">Panier moyen</div><div class="value" id="statAvgBasket">0 DA</div></div>
         </div>
-
+ 
         <div class="dash-grid-2">
             <div class="panel-box">
                 <h3>Dernières commandes</h3>
@@ -550,7 +550,7 @@
             </div>
         </div>
     </div>
-
+ 
     <!-- ===== ONGLET : COMMANDES ===== -->
     <div class="tab-panel" id="panel-orders">
         <div class="toolbar">
@@ -567,19 +567,19 @@
             <button class="btn-sm" onclick="openArchiveOverlay()">📚 Historique des journées</button>
         </div>
         <p style="color:var(--muted);font-size:0.76rem;margin:-10px 0 16px;">💾 « Clôturer la journée » enregistre une sauvegarde de toutes les commandes actuelles sur cet appareil, sans rien effacer ni modifier — utile pour garder une trace même si des données venaient à disparaître.</p>
-
+ 
         <div id="orderListWrap"></div>
     </div>
-
+ 
     <!-- ===== ONGLET : CLIENTS ===== -->
     <div class="tab-panel" id="panel-clients">
         <div class="toolbar">
             <input type="text" id="clientSearchInput" placeholder="Rechercher un client (nom, téléphone)..." oninput="renderClients()">
         </div>
-
+ 
         <div id="clientListWrap"></div>
     </div>
-
+ 
     <!-- ===== ONGLET : PRODUITS ===== -->
     <div class="tab-panel" id="panel-produits">
         <div class="toolbar">
@@ -588,7 +588,7 @@
         </div>
         <div id="productListWrap"></div>
     </div>
-
+ 
     <!-- ===== ONGLET : STOCK ===== -->
     <div class="tab-panel" id="panel-stock">
         <div class="panel-box" id="lowStockBox" style="display:none;">
@@ -600,7 +600,7 @@
         </div>
         <div id="stockListWrap"></div>
     </div>
-
+ 
     <!-- ===== ONGLET : STATISTIQUES ===== -->
     <div class="tab-panel" id="panel-stats">
         <div class="toolbar">
@@ -632,27 +632,27 @@
 <div class="modal-overlay" id="detailOverlay">
     <div class="modal-box" id="detailBox"></div>
 </div>
-
+ 
 <!-- ============ PRODUCT MODAL ============ -->
 <div class="modal-overlay" id="productOverlay">
     <div class="modal-box" id="productBox" style="max-width:560px;"></div>
 </div>
-
+ 
 <!-- ============ STOCK MODAL ============ -->
 <div class="modal-overlay" id="stockOverlay">
     <div class="modal-box" id="stockBox" style="max-width:640px;"></div>
 </div>
-
+ 
 <!-- ============ NEW ORDER MODAL ============ -->
 <div class="modal-overlay" id="newOrderOverlay">
     <div class="modal-box" id="newOrderBox" style="max-width:520px;"></div>
 </div>
-
+ 
 <!-- ============ DAY ARCHIVES MODAL ============ -->
 <div class="modal-overlay" id="archiveOverlay">
     <div class="modal-box" id="archiveBox" style="max-width:560px;"></div>
 </div>
-
+ 
 <!-- ============ BOUTON WHATSAPP FLOTTANT (contact rapide) ============ -->
 <a class="wa-float" href="https://wa.me/213770406106" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp" title="Contacter sur WhatsApp">
     <svg viewBox="0 0 32 32" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
@@ -678,7 +678,7 @@
  
     // Cache local des commandes chargées depuis Supabase (pour filtrer/chercher sans re-requêter à chaque frappe).
     let ordersCache = [];
-
+ 
     // Empêche le navigateur de pré-remplir automatiquement l'email et le mot de passe
     // à l'ouverture de la page (certains navigateurs le font même avec autocomplete="off").
     window.addEventListener('load', () => {
@@ -707,14 +707,14 @@
         }
         showDashboard();
     }
-
+ 
     async function logout() {
         if (supabaseClient) await supabaseClient.auth.signOut();
         document.getElementById('dash').classList.remove('show');
         document.getElementById('gate').style.display = 'flex';
         document.getElementById('gatePassword').value = '';
     }
-
+ 
     function showDashboard() {
         document.getElementById('gate').style.display = 'none';
         document.getElementById('dash').classList.add('show');
@@ -723,7 +723,7 @@
         loadInventory();
         subscribeRealtime();
     }
-
+ 
     // Vérifie une session Supabase Auth existante (au lieu d'un simple flag local non sécurisé).
     (async function checkExistingSession() {
         if (!supabaseClient) return;
@@ -789,7 +789,7 @@
     }
  
     function fmtDA(n) { return Number(n || 0).toLocaleString('fr-FR') + ' DA'; }
-
+ 
     // Titre lisible d'une commande : détaille l'article unique, ou résume les
     // commandes composées de plusieurs articles (ex. "T-shirt M + Short + Pull").
     function orderTitle(o) {
@@ -799,6 +799,16 @@
     }
  
     const STATUS_LABEL = { nouveau: 'Nouveau', en_cours: 'En cours', traite: 'Traité', annule: 'Annulé' };
+ 
+    // Coordonnées légales de l'entreprise, utilisées sur la facture imprimée.
+    const COMPANY_INFO = {
+        name: 'SISKO SHOP',
+        address: 'Cité Drioueche, 145400 Draria, Alger',
+        phone: '0770406106',
+        activity: 'Vente et personnalisation de vêtements',
+        nif: '19516060060819861600',
+        nis: '199516060060823',
+    };
  
     function renderOrders() {
         const orders = ordersCache;
@@ -857,7 +867,8 @@
                     '</select>' +
                     '<div class="order-actions">' +
                         '<button class="icon-btn" title="Détails" onclick="openDetail(\'' + o.id + '\')">👁</button>' +
-                        '<button class="icon-btn" title="Imprimer" onclick="printOrder(\'' + o.id + '\')">🖨</button>' +
+                        '<button class="icon-btn" title="Imprimer (bon de commande)" onclick="printOrder(\'' + o.id + '\')">🖨</button>' +
+                        '<button class="icon-btn" title="Facture" onclick="printInvoice(\'' + o.id + '\')">🧾</button>' +
                         '<button class="icon-btn" title="Supprimer" onclick="deleteOrder(\'' + o.id + '\')">🗑</button>' +
                     '</div>' +
                 '</div>'
@@ -878,14 +889,14 @@
         if (tab === 'stock') renderStockTab();
         if (tab === 'stats') renderStats();
     }
-
+ 
     /* Rafraîchit les 3 onglets d'un coup (après chargement / modif / suppression). */
     function renderAll() {
         renderOrders();
         renderClients();
         renderOverview();
     }
-
+ 
     /* =====================================================================
        CLIENTS — agrégés à partir des commandes (regroupées par téléphone)
        ===================================================================== */
@@ -916,11 +927,11 @@
             };
         }).sort((a, b) => (b.lastOrderDate || 0) - (a.lastOrderDate || 0));
     }
-
+ 
     function initials(name) {
         return (name || '?').trim().split(/\s+/).slice(0, 2).map(s => s[0]).join('').toUpperCase() || '?';
     }
-
+ 
     function renderClients() {
         const clients = getClients();
         const search = (document.getElementById('clientSearchInput')?.value || '').toLowerCase();
@@ -928,10 +939,10 @@
             if (!search) return true;
             return (c.name + ' ' + c.phone).toLowerCase().includes(search);
         });
-
+ 
         const wrap = document.getElementById('clientListWrap');
         if (!wrap) return;
-
+ 
         if (clients.length === 0) {
             wrap.innerHTML = '<div class="empty-state"><div class="icon">🧑‍🤝‍🧑</div><h3>Aucun client pour l\'instant</h3><p>Les clients apparaissent automatiquement dès qu\'une commande est passée.</p></div>';
             return;
@@ -940,7 +951,7 @@
             wrap.innerHTML = '<div class="empty-state"><div class="icon">🔎</div><h3>Aucun résultat</h3><p>Essayez une autre recherche.</p></div>';
             return;
         }
-
+ 
         wrap.innerHTML = '<div class="client-list">' + filtered.map(c => {
             const d = c.lastOrderDate;
             const dateStr = d && !isNaN(d) ? d.toLocaleDateString('fr-FR') : '—';
@@ -955,7 +966,7 @@
             );
         }).join('') + '</div>';
     }
-
+ 
     function openClientDetail(phoneDigits) {
         const c = getClients().find(x => x.phone.replace(/[^0-9]/g, '') === phoneDigits);
         if (!c) return;
@@ -967,7 +978,7 @@
                     '<span>' + o.product + ' — ' + fmtDA(o.total) + '</span>' +
                 '</div>'
             )).join('');
-
+ 
         const box = document.getElementById('detailBox');
         box.innerHTML =
             '<h3>' + c.name + '</h3>' +
@@ -982,14 +993,14 @@
             '</div>';
         document.getElementById('detailOverlay').classList.add('open');
     }
-
+ 
     /* =====================================================================
        VUE D'ENSEMBLE
        ===================================================================== */
     function renderOverview() {
         const orders = ordersCache;
         const clients = getClients();
-
+ 
         const elClients = document.getElementById('statClients');
         const elAvg = document.getElementById('statAvgBasket');
         if (elClients) elClients.textContent = clients.length;
@@ -998,7 +1009,7 @@
             const avg = valid.length ? valid.reduce((s, o) => s + (o.total || 0), 0) / valid.length : 0;
             elAvg.textContent = fmtDA(Math.round(avg));
         }
-
+ 
         const recentWrap = document.getElementById('recentOrdersList');
         if (recentWrap) {
             const recent = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 6);
@@ -1009,7 +1020,7 @@
                 '</div>'
             ).join('') : '<p style="color:var(--muted);font-size:0.85rem;">Aucune commande pour l\'instant.</p>';
         }
-
+ 
         const topWrap = document.getElementById('topClientsList');
         if (topWrap) {
             const top = [...clients].sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 6);
@@ -1021,7 +1032,7 @@
             ).join('') : '<p style="color:var(--muted);font-size:0.85rem;">Aucun client pour l\'instant.</p>';
         }
     }
-
+ 
     async function updateStatus(id, status) {
         const o = ordersCache.find(x => x.id === id);
         if (o) o.status = status; // mise à jour optimiste de l'affichage
@@ -1093,7 +1104,10 @@
             '</div>' +
             '<div class="modal-close-row">' +
                 (o.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + o.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
-                '<button class="btn-sm" style="flex:1;" onclick="printOrder(\'' + o.id + '\')">🖨 Imprimer</button>' +
+                '<button class="btn-sm" style="flex:1;" onclick="printOrder(\'' + o.id + '\')">🖨 Bon de commande</button>' +
+            '</div>' +
+            '<div class="modal-close-row">' +
+                '<button class="btn-sm" style="flex:1;" onclick="printInvoice(\'' + o.id + '\')">🧾 Facture</button>' +
             '</div>' +
             '<div class="modal-close-row">' +
                 '<button class="btn-sm" style="flex:1;" onclick="closeDetail()">Fermer</button>' +
@@ -1112,7 +1126,7 @@
         const status = o.status || 'nouveau';
         const date = new Date(o.date);
         const dateStr = isNaN(date) ? '—' : date.toLocaleDateString('fr-FR') + ' à ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
-
+ 
         const itemRows = (o.items && o.items.length)
             ? o.items.map((it, i) => ['Article ' + (i + 1), it.product + ' — ' + it.size + ' / ' + it.color + ' × ' + it.qty + ' — ' + fmtDA(it.total)])
             : [
@@ -1122,7 +1136,7 @@
                 ['Quantité', o.qty],
                 ['Prix unitaire', fmtDA(o.price)],
               ];
-
+ 
         const rows = [
             ['Référence', o.id],
             ['Date', dateStr],
@@ -1135,13 +1149,13 @@
         ];
         if (o.logoNote) rows.push(['Placement logo', o.logoNote]);
         if (o.note) rows.push(['Remarque', o.note]);
-
+ 
         const rowsHtml = rows.map(([label, value]) =>
             '<tr><td class="label">' + label + '</td><td class="value">' + (value ?? '—') + '</td></tr>'
         ).join('');
-
+ 
         const logoHtml = o.logoDataUrl ? '<img class="order-logo" src="' + o.logoDataUrl + '" alt="logo">' : '';
-
+ 
         const html =
             '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' +
             '<title>Bon de commande — ' + o.id + '</title>' +
@@ -1166,7 +1180,7 @@
                 '<table>' + rowsHtml + '</table>' +
                 '<div class="footer">Document généré depuis l\'espace équipe Sisko Shop.</div>' +
             '</body></html>';
-
+ 
         const win = window.open('', '_blank', 'width=700,height=900');
         if (!win) { alert('Merci d\'autoriser les fenêtres pop-up pour imprimer.'); return; }
         win.document.open();
@@ -1177,7 +1191,121 @@
         // Filet de sécurité si onload ne se déclenche pas immédiatement.
         setTimeout(() => { try { win.print(); } catch (e) {} }, 400);
     }
-
+ 
+    /* =====================================================================
+       FACTURE — document légal avec les coordonnées de l'entreprise
+       (adresse, téléphone, NIF, NIS, activité), distinct du simple bon de
+       commande ci-dessus.
+       ===================================================================== */
+ 
+    // Attribue (et mémorise) un numéro de facture séquentiel par commande,
+    // pour ne pas changer de numéro si la facture est réimprimée plus tard.
+    function getInvoiceNumber(orderId) {
+        let map = {};
+        try { map = JSON.parse(localStorage.getItem('sisko_invoice_numbers') || '{}'); } catch (e) { map = {}; }
+        if (map[orderId]) return map[orderId];
+        const counter = Number(localStorage.getItem('sisko_invoice_counter') || '0') + 1;
+        localStorage.setItem('sisko_invoice_counter', String(counter));
+        const num = 'FACT-' + new Date().getFullYear() + '-' + String(counter).padStart(4, '0');
+        map[orderId] = num;
+        localStorage.setItem('sisko_invoice_numbers', JSON.stringify(map));
+        return num;
+    }
+ 
+    function printInvoice(id) {
+        const o = ordersCache.find(x => x.id === id);
+        if (!o) return;
+        const invoiceNumber = getInvoiceNumber(o.id);
+        const now = new Date();
+        const orderDate = new Date(o.date);
+        const dateStr = isNaN(orderDate) ? now.toLocaleDateString('fr-FR') : orderDate.toLocaleDateString('fr-FR');
+ 
+        const lineItems = (o.items && o.items.length)
+            ? o.items
+            : [{ product: o.product, size: o.size, color: o.color, qty: o.qty, price: o.price, total: o.total }];
+ 
+        const itemRows = lineItems.map(it =>
+            '<tr>' +
+                '<td>' + (it.product || '') + (it.size || it.color ? ' <span class="muted">(' + [it.size, it.color].filter(Boolean).join(' / ') + ')</span>' : '') + '</td>' +
+                '<td class="num">' + (it.qty || 1) + '</td>' +
+                '<td class="num">' + fmtDA(it.price != null ? it.price : (it.total / (it.qty || 1))) + '</td>' +
+                '<td class="num">' + fmtDA(it.total) + '</td>' +
+            '</tr>'
+        ).join('');
+ 
+        const html =
+            '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">' +
+            '<title>Facture ' + invoiceNumber + '</title>' +
+            '<style>' +
+                '* { box-sizing: border-box; }' +
+                'body { font-family: Arial, Helvetica, sans-serif; color: #111; padding: 36px; max-width: 700px; margin: 0 auto; font-size: 0.92rem; }' +
+                '.top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 26px; }' +
+                '.top h1 { font-size: 1.4rem; margin: 0 0 6px; letter-spacing: 0.5px; }' +
+                '.seller { font-size: 0.8rem; color: #444; line-height: 1.6; }' +
+                '.seller b { color: #111; }' +
+                '.invoice-meta { text-align: right; font-size: 0.85rem; }' +
+                '.invoice-meta .num { font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }' +
+                'hr { border: none; border-top: 2px solid #111; margin: 18px 0 22px; }' +
+                '.legal-box { background: #f5f5f5; border: 1px solid #ddd; border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: #444; line-height: 1.7; margin-bottom: 22px; }' +
+                '.legal-box b { color: #111; }' +
+                '.client-box { margin-bottom: 22px; }' +
+                '.client-box h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: #777; margin-bottom: 6px; }' +
+                '.client-box .name { font-weight: 700; font-size: 1rem; }' +
+                'table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }' +
+                'th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.4px; color: #777; padding: 8px 6px; border-bottom: 2px solid #111; }' +
+                'th.num, td.num { text-align: right; }' +
+                'td { padding: 10px 6px; border-bottom: 1px solid #e2e2e2; vertical-align: top; }' +
+                '.muted { color: #888; font-size: 0.82em; }' +
+                '.totals { display: flex; justify-content: flex-end; }' +
+                '.totals table { width: 260px; margin-bottom: 0; }' +
+                '.totals td { border: none; padding: 6px; }' +
+                '.totals .grand td { font-weight: 800; font-size: 1.05rem; border-top: 2px solid #111; padding-top: 10px; }' +
+                '.footer { margin-top: 34px; font-size: 0.72rem; color: #888; text-align: center; line-height: 1.6; }' +
+                '@media print { body { padding: 14px; } }' +
+            '</style></head><body>' +
+                '<div class="top">' +
+                    '<div>' +
+                        '<h1>' + COMPANY_INFO.name + '</h1>' +
+                        '<div class="seller">' +
+                            COMPANY_INFO.address + '<br>' +
+                            'Tél : ' + COMPANY_INFO.phone + '<br>' +
+                            'Activité : ' + COMPANY_INFO.activity +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="invoice-meta">' +
+                        '<div class="num">Facture N° ' + invoiceNumber + '</div>' +
+                        '<div>Date : ' + dateStr + '</div>' +
+                        '<div>Réf. commande : ' + o.id + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="legal-box">' +
+                    '<b>NIF :</b> ' + COMPANY_INFO.nif + ' &nbsp;·&nbsp; <b>NIS :</b> ' + COMPANY_INFO.nis +
+                '</div>' +
+                '<div class="client-box">' +
+                    '<h3>Facturé à</h3>' +
+                    '<div class="name">' + (o.customerName || 'Client') + '</div>' +
+                    (o.phone ? '<div>' + o.phone + '</div>' : '') +
+                '</div>' +
+                '<table>' +
+                    '<thead><tr><th>Désignation</th><th class="num">Qté</th><th class="num">Prix unitaire</th><th class="num">Total</th></tr></thead>' +
+                    '<tbody>' + itemRows + '</tbody>' +
+                '</table>' +
+                '<div class="totals"><table>' +
+                    '<tr class="grand"><td>Total à payer</td><td class="num">' + fmtDA(o.total) + '</td></tr>' +
+                '</table></div>' +
+                '<div class="footer">Facture générée le ' + now.toLocaleString('fr-FR') + ' — ' + COMPANY_INFO.name + '</div>' +
+            '</body></html>';
+ 
+        const win = window.open('', '_blank', 'width=760,height=960');
+        if (!win) { alert('Merci d\'autoriser les fenêtres pop-up pour imprimer.'); return; }
+        win.document.open();
+        win.document.write(html);
+        win.document.close();
+        win.focus();
+        win.onload = () => { win.print(); };
+        setTimeout(() => { try { win.print(); } catch (e) {} }, 400);
+    }
+ 
     // Construit le bloc "logo" (celui à imprimer sur l'article) affiché dans le détail d'une commande,
     // avec possibilité pour l'équipe d'en ajouter un, d'en changer, ou d'en retirer un.
     function renderLogoBox(o) {
@@ -1199,7 +1327,7 @@
             '<div class="attach-status" id="logoStatus-' + o.id + '"></div>' +
         '</div>';
     }
-
+ 
     // Envoie le logo choisi vers le bucket public "image" de Supabase et l'attache à la commande.
     async function onOrderLogoChosen(orderId, input) {
         const file = input.files && input.files[0];
@@ -1234,7 +1362,7 @@
         openDetail(orderId);
         renderOrders();
     }
-
+ 
     async function removeOrderLogo(orderId) {
         if (!supabaseClient) return;
         const { error } = await supabaseClient
@@ -1247,7 +1375,7 @@
         openDetail(orderId);
         renderOrders();
     }
-
+ 
     // Construit le bloc "pièce jointe" (photo ou fichier ajouté par l'équipe) affiché dans le détail d'une commande.
     function renderAttachBox(o) {
         const isImg = o.adminAttachmentUrl && /\.(jpe?g|png|gif|webp)(\?|$)/i.test(o.adminAttachmentUrl);
@@ -1377,7 +1505,7 @@
         try { return JSON.parse(localStorage.getItem('sisko_day_archives') || '{}'); }
         catch (e) { return {}; }
     }
-
+ 
     function saveDayArchive() {
         if (ordersCache.length === 0) { alert('Aucune commande à sauvegarder pour le moment.'); return; }
         const now = new Date();
@@ -1398,20 +1526,20 @@
         alert('✅ Journée sauvegardée : ' + ordersCache.length + ' commande(s), ' + fmtDA(revenue) + '.\nRetrouve-la à tout moment dans « Historique des journées ». Cette sauvegarde reste sur cet appareil, même si les commandes venaient à être vidées ailleurs.');
         if (document.getElementById('archiveOverlay').classList.contains('open')) openArchiveOverlay();
     }
-
+ 
     function openArchiveOverlay() {
         renderArchiveList();
         document.getElementById('archiveOverlay').classList.add('open');
     }
-
+ 
     function closeArchiveOverlay() {
         document.getElementById('archiveOverlay').classList.remove('open');
     }
-
+ 
     document.getElementById('archiveOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'archiveOverlay') closeArchiveOverlay();
     });
-
+ 
     function renderArchiveList() {
         const archives = getDayArchives();
         const days = Object.values(archives).sort((a, b) => b.date.localeCompare(a.date));
@@ -1438,7 +1566,7 @@
             ).join('') +
             '<div class="modal-close-row"><button class="btn-sm" style="flex:1;" onclick="closeArchiveOverlay()">Fermer</button></div>';
     }
-
+ 
     function viewArchiveDay(dateKey) {
         const archives = getDayArchives();
         const d = archives[dateKey];
@@ -1455,7 +1583,7 @@
                 '<button class="btn-sm" style="flex:1;" onclick="openArchiveOverlay()">← Retour</button>' +
             '</div>';
     }
-
+ 
     function exportArchiveCSV(dateKey) {
         const archives = getDayArchives();
         const d = archives[dateKey];
@@ -1471,7 +1599,7 @@
         a.click();
         a.remove();
     }
-
+ 
     function deleteArchiveDay(dateKey) {
         if (!confirm('Supprimer cette sauvegarde de journée ? Cette action est irréversible.')) return;
         const archives = getDayArchives();
@@ -1479,11 +1607,11 @@
         localStorage.setItem('sisko_day_archives', JSON.stringify(archives));
         renderArchiveList();
     }
-
+ 
     // NB : la mise à jour multi-appareils est désormais gérée par
     // subscribeRealtime() (Supabase), plus fiable que l'ancien événement
     // 'storage' qui ne fonctionnait qu'entre onglets du même navigateur.
-
+ 
     /* =====================================================================
        PRODUITS — CRUD via Supabase (table "products")
        ⚠️ Le prix de revient (coût) n'est PAS géré ici : il est réservé au
@@ -1492,7 +1620,7 @@
     let productsCache = [];
     let editingProductId = null; // null = nouveau produit
     let colorRowSeq = 0;
-
+ 
     function slugify(str) {
         return (str || '')
             .toLowerCase()
@@ -1500,7 +1628,7 @@
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/(^-|-$)/g, '') || ('produit-' + Date.now());
     }
-
+ 
     async function loadProducts() {
         if (!supabaseClient) {
             try { productsCache = JSON.parse(localStorage.getItem('sisko_products') || '[]'); }
@@ -1520,13 +1648,13 @@
         }
         if (document.getElementById('panel-produits')?.classList.contains('active')) renderProducts();
     }
-
+ 
     function renderProducts() {
         const search = (document.getElementById('productSearchInput')?.value || '').toLowerCase();
         const filtered = productsCache.filter(p => !search || (p.name || '').toLowerCase().includes(search));
         const wrap = document.getElementById('productListWrap');
         if (!wrap) return;
-
+ 
         if (productsCache.length === 0) {
             wrap.innerHTML = '<div class="empty-state"><div class="icon">👕</div><h3>Aucun produit pour l\'instant</h3><p>Cliquez sur « + Nouveau produit » pour ajouter votre premier article au catalogue du site.</p></div>';
             return;
@@ -1535,7 +1663,7 @@
             wrap.innerHTML = '<div class="empty-state"><div class="icon">🔎</div><h3>Aucun résultat</h3><p>Essayez une autre recherche.</p></div>';
             return;
         }
-
+ 
         wrap.innerHTML = '<div class="product-list">' + filtered.map(p => {
             const colors = Array.isArray(p.colors) ? p.colors : [];
             const firstImg = p.images && colors.length ? p.images[colors[0]] : null;
@@ -1556,12 +1684,12 @@
             );
         }).join('') + '</div>';
     }
-
+ 
     function openProductModal(id) {
         editingProductId = id;
         const p = id ? productsCache.find(x => x.id === id) : null;
         const colors = p && Array.isArray(p.colors) ? p.colors : [];
-
+ 
         const box = document.getElementById('productBox');
         box.innerHTML =
             '<h3>' + (p ? 'Modifier le produit' : 'Nouveau produit') + '</h3>' +
@@ -1578,7 +1706,7 @@
                 '<button class="btn-sm" style="flex:1;" onclick="saveProduct()">💾 Enregistrer</button>' +
                 '<button class="btn-sm" style="flex:1;" onclick="closeProductModal()">Annuler</button>' +
             '</div>';
-
+ 
         document.getElementById('colorRows').innerHTML = '';
         if (colors.length) {
             colors.forEach(c => addColorRow(c, p.images ? p.images[c] : null));
@@ -1587,7 +1715,7 @@
         }
         document.getElementById('productOverlay').classList.add('open');
     }
-
+ 
     function addColorRow(name, imageUrl) {
         const rowId = 'colrow' + (colorRowSeq++);
         const wrap = document.getElementById('colorRows');
@@ -1602,7 +1730,7 @@
             '<button type="button" class="icon-btn" title="Retirer" onclick="document.getElementById(\'' + rowId + '\').remove()">✕</button>';
         wrap.appendChild(div);
     }
-
+ 
     function onColorImageChosen(rowId, input) {
         const file = input.files && input.files[0];
         if (!file) return;
@@ -1612,15 +1740,15 @@
         reader.onload = () => { document.getElementById(rowId + '-thumb').innerHTML = '<img src="' + reader.result + '">'; };
         reader.readAsDataURL(file);
     }
-
+ 
     function closeProductModal() {
         document.getElementById('productOverlay').classList.remove('open');
     }
-
+ 
     document.getElementById('productOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'productOverlay') closeProductModal();
     });
-
+ 
     // Envoie une image vers le bucket public "image" de Supabase et renvoie son URL publique.
     async function uploadProductImage(file, productId, colorName) {
         const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
@@ -1630,21 +1758,21 @@
         const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
         return data ? data.publicUrl : null;
     }
-
+ 
     async function saveProduct() {
         const name = document.getElementById('pfName').value.trim();
         const price = Number(document.getElementById('pfPrice').value) || 0;
         const description = document.getElementById('pfDesc').value.trim();
         const popular = document.getElementById('pfPopular').checked;
         const active = document.getElementById('pfActive').checked;
-
+ 
         if (!name || !price) { alert('Merci de renseigner au moins le nom et le prix.'); return; }
-
+ 
         const id = editingProductId || slugify(name);
         const rows = Array.from(document.querySelectorAll('#colorRows .color-row'));
         const colors = [];
         const images = {};
-
+ 
         for (const row of rows) {
             const colorName = row.querySelector('input[type="text"]').value.trim();
             if (!colorName) continue;
@@ -1656,11 +1784,11 @@
             }
             if (url) images[colorName] = url;
         }
-
+ 
         const existing = productsCache.find(x => x.id === id);
         const sortOrder = existing ? existing.sort_order : (productsCache.length ? Math.max(...productsCache.map(p => p.sort_order || 0)) + 1 : 1);
         const payload = { id, name, price, description, colors, images, popular, active, sort_order: sortOrder };
-
+ 
         if (supabaseClient) {
             const { error } = await supabaseClient.from('products').upsert(payload);
             if (error) { console.error('Erreur sauvegarde produit :', error); alert('Erreur lors de la sauvegarde. Vérifiez la configuration Supabase.'); return; }
@@ -1669,17 +1797,17 @@
             if (i >= 0) productsCache[i] = payload; else productsCache.push(payload);
             localStorage.setItem('sisko_products', JSON.stringify(productsCache));
         }
-
+ 
         closeProductModal();
         await loadProducts();
         renderProducts();
     }
-
+ 
     async function deleteProduct(id) {
         if (!confirm('Supprimer définitivement ce produit du catalogue ?')) return;
         productsCache = productsCache.filter(p => p.id !== id);
         renderProducts();
-
+ 
         if (supabaseClient) {
             const { error } = await supabaseClient.from('products').delete().eq('id', id);
             if (error) console.error('Erreur suppression produit :', error);
@@ -1687,7 +1815,7 @@
             localStorage.setItem('sisko_products', JSON.stringify(productsCache));
         }
     }
-
+ 
     /* =====================================================================
        STOCK — inventaire par produit / couleur / taille (table "inventory")
        Le stock est indicatif pour le site (badge), mais géré précisément ici.
@@ -1695,12 +1823,12 @@
     const SIZES = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
     const LOW_STOCK_THRESHOLD = 3;
     let inventoryCache = []; // [{product_id, color, size, quantity}]
-
+ 
     function invQty(productId, color, size) {
         const row = inventoryCache.find(r => r.product_id === productId && r.color === color && r.size === size);
         return row ? row.quantity : 0;
     }
-
+ 
     async function loadInventory() {
         if (!supabaseClient) {
             try { inventoryCache = JSON.parse(localStorage.getItem('sisko_inventory') || '[]'); }
@@ -1712,18 +1840,18 @@
         }
         if (document.getElementById('panel-stock')?.classList.contains('active')) renderStockTab();
     }
-
+ 
     function renderStockTab() {
         const wrap = document.getElementById('stockListWrap');
         const search = (document.getElementById('stockSearchInput')?.value || '').toLowerCase();
         if (!wrap) return;
-
+ 
         if (productsCache.length === 0) {
             wrap.innerHTML = '<div class="empty-state"><div class="icon">📦</div><h3>Aucun produit</h3><p>Ajoutez d\'abord vos produits dans l\'onglet « Produits », puis revenez ici pour gérer leur stock.</p></div>';
             document.getElementById('lowStockBox').style.display = 'none';
             return;
         }
-
+ 
         // Bandeau "à réapprovisionner"
         const lowItems = [];
         productsCache.forEach(p => {
@@ -1747,7 +1875,7 @@
         } else {
             lowBox.style.display = 'none';
         }
-
+ 
         // Liste des produits
         const filtered = productsCache.filter(p => !search || p.name.toLowerCase().includes(search));
         wrap.innerHTML = '<div class="product-list">' + filtered.map(p => {
@@ -1762,17 +1890,17 @@
             );
         }).join('') + '</div>';
     }
-
+ 
     function openStockModal(productId) {
         const p = productsCache.find(x => x.id === productId);
         if (!p) return;
         const colors = p.colors && p.colors.length ? p.colors : ['Défaut'];
-
+ 
         const box = document.getElementById('stockBox');
         let table = '<h3>Stock — ' + p.name + '</h3>' +
             '<div style="overflow-x:auto; margin-top:14px;"><table class="stock-table"><thead><tr><th>Couleur</th>' +
             SIZES.map(s => '<th>' + s + '</th>').join('') + '</tr></thead><tbody>';
-
+ 
         colors.forEach(c => {
             table += '<tr><td>' + c + '</td>';
             SIZES.forEach(s => {
@@ -1790,15 +1918,15 @@
         box.innerHTML = table;
         document.getElementById('stockOverlay').classList.add('open');
     }
-
+ 
     function closeStockModal() {
         document.getElementById('stockOverlay').classList.remove('open');
     }
-
+ 
     document.getElementById('stockOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'stockOverlay') closeStockModal();
     });
-
+ 
     async function saveStock(productId) {
         const inputs = Array.from(document.querySelectorAll('#stockBox input[data-color]'));
         const rows = inputs.map(inp => ({
@@ -1807,7 +1935,7 @@
             size: inp.dataset.size,
             quantity: Number(inp.value) || 0,
         }));
-
+ 
         if (supabaseClient) {
             const { error } = await supabaseClient.from('inventory').upsert(rows);
             if (error) { console.error('Erreur sauvegarde stock :', error); alert('Erreur lors de la sauvegarde du stock.'); return; }
@@ -1818,12 +1946,12 @@
             });
             localStorage.setItem('sisko_inventory', JSON.stringify(inventoryCache));
         }
-
+ 
         closeStockModal();
         await loadInventory();
         renderStockTab();
     }
-
+ 
     /* =====================================================================
        NOUVELLE COMMANDE MANUELLE (ajoutée par l'équipe, ex. commande reçue
        par téléphone / WhatsApp direct, sans passer par le configurateur)
@@ -1832,12 +1960,12 @@
     // plusieurs articles différents — ex. T-shirt M + Short + Pull — dans UNE
     // seule commande avant de l'enregistrer).
     let noCart = [];
-
+ 
     function openNewOrderModal() {
         noCart = [];
         const box = document.getElementById('newOrderBox');
         const productOptions = productsCache.map(p => '<option value="' + p.id + '">' + p.name + ' — ' + fmtDA(p.price) + '</option>').join('');
-
+ 
         box.innerHTML =
             '<h3>Nouvelle commande</h3>' +
             '<p style="color:var(--muted);font-size:0.78rem;margin:-6px 0 14px;">Ajoutez un ou plusieurs articles (ex. T-shirt M + Short + Pull), puis enregistrez la commande.</p>' +
@@ -1872,11 +2000,11 @@
                 '<button class="btn-sm" style="flex:1;" onclick="saveNewOrder()">💾 Enregistrer la commande</button>' +
                 '<button class="btn-sm" style="flex:1;" onclick="closeNewOrderModal()">Annuler</button>' +
             '</div>';
-
+ 
         noRenderCart();
         document.getElementById('newOrderOverlay').classList.add('open');
     }
-
+ 
     function noUpdateProductFields() {
         const pid = document.getElementById('noProduct').value;
         const p = productsCache.find(x => x.id === pid);
@@ -1885,7 +2013,7 @@
         colorSelect.innerHTML = (p.colors || []).map(c => '<option value="' + c + '">' + c + '</option>').join('');
         document.getElementById('noPrice').value = p.price;
     }
-
+ 
     // Ajoute l'article actuellement sélectionné (produit + couleur + taille +
     // quantité + prix) au panier de la commande en cours.
     function noAddItem() {
@@ -1897,14 +2025,14 @@
         const size = document.getElementById('noSize').value;
         const qty = Number(document.getElementById('noQty').value) || 1;
         const price = Number(document.getElementById('noPrice').value) || 0;
-
+ 
         noCart.push({ product_id: productId, product: p.name, color: color, size: size, qty: qty, price: price, total: qty * price });
         noRenderCart();
-
+ 
         // Repart sur une quantité de 1 pour faciliter l'ajout de l'article suivant.
         document.getElementById('noQty').value = 1;
     }
-
+ 
     // Aperçu local (avant envoi) du logo choisi pour une commande manuelle.
     function noPreviewLogo(input) {
         const wrap = document.getElementById('noLogoPreviewWrap');
@@ -1915,12 +2043,12 @@
         reader.onload = (e) => { img.src = e.target.result; wrap.style.display = 'block'; };
         reader.readAsDataURL(file);
     }
-
+ 
     function noRemoveItem(i) {
         noCart.splice(i, 1);
         noRenderCart();
     }
-
+ 
     // Affiche la liste des articles déjà ajoutés à la commande en cours, avec
     // le total cumulé et un bouton pour retirer un article.
     function noRenderCart() {
@@ -1945,16 +2073,16 @@
                 '<div class="mini-row" style="border-bottom:none;font-weight:700;"><span>Total commande</span><span>' + fmtDA(cartTotal) + '</span></div>' +
             '</div>';
     }
-
+ 
     function closeNewOrderModal() {
         noCart = [];
         document.getElementById('newOrderOverlay').classList.remove('open');
     }
-
+ 
     document.getElementById('newOrderOverlay').addEventListener('click', (e) => {
         if (e.target.id === 'newOrderOverlay') closeNewOrderModal();
     });
-
+ 
     // Envoie une commande à Supabase ; si la base signale une colonne
     // manquante (schéma pas à jour), retire ce champ et réessaie plutôt que
     // de bloquer complètement l'enregistrement. Renvoie les champs perdus
@@ -1976,25 +2104,25 @@
         }
         return { error: { message: 'Trop de colonnes manquantes dans la table orders.' }, missingFields };
     }
-
+ 
     async function saveNewOrder() {
         if (noCart.length === 0) {
             alert('Merci d\'ajouter au moins un article à la commande (bouton "+ Ajouter cet article").');
             return;
         }
-
+ 
         const customerName = document.getElementById('noCustomerName').value.trim();
         const phone = document.getElementById('noPhone').value.trim();
         const note = document.getElementById('noNote').value.trim();
         const status = document.getElementById('noStatus').value;
-
+ 
         const total = noCart.reduce((s, it) => s + it.total, 0);
         const qty = noCart.reduce((s, it) => s + it.qty, 0);
         // Résumé lisible de tous les articles, ex. "T-shirt (M/Rouge) + Short (L) + Pull (M) ×2"
         const productSummary = noCart.map(it =>
             it.product + ' (' + it.size + (it.color ? '/' + it.color : '') + ')' + (it.qty > 1 ? ' ×' + it.qty : '')
         ).join(' + ');
-
+ 
         // Upload du logo (facultatif) vers le bucket Supabase "image", même
         // logique que la pièce jointe équipe plus bas dans le fichier.
         let logoDataUrl = null, logoName = null;
@@ -2014,7 +2142,7 @@
                 logoName = file.name;
             }
         }
-
+ 
         // NB : "product_id" n'existe pas comme colonne sur la commande elle-même
         // (seulement à l'intérieur de chaque article dans "items") — l'envoyer
         // ici faisait échouer l'enregistrement ("colonne introuvable").
@@ -2035,7 +2163,7 @@
             logo_name: logoName,
             no_logo: !!noLogoChecked,
         };
-
+ 
         if (supabaseClient) {
             try {
                 const { error, missingFields } = await insertOrderWithFallback(order);
@@ -2065,30 +2193,30 @@
                 localStorage.setItem('sisko_orders', JSON.stringify(local));
             } catch (e) { console.error(e); }
         }
-
+ 
         noCart = [];
         closeNewOrderModal();
         await loadOrders();
         await loadInventory();
     }
-
+ 
     /* =====================================================================
        STATISTIQUES — graphiques Chart.js à partir de ordersCache
        ===================================================================== */
     let chartRevenue, chartStatus, chartTopProducts;
-
+ 
     function filteredOrdersForStats() {
         const days = Number(document.getElementById('statsPeriod')?.value || 30);
         if (!days) return ordersCache;
         const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
         return ordersCache.filter(o => new Date(o.date).getTime() >= cutoff);
     }
-
+ 
     function renderStats() {
         if (typeof Chart === 'undefined') return;
         const orders = filteredOrdersForStats();
         const valid = orders.filter(o => o.status !== 'annule');
-
+ 
         // --- Chiffre d'affaires par jour ---
         const byDay = new Map();
         valid.forEach(o => {
@@ -2102,7 +2230,7 @@
             return new Date(ya, ma - 1, da) - new Date(yb, mb - 1, db);
         });
         const revenueData = sortedDays.map(k => byDay.get(k));
-
+ 
         const ctxRevenue = document.getElementById('chartRevenue');
         if (chartRevenue) chartRevenue.destroy();
         if (ctxRevenue) {
@@ -2112,7 +2240,7 @@
                 options: { responsive: true, plugins: { legend: { labels: { color: '#f5f5f5' } } }, scales: { x: { ticks: { color: '#9c9c9c' }, grid: { color: '#303030' } }, y: { ticks: { color: '#9c9c9c' }, grid: { color: '#303030' } } } }
             });
         }
-
+ 
         // --- Commandes par statut ---
         const statusCounts = { nouveau: 0, en_cours: 0, traite: 0, annule: 0 };
         orders.forEach(o => { statusCounts[o.status || 'nouveau'] = (statusCounts[o.status || 'nouveau'] || 0) + 1; });
@@ -2128,7 +2256,7 @@
                 options: { responsive: true, plugins: { legend: { labels: { color: '#f5f5f5' } } } }
             });
         }
-
+ 
         // --- Top produits par quantité vendue ---
         const qtyByProduct = new Map();
         valid.forEach(o => {
