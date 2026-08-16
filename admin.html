@@ -19,6 +19,9 @@
         --on-accent: #ffffff;
         --green: #2ecc71;
         --amber: #f2b134;
+        --blue: #3b82f6;
+        --yellow: #f5c518;
+        --red: #e10600;
     }
  
     body { background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh; }
@@ -247,16 +250,16 @@
         font-size: 0.8rem;
         font-weight: 700;
     }
-    .status-select.st-nouveau { background: rgba(225,6,0,0.14); border-color: var(--accent); color: #ff6b63; }
-    .status-select.st-en_cours { background: rgba(242,177,52,0.16); border-color: #f2b134; color: #f2b134; }
+    .status-select.st-nouveau { background: rgba(59,130,246,0.16); border-color: var(--blue); color: #7eaaff; }
+    .status-select.st-en_cours { background: rgba(245,197,24,0.18); border-color: var(--yellow); color: var(--yellow); }
     .status-select.st-traite { background: rgba(46,204,113,0.16); border-color: #2ecc71; color: #2ecc71; }
-    .status-select.st-annule { background: rgba(156,156,156,0.14); border-color: var(--muted); color: var(--muted); }
+    .status-select.st-annule { background: rgba(225,6,0,0.16); border-color: var(--red); color: #ff6b63; }
 
     .status-pill { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
-    .status-pill.st-nouveau { background: rgba(225,6,0,0.14); color: #ff6b63; }
-    .status-pill.st-en_cours { background: rgba(242,177,52,0.16); color: #f2b134; }
+    .status-pill.st-nouveau { background: rgba(59,130,246,0.16); color: #7eaaff; }
+    .status-pill.st-en_cours { background: rgba(245,197,24,0.18); color: var(--yellow); }
     .status-pill.st-traite { background: rgba(46,204,113,0.16); color: #2ecc71; }
-    .status-pill.st-annule { background: rgba(156,156,156,0.14); color: var(--muted); }
+    .status-pill.st-annule { background: rgba(225,6,0,0.16); color: #ff6b63; }
  
     .order-actions { display: flex; gap: 8px; }
  
@@ -560,7 +563,10 @@
                 <option value="annule">Annulé</option>
             </select>
             <button class="btn-sm" onclick="openNewOrderModal()">+ Nouvelle commande</button>
+            <button class="btn-sm" onclick="saveDayArchive()" title="Fait une sauvegarde horodatée de toutes les commandes actuelles sur cet appareil">💾 Clôturer la journée</button>
+            <button class="btn-sm" onclick="openArchiveOverlay()">📚 Historique des journées</button>
         </div>
+        <p style="color:var(--muted);font-size:0.76rem;margin:-10px 0 16px;">💾 « Clôturer la journée » enregistre une sauvegarde de toutes les commandes actuelles sur cet appareil, sans rien effacer ni modifier — utile pour garder une trace même si des données venaient à disparaître.</p>
 
         <div id="orderListWrap"></div>
     </div>
@@ -640,6 +646,11 @@
 <!-- ============ NEW ORDER MODAL ============ -->
 <div class="modal-overlay" id="newOrderOverlay">
     <div class="modal-box" id="newOrderBox" style="max-width:520px;"></div>
+</div>
+
+<!-- ============ DAY ARCHIVES MODAL ============ -->
+<div class="modal-overlay" id="archiveOverlay">
+    <div class="modal-box" id="archiveBox" style="max-width:560px;"></div>
 </div>
 
 <!-- ============ BOUTON WHATSAPP FLOTTANT (contact rapide) ============ -->
@@ -1072,13 +1083,13 @@
             '<div class="modal-row"><span>Total</span><span>' + fmtDA(o.total) + '</span></div>' +
             '<div class="modal-row"><span>Nom</span><span>' + (o.customerName || '—') + '</span></div>' +
             '<div class="modal-row"><span>Téléphone</span><span>' + (o.phone || '—') + '</span></div>' +
-            '<div class="modal-row"><span>Logo</span><span>' + (o.noLogo ? 'Sans logo' : (o.logoName || '—')) + '</span></div>' +
             (o.logoNote ? '<div class="modal-row"><span>Placement</span><span>' + o.logoNote + '</span></div>' : '') +
             (o.note ? '<div class="modal-row"><span>Remarque</span><span>' + o.note + '</span></div>' : '') +
+            renderLogoBox(o) +
             renderAttachBox(o) +
             '<div class="modal-close-row">' +
                 '<button class="btn-sm" style="flex:1;background:rgba(46,204,113,0.16);border-color:#2ecc71;color:#2ecc71;" onclick="updateStatus(\'' + o.id + '\',\'traite\'); openDetail(\'' + o.id + '\');">✅ Confirmer</button>' +
-                '<button class="btn-sm" style="flex:1;background:rgba(156,156,156,0.14);border-color:var(--muted);color:var(--muted);" onclick="updateStatus(\'' + o.id + '\',\'annule\'); openDetail(\'' + o.id + '\');">✕ Annuler</button>' +
+                '<button class="btn-sm" style="flex:1;background:rgba(225,6,0,0.16);border-color:var(--red);color:#ff6b63;" onclick="updateStatus(\'' + o.id + '\',\'annule\'); openDetail(\'' + o.id + '\');">✕ Annuler</button>' +
             '</div>' +
             '<div class="modal-close-row">' +
                 (o.phone ? '<a class="btn-sm" style="text-align:center;flex:1;text-decoration:none;" href="https://wa.me/' + o.phone.replace(/[^0-9]/g,'') + '" target="_blank">💬 WhatsApp</a>' : '') +
@@ -1165,6 +1176,76 @@
         win.onload = () => { win.print(); };
         // Filet de sécurité si onload ne se déclenche pas immédiatement.
         setTimeout(() => { try { win.print(); } catch (e) {} }, 400);
+    }
+
+    // Construit le bloc "logo" (celui à imprimer sur l'article) affiché dans le détail d'une commande,
+    // avec possibilité pour l'équipe d'en ajouter un, d'en changer, ou d'en retirer un.
+    function renderLogoBox(o) {
+        const current = o.logoDataUrl
+            ? '<div class="attach-current">' +
+                  '<div class="attach-thumb"><img src="' + o.logoDataUrl + '"></div>' +
+                  '<div class="attach-name">' + (o.logoName || 'Logo') + '</div>' +
+              '</div>' +
+              '<div class="attach-actions">' +
+                  '<button class="btn-sm danger" onclick="removeOrderLogo(\'' + o.id + '\')">🗑️ Retirer</button>' +
+              '</div>'
+            : '<div class="attach-status" id="logoEmpty-' + o.id + '">' + (o.noLogo ? 'Commande sans logo.' : 'Aucun logo ajouté pour cette commande.') + '</div>';
+        return '<div class="attach-box">' +
+            '<div class="attach-title">Logo à imprimer</div>' +
+            current +
+            '<div class="attach-input-row" style="margin-top:10px;">' +
+                '<input type="file" accept="image/*" id="logoInput-' + o.id + '" onchange="onOrderLogoChosen(\'' + o.id + '\', this)">' +
+            '</div>' +
+            '<div class="attach-status" id="logoStatus-' + o.id + '"></div>' +
+        '</div>';
+    }
+
+    // Envoie le logo choisi vers le bucket public "image" de Supabase et l'attache à la commande.
+    async function onOrderLogoChosen(orderId, input) {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const statusEl = document.getElementById('logoStatus-' + orderId);
+        if (!supabaseClient) {
+            if (statusEl) statusEl.textContent = "Connexion à la base indisponible : impossible d'enregistrer le logo.";
+            return;
+        }
+        if (statusEl) statusEl.textContent = 'Envoi en cours...';
+        const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+        const path = 'logos/' + orderId + '/' + Date.now() + '.' + ext;
+        const { error: upErr } = await supabaseClient.storage.from('image').upload(path, file, { upsert: true });
+        if (upErr) {
+            console.error('Erreur upload logo :', upErr);
+            if (statusEl) statusEl.textContent = "Échec de l'envoi. Réessaie.";
+            return;
+        }
+        const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
+        const url = data ? data.publicUrl : null;
+        const { error: dbErr } = await supabaseClient
+            .from('orders')
+            .update({ logo_data_url: url, logo_name: file.name, no_logo: false })
+            .eq('id', orderId);
+        if (dbErr) {
+            console.error('Erreur enregistrement logo :', dbErr);
+            if (statusEl) statusEl.textContent = "Logo envoyé mais non enregistré sur la commande.";
+            return;
+        }
+        const o = ordersCache.find(x => x.id === orderId);
+        if (o) { o.logoDataUrl = url; o.logoName = file.name; o.noLogo = false; }
+        openDetail(orderId);
+        renderOrders();
+    }
+
+    async function removeOrderLogo(orderId) {
+        if (!supabaseClient) return;
+        const { error } = await supabaseClient
+            .from('orders')
+            .update({ logo_data_url: null, logo_name: null })
+            .eq('id', orderId);
+        if (error) { console.error('Erreur suppression logo :', error); return; }
+        const o = ordersCache.find(x => x.id === orderId);
+        if (o) { o.logoDataUrl = null; o.logoName = null; }
+        openDetail(orderId);
+        renderOrders();
     }
 
     // Construit le bloc "pièce jointe" (photo ou fichier ajouté par l'équipe) affiché dans le détail d'une commande.
@@ -1286,6 +1367,119 @@
         a.remove();
     }
  
+    /* =====================================================================
+       ARCHIVES QUOTIDIENNES — sauvegarde locale (par appareil) d'un instantané
+       de toutes les commandes, horodatée par jour. N'efface ni ne modifie rien
+       dans Supabase : c'est un filet de sécurité en plus, gardé dans le
+       localStorage du navigateur pour consultation même hors ligne.
+       ===================================================================== */
+    function getDayArchives() {
+        try { return JSON.parse(localStorage.getItem('sisko_day_archives') || '{}'); }
+        catch (e) { return {}; }
+    }
+
+    function saveDayArchive() {
+        if (ordersCache.length === 0) { alert('Aucune commande à sauvegarder pour le moment.'); return; }
+        const now = new Date();
+        const dateKey = now.toISOString().slice(0, 10);
+        const archives = getDayArchives();
+        const revenue = ordersCache.filter(o => o.status !== 'annule').reduce((s, o) => s + (o.total || 0), 0);
+        archives[dateKey] = {
+            date: dateKey,
+            savedAt: now.toISOString(),
+            orderCount: ordersCache.length,
+            revenue: revenue,
+            orders: ordersCache.map(o => ({
+                id: o.id, date: o.date, product: o.product, customerName: o.customerName,
+                phone: o.phone, total: o.total, status: o.status,
+            })),
+        };
+        localStorage.setItem('sisko_day_archives', JSON.stringify(archives));
+        alert('✅ Journée sauvegardée : ' + ordersCache.length + ' commande(s), ' + fmtDA(revenue) + '.\nRetrouve-la à tout moment dans « Historique des journées ». Cette sauvegarde reste sur cet appareil, même si les commandes venaient à être vidées ailleurs.');
+        if (document.getElementById('archiveOverlay').classList.contains('open')) openArchiveOverlay();
+    }
+
+    function openArchiveOverlay() {
+        renderArchiveList();
+        document.getElementById('archiveOverlay').classList.add('open');
+    }
+
+    function closeArchiveOverlay() {
+        document.getElementById('archiveOverlay').classList.remove('open');
+    }
+
+    document.getElementById('archiveOverlay').addEventListener('click', (e) => {
+        if (e.target.id === 'archiveOverlay') closeArchiveOverlay();
+    });
+
+    function renderArchiveList() {
+        const archives = getDayArchives();
+        const days = Object.values(archives).sort((a, b) => b.date.localeCompare(a.date));
+        const box = document.getElementById('archiveBox');
+        if (days.length === 0) {
+            box.innerHTML =
+                '<h3>Historique des journées</h3>' +
+                '<p style="color:var(--muted);font-size:0.85rem;margin:10px 0 18px;">Aucune sauvegarde pour l\'instant. Utilise le bouton « 💾 Clôturer la journée » pour en créer une.</p>' +
+                '<div class="modal-close-row"><button class="btn-sm" style="flex:1;" onclick="closeArchiveOverlay()">Fermer</button></div>';
+            return;
+        }
+        box.innerHTML =
+            '<h3>Historique des journées</h3>' +
+            '<p style="color:var(--muted);font-size:0.78rem;margin:8px 0 16px;">Sauvegardes locales à cet appareil.</p>' +
+            days.map(d =>
+                '<div class="modal-row">' +
+                    '<span>' + new Date(d.date).toLocaleDateString('fr-FR') + '<br><span style="color:var(--muted);font-size:0.72rem;">' + d.orderCount + ' commande(s) · ' + fmtDA(d.revenue) + '</span></span>' +
+                    '<span style="display:flex;gap:6px;">' +
+                        '<button class="btn-sm" onclick="viewArchiveDay(\'' + d.date + '\')">👁</button>' +
+                        '<button class="btn-sm" onclick="exportArchiveCSV(\'' + d.date + '\')">⬇</button>' +
+                        '<button class="btn-sm danger" onclick="deleteArchiveDay(\'' + d.date + '\')">🗑</button>' +
+                    '</span>' +
+                '</div>'
+            ).join('') +
+            '<div class="modal-close-row"><button class="btn-sm" style="flex:1;" onclick="closeArchiveOverlay()">Fermer</button></div>';
+    }
+
+    function viewArchiveDay(dateKey) {
+        const archives = getDayArchives();
+        const d = archives[dateKey];
+        if (!d) return;
+        const box = document.getElementById('archiveBox');
+        box.innerHTML =
+            '<h3>Sauvegarde du ' + new Date(d.date).toLocaleDateString('fr-FR') + '</h3>' +
+            '<p style="color:var(--muted);font-size:0.78rem;margin:8px 0 16px;">' + d.orderCount + ' commande(s) · ' + fmtDA(d.revenue) + ' · enregistrée le ' + new Date(d.savedAt).toLocaleString('fr-FR') + '</p>' +
+            d.orders.map(o =>
+                '<div class="modal-row"><span>' + o.id + ' · ' + (o.customerName || '—') + '</span><span>' + fmtDA(o.total) + ' · ' + (STATUS_LABEL[o.status] || o.status) + '</span></div>'
+            ).join('') +
+            '<div class="modal-close-row">' +
+                '<button class="btn-sm" style="flex:1;" onclick="exportArchiveCSV(\'' + d.date + '\')">⬇ Exporter en CSV</button>' +
+                '<button class="btn-sm" style="flex:1;" onclick="openArchiveOverlay()">← Retour</button>' +
+            '</div>';
+    }
+
+    function exportArchiveCSV(dateKey) {
+        const archives = getDayArchives();
+        const d = archives[dateKey];
+        if (!d) return;
+        const headers = ['Référence', 'Date', 'Article', 'Total (DA)', 'Client', 'Téléphone', 'Statut'];
+        const rows = d.orders.map(o => [o.id, o.date, o.product, o.total, o.customerName, o.phone, STATUS_LABEL[o.status] || o.status]);
+        const csv = [headers, ...rows].map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n');
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'sisko-journee-' + d.date + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    function deleteArchiveDay(dateKey) {
+        if (!confirm('Supprimer cette sauvegarde de journée ? Cette action est irréversible.')) return;
+        const archives = getDayArchives();
+        delete archives[dateKey];
+        localStorage.setItem('sisko_day_archives', JSON.stringify(archives));
+        renderArchiveList();
+    }
+
     // NB : la mise à jour multi-appareils est désormais gérée par
     // subscribeRealtime() (Supabase), plus fiable que l'ancien événement
     // 'storage' qui ne fonctionnait qu'entre onglets du même navigateur.
@@ -1664,7 +1858,13 @@
             '<div id="noCartWrap"></div>' +
             '<div class="form-row"><label>Nom du client</label><input type="text" id="noCustomerName" placeholder="Ex. Yacine B."></div>' +
             '<div class="form-row"><label>Téléphone</label><input type="text" id="noPhone" placeholder="Ex. 0770406106"></div>' +
-            '<div class="form-row"><label>Remarque</label><textarea id="noNote" placeholder="Détails, logo, adresse..."></textarea></div>' +
+            '<div class="form-row"><label>Remarque</label><textarea id="noNote" placeholder="Détails, placement du logo, adresse..."></textarea></div>' +
+            '<div class="form-row">' +
+                '<label>Logo à imprimer</label>' +
+                '<input type="file" id="noLogoFile" accept="image/*" onchange="noPreviewLogo(this)">' +
+                '<div id="noLogoPreviewWrap" style="margin-top:8px;display:none;"><img id="noLogoPreview" style="max-width:70px;max-height:70px;border-radius:6px;border:1px solid var(--border);background:#fff;object-fit:contain;"></div>' +
+                '<label class="checkbox-row" style="margin-top:8px;"><input type="checkbox" id="noLogoNone"> Commande sans logo</label>' +
+            '</div>' +
             '<div class="form-row"><label>Statut</label><select id="noStatus">' +
                 ['nouveau','en_cours','traite','annule'].map(s => '<option value="' + s + '">' + STATUS_LABEL[s] + '</option>').join('') +
             '</select></div>' +
@@ -1703,6 +1903,17 @@
 
         // Repart sur une quantité de 1 pour faciliter l'ajout de l'article suivant.
         document.getElementById('noQty').value = 1;
+    }
+
+    // Aperçu local (avant envoi) du logo choisi pour une commande manuelle.
+    function noPreviewLogo(input) {
+        const wrap = document.getElementById('noLogoPreviewWrap');
+        const img = document.getElementById('noLogoPreview');
+        const file = input.files && input.files[0];
+        if (!file) { wrap.style.display = 'none'; return; }
+        const reader = new FileReader();
+        reader.onload = (e) => { img.src = e.target.result; wrap.style.display = 'block'; };
+        reader.readAsDataURL(file);
     }
 
     function noRemoveItem(i) {
@@ -1762,10 +1973,32 @@
             it.product + ' (' + it.size + (it.color ? '/' + it.color : '') + ')' + (it.qty > 1 ? ' ×' + it.qty : '')
         ).join(' + ');
 
+        // Upload du logo (facultatif) vers le bucket Supabase "image", même
+        // logique que la pièce jointe équipe plus bas dans le fichier.
+        let logoDataUrl = null, logoName = null;
+        const logoInput = document.getElementById('noLogoFile');
+        const noLogoChecked = document.getElementById('noLogoNone')?.checked;
+        if (supabaseClient && logoInput && logoInput.files && logoInput.files[0] && !noLogoChecked) {
+            const file = logoInput.files[0];
+            const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+            const path = 'logos/manuel-' + Date.now() + '.' + ext;
+            const { error: upErr } = await supabaseClient.storage.from('image').upload(path, file, { upsert: true });
+            if (upErr) {
+                console.error('Erreur upload logo :', upErr);
+                alert("Le logo n'a pas pu être envoyé (" + (upErr.message || upErr) + "). La commande va être enregistrée sans logo.");
+            } else {
+                const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
+                logoDataUrl = data ? data.publicUrl : null;
+                logoName = file.name;
+            }
+        }
+
+        // NB : "product_id" n'existe pas comme colonne sur la commande elle-même
+        // (seulement à l'intérieur de chaque article dans "items") — l'envoyer
+        // ici faisait échouer l'enregistrement ("colonne introuvable").
         const order = {
             id: 'CMD-' + Date.now().toString(36).toUpperCase(),
             items: noCart,
-            product_id: noCart.length === 1 ? noCart[0].product_id : null,
             product: productSummary,
             price: noCart.length === 1 ? noCart[0].price : null,
             size: noCart.length === 1 ? noCart[0].size : null,
@@ -1776,11 +2009,24 @@
             phone: phone,
             note: note,
             status: status,
+            logo_data_url: logoDataUrl,
+            logo_name: logoName,
+            no_logo: !!noLogoChecked,
         };
 
         if (supabaseClient) {
-            const { error } = await supabaseClient.from('orders').insert(order);
-            if (error) { console.error('Erreur ajout commande :', error); alert('Erreur lors de l\'enregistrement de la commande.'); return; }
+            try {
+                const { error } = await supabaseClient.from('orders').insert(order);
+                if (error) {
+                    console.error('Erreur ajout commande :', error);
+                    alert('Erreur lors de l\'enregistrement de la commande : ' + (error.message || 'erreur inconnue') + (error.hint ? ('\n' + error.hint) : ''));
+                    return;
+                }
+            } catch (e) {
+                console.error('Erreur réseau ajout commande :', e);
+                alert('Erreur lors de l\'enregistrement de la commande (connexion). Vérifie ta connexion et réessaie.');
+                return;
+            }
             if (supabaseClient.rpc) {
                 for (const it of noCart) {
                     const { error: stockError } = await supabaseClient.rpc('decrement_stock', { p_product_id: it.product_id, p_color: it.color, p_size: it.size, p_qty: it.qty });
@@ -1790,7 +2036,7 @@
         } else {
             try {
                 const local = JSON.parse(localStorage.getItem('sisko_orders') || '[]');
-                local.unshift({ ...order, date: new Date().toISOString(), customerName, logoDataUrl: null });
+                local.unshift({ ...order, date: new Date().toISOString(), customerName, logoDataUrl, logoName });
                 localStorage.setItem('sisko_orders', JSON.stringify(local));
             } catch (e) { console.error(e); }
         }
@@ -1852,7 +2098,7 @@
                 type: 'doughnut',
                 data: {
                     labels: ['Nouveau', 'En cours', 'Traité', 'Annulé'],
-                    datasets: [{ data: [statusCounts.nouveau, statusCounts.en_cours, statusCounts.traite, statusCounts.annule], backgroundColor: ['#e10600', '#f2b134', '#2ecc71', '#9c9c9c'] }]
+                    datasets: [{ data: [statusCounts.nouveau, statusCounts.en_cours, statusCounts.traite, statusCounts.annule], backgroundColor: ['#3b82f6', '#f5c518', '#2ecc71', '#e10600'] }]
                 },
                 options: { responsive: true, plugins: { legend: { labels: { color: '#f5f5f5' } } } }
             });
