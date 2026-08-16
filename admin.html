@@ -725,6 +725,7 @@
         return {
             id: r.id,
             date: r.created_at,
+            items: r.items || null,
             product: r.product,
             price: r.price,
             size: r.size,
@@ -777,6 +778,14 @@
     }
  
     function fmtDA(n) { return Number(n || 0).toLocaleString('fr-FR') + ' DA'; }
+
+    // Titre lisible d'une commande : détaille l'article unique, ou résume les
+    // commandes composées de plusieurs articles (ex. "T-shirt M + Short + Pull").
+    function orderTitle(o) {
+        if (o.items && o.items.length > 1) return o.items.length + ' articles : ' + o.product;
+        const it = (o.items && o.items[0]) || o;
+        return (it.product || o.product) + ' — ' + it.size + ' / ' + it.color + ' × ' + it.qty;
+    }
  
     const STATUS_LABEL = { nouveau: 'Nouveau', en_cours: 'En cours', traite: 'Traité', annule: 'Annulé' };
  
@@ -826,7 +835,7 @@
                     '<div class="order-thumb">' + thumb + '</div>' +
                     '<div class="order-main">' +
                         '<div class="ref">' + o.id + ' · ' + dateStr + '</div>' +
-                        '<div class="title">' + o.product + ' — ' + o.size + ' / ' + o.color + ' × ' + o.qty + '</div>' +
+                        '<div class="title">' + orderTitle(o) + '</div>' +
                         '<div class="customer">' + (o.customerName || '—') + ' · ' + (o.phone || '—') + '</div>' +
                     '</div>' +
                     '<div class="order-total">' + fmtDA(o.total) + '</div>' +
@@ -1046,13 +1055,20 @@
         if (!o) return;
         const status = o.status || 'nouveau';
         const box = document.getElementById('detailBox');
+        const itemsHtml = (o.items && o.items.length)
+            ? o.items.map(it =>
+                '<div class="modal-row"><span>' + it.product + ' — ' + it.size + ' / ' + it.color + '</span><span>× ' + it.qty + ' — ' + fmtDA(it.total) + '</span></div>'
+              ).join('')
+            : (
+                '<div class="modal-row"><span>Article</span><span>' + o.product + '</span></div>' +
+                '<div class="modal-row"><span>Taille</span><span>' + o.size + '</span></div>' +
+                '<div class="modal-row"><span>Couleur</span><span>' + o.color + '</span></div>' +
+                '<div class="modal-row"><span>Quantité</span><span>' + o.qty + '</span></div>'
+              );
         box.innerHTML =
             '<h3>' + o.id + ' <span class="status-pill st-' + status + '">' + STATUS_LABEL[status] + '</span></h3>' +
             (o.logoDataUrl ? '<img class="modal-logo" src="' + o.logoDataUrl + '" alt="logo">' : '') +
-            '<div class="modal-row"><span>Article</span><span>' + o.product + '</span></div>' +
-            '<div class="modal-row"><span>Taille</span><span>' + o.size + '</span></div>' +
-            '<div class="modal-row"><span>Couleur</span><span>' + o.color + '</span></div>' +
-            '<div class="modal-row"><span>Quantité</span><span>' + o.qty + '</span></div>' +
+            itemsHtml +
             '<div class="modal-row"><span>Total</span><span>' + fmtDA(o.total) + '</span></div>' +
             '<div class="modal-row"><span>Nom</span><span>' + (o.customerName || '—') + '</span></div>' +
             '<div class="modal-row"><span>Téléphone</span><span>' + (o.phone || '—') + '</span></div>' +
@@ -1086,15 +1102,21 @@
         const date = new Date(o.date);
         const dateStr = isNaN(date) ? '—' : date.toLocaleDateString('fr-FR') + ' à ' + date.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
 
+        const itemRows = (o.items && o.items.length)
+            ? o.items.map((it, i) => ['Article ' + (i + 1), it.product + ' — ' + it.size + ' / ' + it.color + ' × ' + it.qty + ' — ' + fmtDA(it.total)])
+            : [
+                ['Article', o.product],
+                ['Taille', o.size || '—'],
+                ['Couleur', o.color || '—'],
+                ['Quantité', o.qty],
+                ['Prix unitaire', fmtDA(o.price)],
+              ];
+
         const rows = [
             ['Référence', o.id],
             ['Date', dateStr],
             ['Statut', STATUS_LABEL[status] || status],
-            ['Article', o.product],
-            ['Taille', o.size || '—'],
-            ['Couleur', o.color || '—'],
-            ['Quantité', o.qty],
-            ['Prix unitaire', fmtDA(o.price)],
+            ...itemRows,
             ['Total', fmtDA(o.total)],
             ['Client', o.customerName || '—'],
             ['Téléphone', o.phone || '—'],
@@ -1612,12 +1634,19 @@
        NOUVELLE COMMANDE MANUELLE (ajoutée par l'équipe, ex. commande reçue
        par téléphone / WhatsApp direct, sans passer par le configurateur)
        ===================================================================== */
+    // Panier temporaire de la commande en cours de saisie (permet d'ajouter
+    // plusieurs articles différents — ex. T-shirt M + Short + Pull — dans UNE
+    // seule commande avant de l'enregistrer).
+    let noCart = [];
+
     function openNewOrderModal() {
+        noCart = [];
         const box = document.getElementById('newOrderBox');
         const productOptions = productsCache.map(p => '<option value="' + p.id + '">' + p.name + ' — ' + fmtDA(p.price) + '</option>').join('');
 
         box.innerHTML =
             '<h3>Nouvelle commande</h3>' +
+            '<p style="color:var(--muted);font-size:0.78rem;margin:-6px 0 14px;">Ajoutez un ou plusieurs articles (ex. T-shirt M + Short + Pull), puis enregistrez la commande.</p>' +
             '<div class="form-row"><label>Produit</label><select id="noProduct" onchange="noUpdateProductFields()">' +
                 '<option value="">— Choisir —</option>' + productOptions +
             '</select></div>' +
@@ -1631,6 +1660,8 @@
                 '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Quantité</label><input type="number" id="noQty" value="1" min="1"></div>' +
                 '<div style="flex:1;"><label style="display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;">Prix unitaire (DA)</label><input type="number" id="noPrice" value="0"></div>' +
             '</div>' +
+            '<button type="button" class="btn-sm" style="width:100%;margin-bottom:16px;" onclick="noAddItem()">+ Ajouter cet article à la commande</button>' +
+            '<div id="noCartWrap"></div>' +
             '<div class="form-row"><label>Nom du client</label><input type="text" id="noCustomerName" placeholder="Ex. Yacine B."></div>' +
             '<div class="form-row"><label>Téléphone</label><input type="text" id="noPhone" placeholder="Ex. 0770406106"></div>' +
             '<div class="form-row"><label>Remarque</label><textarea id="noNote" placeholder="Détails, logo, adresse..."></textarea></div>' +
@@ -1642,6 +1673,7 @@
                 '<button class="btn-sm" style="flex:1;" onclick="closeNewOrderModal()">Annuler</button>' +
             '</div>';
 
+        noRenderCart();
         document.getElementById('newOrderOverlay').classList.add('open');
     }
 
@@ -1654,7 +1686,57 @@
         document.getElementById('noPrice').value = p.price;
     }
 
+    // Ajoute l'article actuellement sélectionné (produit + couleur + taille +
+    // quantité + prix) au panier de la commande en cours.
+    function noAddItem() {
+        const productId = document.getElementById('noProduct').value;
+        const p = productsCache.find(x => x.id === productId);
+        if (!p) { alert('Merci de choisir un produit.'); return; }
+        const color = document.getElementById('noColor').value;
+        if (!color) { alert('Merci de choisir une couleur.'); return; }
+        const size = document.getElementById('noSize').value;
+        const qty = Number(document.getElementById('noQty').value) || 1;
+        const price = Number(document.getElementById('noPrice').value) || 0;
+
+        noCart.push({ product_id: productId, product: p.name, color: color, size: size, qty: qty, price: price, total: qty * price });
+        noRenderCart();
+
+        // Repart sur une quantité de 1 pour faciliter l'ajout de l'article suivant.
+        document.getElementById('noQty').value = 1;
+    }
+
+    function noRemoveItem(i) {
+        noCart.splice(i, 1);
+        noRenderCart();
+    }
+
+    // Affiche la liste des articles déjà ajoutés à la commande en cours, avec
+    // le total cumulé et un bouton pour retirer un article.
+    function noRenderCart() {
+        const wrap = document.getElementById('noCartWrap');
+        if (!wrap) return;
+        if (noCart.length === 0) {
+            wrap.innerHTML = '<p style="color:var(--muted);font-size:0.82rem;margin:-8px 0 16px;">Aucun article ajouté pour l\'instant.</p>';
+            return;
+        }
+        const cartTotal = noCart.reduce((s, it) => s + it.total, 0);
+        wrap.innerHTML =
+            '<div style="border:1px solid var(--border);border-radius:10px;padding:4px 12px;margin-bottom:16px;">' +
+                noCart.map((it, i) =>
+                    '<div class="mini-row">' +
+                        '<div class="mini-left"><span>' + it.product + ' — ' + it.size + ' / ' + it.color + ' × ' + it.qty + '</span></div>' +
+                        '<div style="display:flex;align-items:center;gap:10px;">' +
+                            '<span class="mini-val">' + fmtDA(it.total) + '</span>' +
+                            '<button type="button" class="icon-btn" title="Retirer" onclick="noRemoveItem(' + i + ')">🗑</button>' +
+                        '</div>' +
+                    '</div>'
+                ).join('') +
+                '<div class="mini-row" style="border-bottom:none;font-weight:700;"><span>Total commande</span><span>' + fmtDA(cartTotal) + '</span></div>' +
+            '</div>';
+    }
+
     function closeNewOrderModal() {
+        noCart = [];
         document.getElementById('newOrderOverlay').classList.remove('open');
     }
 
@@ -1663,29 +1745,33 @@
     });
 
     async function saveNewOrder() {
-        const productId = document.getElementById('noProduct').value;
-        const p = productsCache.find(x => x.id === productId);
-        const color = document.getElementById('noColor').value;
-        const size = document.getElementById('noSize').value;
-        const qty = Number(document.getElementById('noQty').value) || 1;
-        const price = Number(document.getElementById('noPrice').value) || 0;
+        if (noCart.length === 0) {
+            alert('Merci d\'ajouter au moins un article à la commande (bouton "+ Ajouter cet article").');
+            return;
+        }
+
         const customerName = document.getElementById('noCustomerName').value.trim();
         const phone = document.getElementById('noPhone').value.trim();
         const note = document.getElementById('noNote').value.trim();
         const status = document.getElementById('noStatus').value;
 
-        if (!p) { alert('Merci de choisir un produit.'); return; }
-        if (!color) { alert('Merci de choisir une couleur.'); return; }
+        const total = noCart.reduce((s, it) => s + it.total, 0);
+        const qty = noCart.reduce((s, it) => s + it.qty, 0);
+        // Résumé lisible de tous les articles, ex. "T-shirt (M/Rouge) + Short (L) + Pull (M) ×2"
+        const productSummary = noCart.map(it =>
+            it.product + ' (' + it.size + (it.color ? '/' + it.color : '') + ')' + (it.qty > 1 ? ' ×' + it.qty : '')
+        ).join(' + ');
 
         const order = {
             id: 'CMD-' + Date.now().toString(36).toUpperCase(),
-            product_id: productId,
-            product: p.name,
-            price: price,
-            size: size,
-            color: color,
+            items: noCart,
+            product_id: noCart.length === 1 ? noCart[0].product_id : null,
+            product: productSummary,
+            price: noCart.length === 1 ? noCart[0].price : null,
+            size: noCart.length === 1 ? noCart[0].size : null,
+            color: noCart.length === 1 ? noCart[0].color : null,
             qty: qty,
-            total: price * qty,
+            total: total,
             customer_name: customerName,
             phone: phone,
             note: note,
@@ -1696,8 +1782,10 @@
             const { error } = await supabaseClient.from('orders').insert(order);
             if (error) { console.error('Erreur ajout commande :', error); alert('Erreur lors de l\'enregistrement de la commande.'); return; }
             if (supabaseClient.rpc) {
-                const { error: stockError } = await supabaseClient.rpc('decrement_stock', { p_product_id: productId, p_color: color, p_size: size, p_qty: qty });
-                if (stockError) console.error('Erreur déduction stock :', stockError);
+                for (const it of noCart) {
+                    const { error: stockError } = await supabaseClient.rpc('decrement_stock', { p_product_id: it.product_id, p_color: it.color, p_size: it.size, p_qty: it.qty });
+                    if (stockError) console.error('Erreur déduction stock :', stockError);
+                }
             }
         } else {
             try {
@@ -1707,6 +1795,7 @@
             } catch (e) { console.error(e); }
         }
 
+        noCart = [];
         closeNewOrderModal();
         await loadOrders();
         await loadInventory();
@@ -1771,7 +1860,13 @@
 
         // --- Top produits par quantité vendue ---
         const qtyByProduct = new Map();
-        valid.forEach(o => { qtyByProduct.set(o.product, (qtyByProduct.get(o.product) || 0) + (o.qty || 0)); });
+        valid.forEach(o => {
+            if (o.items && o.items.length) {
+                o.items.forEach(it => qtyByProduct.set(it.product, (qtyByProduct.get(it.product) || 0) + (it.qty || 0)));
+            } else {
+                qtyByProduct.set(o.product, (qtyByProduct.get(o.product) || 0) + (o.qty || 0));
+            }
+        });
         const topEntries = Array.from(qtyByProduct.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
         const ctxTop = document.getElementById('chartTopProducts');
         if (chartTopProducts) chartTopProducts.destroy();
