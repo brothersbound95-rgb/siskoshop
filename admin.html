@@ -802,12 +802,14 @@
  
     // Coordonnées légales de l'entreprise, utilisées sur la facture imprimée.
     const COMPANY_INFO = {
-        name: 'SISKO SHOP',
+        name: 'Nazim Meghrissi',
         address: 'Cité Drioueche, 145400 Draria, Alger',
         phone: '0770406106',
         activity: 'Vente et personnalisation de vêtements',
         nif: '19516060060819861600',
         nis: '199516060060823',
+        rc: '1600-4980080A24',
+        vatNote: 'TVA non assujetti',
     };
  
     function renderOrders() {
@@ -1279,7 +1281,8 @@
                     '</div>' +
                 '</div>' +
                 '<div class="legal-box">' +
-                    '<b>NIF :</b> ' + COMPANY_INFO.nif + ' &nbsp;·&nbsp; <b>NIS :</b> ' + COMPANY_INFO.nis +
+                    '<b>NIF :</b> ' + COMPANY_INFO.nif + ' &nbsp;·&nbsp; <b>NIS :</b> ' + COMPANY_INFO.nis + '<br>' +
+                    '<b>RC :</b> ' + COMPANY_INFO.rc + ' &nbsp;·&nbsp; <b>' + COMPANY_INFO.vatNote + '</b>' +
                 '</div>' +
                 '<div class="client-box">' +
                     '<h3>Facturé à</h3>' +
