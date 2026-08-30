@@ -1318,6 +1318,7 @@
                   '<div class="attach-name">' + (o.logoName || 'Logo') + '</div>' +
               '</div>' +
               '<div class="attach-actions">' +
+                  '<button class="btn-sm" onclick="downloadOrderLogo(\'' + o.id + '\')">⬇️ Télécharger</button>' +
                   '<button class="btn-sm danger" onclick="removeOrderLogo(\'' + o.id + '\')">🗑️ Retirer</button>' +
               '</div>'
             : '<div class="attach-status" id="logoEmpty-' + o.id + '">' + (o.noLogo ? 'Commande sans logo.' : 'Aucun logo ajouté pour cette commande.') + '</div>';
@@ -1331,6 +1332,29 @@
         '</div>';
     }
  
+    // Télécharge le logo d'une commande (fichier local) depuis son URL Supabase.
+    async function downloadOrderLogo(orderId) {
+        const o = ordersCache.find(x => x.id === orderId);
+        if (!o || !o.logoDataUrl) return;
+        const statusEl = document.getElementById('logoStatus-' + orderId);
+        try {
+            const res = await fetch(o.logoDataUrl);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = o.logoName || ('logo-' + orderId);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+        } catch (e) {
+            console.error('Erreur téléchargement logo :', e);
+            if (statusEl) statusEl.textContent = "Le logo n'a pas pu être téléchargé.";
+        }
+    }
+
     // Envoie le logo choisi vers le bucket public "image" de Supabase et l'attache à la commande.
     async function onOrderLogoChosen(orderId, input) {
         const file = input.files && input.files[0];
@@ -1346,7 +1370,7 @@
         const { error: upErr } = await supabaseClient.storage.from('image').upload(path, file, { upsert: true });
         if (upErr) {
             console.error('Erreur upload logo :', upErr);
-            if (statusEl) statusEl.textContent = "Échec de l'envoi. Réessaie.";
+            if (statusEl) statusEl.textContent = "Échec de l'envoi : " + (upErr.message || upErr);
             return;
         }
         const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
@@ -1417,7 +1441,7 @@
         const { error: upErr } = await supabaseClient.storage.from('image').upload(path, file, { upsert: true });
         if (upErr) {
             console.error('Erreur upload pièce jointe :', upErr);
-            if (statusEl) statusEl.textContent = "Échec de l'envoi. Réessaie.";
+            if (statusEl) statusEl.textContent = "Échec de l'envoi : " + (upErr.message || upErr);
             return;
         }
         const { data } = supabaseClient.storage.from('image').getPublicUrl(path);
